@@ -1,9 +1,5 @@
 # Murty Website
 
-[ ![Deployment Status](https://img.shields.io/github/actions/workflow/status/brendanmurty/site/release.yml?label=Deployment%20Status&style=flat-square&labelColor=%23222222)](https://github.com/bmurty/site/actions/workflows/release.yml)
-[ ![Latest Release](https://img.shields.io/github/v/release/brendanmurty/site?label=Latest%20Release&style=flat-square&color=%2323c5b0&labelColor=%23222222)](https://github.com/bmurty/site/releases)
-[ ![Website Status](https://img.shields.io/website?url=https%3A%2F%2Fmurty.au&up_message=online&down_message=offline&style=flat-square&logo=globe&label=Website%20Status&labelColor=%23222222)](https://murty.au)
-
 ## Summary
 
 This repository contains the [murty.au](https://murty.au/) website, which has been built with [Deno](https://deno.land/), [Lume](https://lumeland.github.io/), a licensed version of the [IO font by Mass-Driver](https://io.mass-driver.com/), and the free [Font Awesome icon pack](https://fontawesome.com/).
@@ -12,7 +8,7 @@ Tests, build and local server commands are available from local environments.
 
 Remote testing and [GitHub Pages](https://pages.github.com/), releases are started locally, then testing and deployment to [Deno Deploy](https://deno.com/deploy) is handled remotely by a [GitHub Actions workflow](.github/workflows/release.yml).
 
-## Folder Structure
+## Structure
 
 | Path | Description |
 | ---- | ---- |
@@ -29,7 +25,7 @@ Remote testing and [GitHub Pages](https://pages.github.com/), releases are start
 | [AGENTS.md](AGENTS.md) | AI Agent instructions, technical docs and guidance. |
 | [deno.json](deno.json) | [Deno](https://deno.land/) imports, tasks and configuration for this repository. |
 
-## Initial setup
+## Initial Setup
 
 1. Fork this repository
 2. Make a local clone of that forked repository
@@ -53,9 +49,3 @@ Remote testing and [GitHub Pages](https://pages.github.com/), releases are start
 
 - Create a new site in your own account
 - Update your `.env` file's `GOOGLE_ANALYTICS_SITE_CODE` value to use your new `Measurement ID`
-
-10. **Optional:** Install [VS Code](https://code.visualstudio.com/) and add the [Deno](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno) plugin
-
-## Docker Usage
-
-For detailed Docker build and deployment instructions, see [docker/README.md](docker/README.md).
