@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       continue_deployment:
-        description: 'Continue with deploy to production?'
+        description: 'Confirm production deployment'
         type: boolean
         required: true
         default: false
