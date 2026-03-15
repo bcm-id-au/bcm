@@ -57,7 +57,6 @@ jobs:
             --org=$DENO_DEPLOY_ORG \
             --app=$DENO_DEPLOY_PROJECT \
             --token=$DENO_DEPLOY_TOKEN \
-            --static=_site \
             --prod
 
   release:
