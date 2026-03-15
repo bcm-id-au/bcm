@@ -61,6 +61,10 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: ${{ steps.build-site.outputs.artifact-file-name }}
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: latest
       - name: Run tests
         shell: bash
         run: deno task test
