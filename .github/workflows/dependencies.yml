@@ -16,6 +16,9 @@ on:
 permissions:
   contents: read
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   deps-update:
     runs-on: ubuntu-latest
@@ -24,10 +27,6 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - name: Set build artifact name
-        id: artifact
-        shell: bash
-        run: echo "artifact-file-name=build-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
       - name: Update script file attributes
         shell: bash
         run: chmod +x ./bin/*.sh
@@ -36,17 +35,13 @@ jobs:
         with:
           deno-version: latest
       - name: Setup environment
-        shell: bash
         run: deno task setup
       - name: Build site
-        shell: bash
         run: deno task build
       - name: Run deps-update
-        shell: bash
         run: deno task deps-update
       - name: Check for changes
         id: changes
-        shell: bash
         run: |
           if [[ -n $(git status --porcelain) ]]; then
             echo "Git status found changes."
@@ -77,8 +72,6 @@ jobs:
           git push -u origin ${{ steps.feature-branch.outputs.branch-name }}
       - name: Create Pull Request
         if: steps.changes.outputs.has_changes == 'true'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr create \
             --base main \
