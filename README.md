@@ -10,7 +10,7 @@ This repository contains the [murty.au](https://murty.au/) website, which has be
 
 Tests, build and local server commands are available from local environments.
 
-Remote testing and [GitHub Pages](https://pages.github.com/) deployment can be triggered locally and is then handled remotely by a [GitHub Actions workflow](.github/workflows/release.yml).
+Remote testing and [GitHub Pages](https://pages.github.com/), releases are started locally, then testing and deployment to [Deno Deploy](https://deno.com/deploy) is handled remotely by a [GitHub Actions workflow](.github/workflows/release.yml).
 
 ## Folder Structure
 
@@ -23,7 +23,6 @@ Remote testing and [GitHub Pages](https://pages.github.com/) deployment can be t
 | [config](config/) | Supporting configuration files. |
 | [content](content/) | Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files. |
 | [dev](dev/) | Dev helper scripts, run `deno task` to show available options. |
-| [docker](docker/) | Docker configuration and documentation. See [docker/README.md](docker/README.md) for details. |
 | [src](src/) | Source code and related unit tests. |
 | [src/layouts](src/layouts/) | Nunjucks page layouts. |
 | [src/styles](src/styles/) | CSS styles. |
@@ -45,12 +44,12 @@ Remote testing and [GitHub Pages](https://pages.github.com/) deployment can be t
 - Purchase your own license to use the [Mass-Driver IO font](https://io.mass-driver.com/) or update the CSS to use other fonts
 
 6. Commit and push all of these changes to your forked repository
-7. Update the Settings for your forked repository via GitHub:
+7. Setup your own [Deno Deploy](https://deno.com/deploy) Org, Project and Personal Access Token
+8. Update the Settings for your forked repository via GitHub:
 
-- Pages > Source: _GitHub Actions_
-- Pages > Custom domain: _use your own domain_
+- Go to `Settings > Security > Secrets and variables > Actions`
+- Add new `Repository secrets` for `DENO_DEPLOY_ORG`, `DENO_DEPLOY_PROJECT` and `DENO_DEPLOY_TOKEN`
 
-8. Update `CNAME` to use the same domain as you configured above
 9. Setup [Google Analytics](https://analytics.google.com/):
 
 - Create a new site in your own account

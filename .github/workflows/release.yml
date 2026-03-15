@@ -1,10 +1,19 @@
 name: Release
+
 on:
   push:
     tags:
       - "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].[0-9][0-9][0-9][0-9]"
+
+env:
+  DENO_DEPLOY_ORG: ${{ secrets.DENO_DEPLOY_ORG }}
+  DENO_DEPLOY_PROJECT: ${{ secrets.DENO_DEPLOY_PROJECT }}
+  DENO_DEPLOY_TOKEN: ${{ secrets.DENO_DEPLOY_TOKEN }}
+
 jobs:
+
   test:
+    name: Test
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -21,7 +30,9 @@ jobs:
       - name: Run tests
         shell: bash
         run: deno task test
+
   deploy:
+    name: Deploy
     needs: test
     runs-on: ubuntu-latest
     permissions:
@@ -35,16 +46,17 @@ jobs:
         uses: actions/download-artifact@v7
         with:
           name: ${{ steps.build-site.outputs.artifact-file-name }}
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v5
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site/
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Deploy to Deno Deploy
+        run: |
+          deno deploy \
+            --org=$DENO_DEPLOY_ORG \
+            --app=$DENO_DEPLOY_PROJECT \
+            --token=$DENO_DEPLOY_TOKEN \
+            --static=_site \
+            --prod
+
   release:
+    name: Release
     needs: deploy
     runs-on: ubuntu-latest
     permissions:
@@ -58,10 +70,12 @@ jobs:
           fetch-depth: 0
       - name: Generate release notes
         run: bash 'dev/release-notes.sh' 'release-notes.log'
-      - name: Create GitHub release
+      - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
           name: ${{ github.ref_name }}
           tag: ${{ github.ref_name }}
           bodyFile: release-notes.log
           makeLatest: true
+      - name: Cleanup
+        run: rm release-notes.log

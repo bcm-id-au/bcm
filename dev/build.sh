@@ -64,9 +64,6 @@ rm -rf "$PUBLIC_DIR/sitemap.xml-e"
 
 echo -e "${YELLOW}Configuring GitHub Pages in the '$PUBLIC_DIR' directory${NC}"
 
-# Domain name configuration
-cp "CNAME" "$PUBLIC_DIR/CNAME"
-
 # Custom 404 page
 cp "assets/redirect.html" "$PUBLIC_DIR/404.html"
 
