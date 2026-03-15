@@ -114,8 +114,7 @@ jobs:
 
   create-pr:
     name: Create PR
-    needs: [test, deps-update]
-    if: steps.changes.outputs.has_changes == 'true'
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
