@@ -22,7 +22,7 @@ Other useful commands:
 
 ### Build Process
 
-The build is orchestrated by `dev/build.sh` which:
+The build is orchestrated by `bin/build.sh` which:
 
 1. Lints and formats code
 2. Creates a temporary `build/` directory
@@ -41,6 +41,9 @@ The build is orchestrated by `dev/build.sh` which:
 
 ### Directory Structure
 
+- **`assets/`**: Static files (fonts, images, PDFs, favicon, etc.)
+- **`bin/`**: Bash scripts for common tasks
+- **`config/`**: Configuration files (Lume config, robots.txt, security.txt, keybase.txt)
 - **`content/`**: Markdown files for pages and posts with frontmatter (e.g., `layout: home.njk`)
 - **`src/`**: TypeScript source code
   - `src/layouts/`: Nunjucks layout templates (`.njk`)
@@ -48,9 +51,6 @@ The build is orchestrated by `dev/build.sh` which:
   - `src/styles/`: CSS files (combined and minified during build)
   - `*.ts`: Utility modules (json-feed, posts-list, docker-server)
   - `*.test.ts`: Deno tests (use `Deno.test()` with steps)
-- **`assets/`**: Static files (fonts, images, PDFs, favicon, etc.)
-- **`config/`**: Configuration files (Lume config, robots.txt, security.txt, keybase.txt)
-- **`dev/`**: Bash dev scripts for build automation
 - **`_site/`**: Built output (generated, not committed)
 - **`build/`**: Temporary directory during build (cleaned up after)
 
@@ -126,15 +126,6 @@ Releases use date-based version tags: `YYYYMMDD.HHMM` (e.g., `20240221.1430`)
 - Created via `deno task release` script
 - Triggers the `.github/workflows/release.yml` workflow
 - Workflow runs tests, deploys to GitHub Pages, and creates a GitHub release
-
-### Docker
-
-Docker support is available via `docker/docker-compose.yaml`:
-
-- `deno task docker-dev` - Development container
-- `deno task docker-prod` - Production container
-
-See `docker/README.md` for detailed Docker instructions.
 
 ## Code Style
 

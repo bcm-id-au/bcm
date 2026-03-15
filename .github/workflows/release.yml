@@ -25,7 +25,7 @@ jobs:
         run: echo "artifact-file-name=build-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
       - name: Set executable status on dev scripts
         shell: bash
-        run: chmod +x ./dev/*.sh
+        run: chmod +x ./bin/*.sh
       - name: Setup Deno
         uses: denoland/setup-deno@v2
         with:
@@ -108,7 +108,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Generate release notes
-        run: bash 'dev/release-notes.sh' 'release-notes.log'
+        run: bash 'bin/release-notes.sh' 'release-notes.log'
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
