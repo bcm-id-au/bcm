@@ -76,7 +76,6 @@ cp "assets/favicon.ico" "$PUBLIC_DIR/favicon.ico"
 cp "config/robots.txt" "$PUBLIC_DIR/robots.txt"
 
 mkdir -p "$PUBLIC_DIR/.well-known"
-cp "config/keybase.txt" "$PUBLIC_DIR/.well-known/keybase.txt"
 cp "config/security.txt" "$PUBLIC_DIR/.well-known/security.txt"
 
 echo -e "${YELLOW}Copying CSS files to the '$PUBLIC_DIR/css' directory${NC}"
