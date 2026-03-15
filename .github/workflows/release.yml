@@ -6,12 +6,9 @@ on:
     inputs:
       continue_deployment:
         description: 'Continue with deploy to production?'
-        type: choice
+        type: boolean
         required: true
-        default: 'no'
-        options:
-          - no
-          - yes
+        default: false
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -26,7 +23,7 @@ jobs:
 
   build:
     name: Build
-    if: ${{ inputs.continue_deployment == 'yes' }}
+    if: ${{ inputs.continue_deployment == true }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
