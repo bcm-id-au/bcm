@@ -115,7 +115,7 @@ jobs:
       - name: Set release tag name
         id: release_tag
         shell: bash
-        run: echo "tag_name=release-$(date +%Y%m%d).${{ github.run_id }}" >> $GITHUB_OUTPUT
+        run: echo "tag_name=release-$(date +%Y%m%d.%H%M)" >> $GITHUB_OUTPUT
       - name: Create release tag
         run: |
           git config user.name "bot-release"
