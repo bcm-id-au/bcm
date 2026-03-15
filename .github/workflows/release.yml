@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       confirmation_phrase:
-        description: 'To deploy to production, type DEPLOY in lowercase.'
+        description: 'To deploy to production, type GOLIVE in lowercase.'
         type: string
         required: true
   # Automatically trigger on push of a release tag
@@ -25,7 +25,7 @@ permissions:
 jobs:
   prepare:
     name: Prepare
-    if: ${{ github.event.inputs.confirmation_phrase == 'deploy' }}
+    if: ${{ github.event.inputs.confirmation_phrase == 'golive' }}
     runs-on: ubuntu-latest
     steps:
       - name: Generate release tag
