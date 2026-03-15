@@ -9,9 +9,6 @@ $RECYCLE.BIN/
 !.env.example
 !.env.github.example
 
-infra/aws-ecs/ecs-autoscaling-config.json
-infra/aws-ecs/ecs-task-definition.json
-
 !.envrc
 
 /build
