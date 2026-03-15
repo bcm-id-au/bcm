@@ -17,9 +17,7 @@ permissions:
   contents: read
 
 jobs:
-
-  build:
-    name: Build
+  deps-update:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -43,35 +41,6 @@ jobs:
       - name: Build site
         shell: bash
         run: deno task build
-      - name: Upload build files
-        uses: actions/upload-artifact@v7
-        with:
-          name: ${{ steps.artifact.outputs.artifact-file-name }}
-          overwrite: true
-          include-hidden-files: true
-          retention-days: 1
-          compression-level: 9
-          path: |
-            _site/
-            .env
-
-  deps-update:
-    name: Deps Update
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-      - name: Download build files
-        uses: actions/download-artifact@v8
-        with:
-          name: ${{ steps.artifact.outputs.artifact-file-name }}
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
-        with:
-          deno-version: latest
       - name: Run deps-update
         shell: bash
         run: deno task deps-update
@@ -88,37 +57,13 @@ jobs:
             git status --porcelain
             echo "has_changes=false" >> "$GITHUB_OUTPUT"
           fi
-
-  test:
-    name: Test
-    needs: deps-update
-    if: steps.changes.outputs.has_changes == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-      - name: Download build files
-        uses: actions/download-artifact@v8
-        with:
-          name: ${{ steps.artifact.outputs.artifact-file-name }}
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
-        with:
-          deno-version: latest
       - name: Run tests
+        if: steps.changes.outputs.has_changes == 'true'
         shell: bash
         run: deno task test
       - name: Run test
         shell: bash
         run: deno task test
-
-  create-pr:
-    name: Create PR
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v6
       - name: Setup Git
         run: |
           git config user.name "bot-deps"
