@@ -137,5 +137,4 @@ jobs:
       - name: Cleanup
         run: |
           rm ./*.log
-          rm ./.env
           rm -rf ./_site
