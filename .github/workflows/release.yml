@@ -129,6 +129,9 @@ jobs:
           git config user.email "bcm+bot-release@murty.au"
           git tag ${{ steps.release.outputs.tag_name }}
           git push --tags --quiet
+      - name: Update script file attributes
+        shell: bash
+        run: chmod +x ./bin/*.sh
       - name: Generate release notes
         run: bash 'bin/release-notes.sh' 'release-notes.log'
       - name: Create GitHub Release

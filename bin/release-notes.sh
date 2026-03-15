@@ -30,10 +30,10 @@ else
   fi
 fi
 
-# If we still don't have a previous tag, this might be the first release
+# If we still don't have a previous tag, set a default
 if [ -z "$PREV_GIT_TAG" ]; then
-  echo "No previous tag found. This appears to be the first release."
-  echo "- Initial release" > "$RELEASE_FILE"
+  echo "No previous tag found"
+  echo "" > "$RELEASE_FILE"
   exit 0
 fi
 
@@ -44,7 +44,7 @@ GIT_LOG_FORMAT="- [%s]($GIT_REPO_COMMIT_URL%h)"
 # Generate the commit list between previous tag and current ref
 git log "$PREV_GIT_TAG..$CURRENT_REF" --oneline --no-merges --format="$GIT_LOG_FORMAT" > "$RELEASE_FILE"
 
-# If no commits found, add a placeholder message
+# If no commits found, set a default
 if [ ! -s "$RELEASE_FILE" ]; then
-  echo "- No changes since previous release" > "$RELEASE_FILE"
+  echo "" > "$RELEASE_FILE"
 fi
