@@ -49,42 +49,34 @@ jobs:
         shell: bash
         run: |
           if [[ -n $(git status --porcelain) ]]; then
-            echo "Git status found changes:"
-            git status --porcelain
+            echo "Git status found changes."
             echo "has_changes=true" >> "$GITHUB_OUTPUT"
           else
-            echo "Git status didn't find changes:"
+            echo "Git status didn't find changes."
             git status --porcelain
             echo "has_changes=false" >> "$GITHUB_OUTPUT"
           fi
       - name: Run tests
         if: steps.changes.outputs.has_changes == 'true'
-        shell: bash
         run: deno task test
-      - name: Run test
-        shell: bash
-        run: deno task test
-      - name: Setup Git
+      - name: Generate new branch name
+        if: steps.changes.outputs.has_changes == 'true'
+        id: feature-branch
+        run: echo "branch-name=deps-$(date +"%Y%m%d-%H%M%S")" >> $GITHUB_OUTPUT
+      - name: Commit and push feature branch
         run: |
           git config user.name "bot-deps"
           git config user.email "bcm+bot-deps@murty.au"
           git config --global push.default current
-      - name: Generate new branch name
-        id: feature-branch
-        run: echo "branch-name=deps-$(date +"%Y%m%d-%H%M%S")" >> $GITHUB_OUTPUT
-      - name: Create new branch
-        run: |
           git checkout main
           git pull origin main
           git checkout -b ${{ steps.feature-branch.outputs.branch-name }}
-      - name: Create commit
-        run: |
           git add deno.json
           git add deno.lock
           git commit -m "deps: Upgrade dependencies"
-      - name: Push feature branch
-        run: git push -u origin ${{ steps.feature-branch.outputs.branch-name }}
+          git push -u origin ${{ steps.feature-branch.outputs.branch-name }}
       - name: Create Pull Request
+        if: steps.changes.outputs.has_changes == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
