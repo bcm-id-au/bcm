@@ -46,7 +46,6 @@ jobs:
             echo "has_changes=true" >> "$GITHUB_OUTPUT"
           else
             echo "Git status didn't find changes."
-            git status --porcelain
             echo "has_changes=false" >> "$GITHUB_OUTPUT"
           fi
       - name: Build site
