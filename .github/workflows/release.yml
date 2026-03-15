@@ -30,7 +30,7 @@ jobs:
     steps:
       - name: Generate release tag
         id: release
-        run: echo "tag-name=$(date +%Y%m%d.%H%M)" >> $GITHUB_OUTPUT
+        run: echo "tag-name=release-$(date +%Y%m%d.%H%M)" >> $GITHUB_OUTPUT
 
   build:
     name: Build
