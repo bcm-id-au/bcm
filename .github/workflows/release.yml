@@ -113,14 +113,17 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set release tag name
-        id: release_tag
+        id: release
         shell: bash
-        run: echo "tag_name=release-$(date +%Y%m%d.%H%M)" >> $GITHUB_OUTPUT
+        run: |
+          DATE_RELEASE=$(date +%Y%m%d.%H%M)
+          echo "name=$DATE_RELEASE" >> $GITHUB_OUTPUT
+          echo "tag=release-$DATE_RELEASE" >> $GITHUB_OUTPUT
       - name: Create release tag
         run: |
           git config user.name "bot-release"
           git config user.email "bcm+bot-release@murty.au"
-          git tag ${{ steps.release_tag.outputs.tag_name }}
+          git tag ${{ steps.release.outputs.tag }}
           git push --tags --quiet
       - name: Generate release notes
         shell: bash
@@ -130,8 +133,8 @@ jobs:
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          name: ${{ steps.release_tag.outputs.tag_name }}
-          tag: ${{ steps.release_tag.outputs.tag_name }}
+          name: ${{ steps.release.outputs.name }}
+          tag: ${{ steps.release.outputs.tag }}
           bodyFile: release-notes.log
           makeLatest: true
       - name: Cleanup
