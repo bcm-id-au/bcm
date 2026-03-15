@@ -12,13 +12,13 @@ RELEASE_FILE=${1:-"./release-notes.log"}
 git fetch --tags --force
 
 # Get the current tag (if on a tag) or HEAD
-CURRENT_REF=$(git describe --tags --exact-match 2>/bin/null || echo "HEAD")
+CURRENT_REF=$(git describe --tags --exact-match > './git-temp.log' || echo "HEAD")
 
 # Get all tags sorted by version (newest first), then find the previous tag
 # This works correctly in GitHub Actions where we're on the current tag
 if [ "$CURRENT_REF" = "HEAD" ]; then
   # Not on a tag, get the most recent tag
-  PREV_GIT_TAG=$(git describe --tags --abbrev=0 2>/bin/null)
+  PREV_GIT_TAG=$(git describe --tags --abbrev=0 > './git-temp2.log')
 else
   # On a tag, get all tags sorted and find the one before current
   PREV_GIT_TAG=$(git tag --sort=-version:refname | grep -A1 "^${CURRENT_REF}$" | tail -n1)

@@ -20,7 +20,8 @@ env:
   DENO_DEPLOY_TOKEN: ${{ secrets.DENO_DEPLOY_TOKEN }}
 
 permissions:
-  contents: read
+  contents: write
+  id-token: write
 
 jobs:
   prepare:
@@ -91,8 +92,6 @@ jobs:
     name: Deploy
     needs: [build, test]
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -116,8 +115,6 @@ jobs:
     name: Release
     needs: deploy
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -129,11 +126,11 @@ jobs:
           git config user.email "bcm+bot-release@murty.au"
           git tag ${{ steps.release.outputs.tag_name }}
           git push --tags --quiet
-      - name: Update script file attributes
-        shell: bash
-        run: chmod +x ./bin/*.sh
       - name: Generate release notes
-        run: bash 'bin/release-notes.sh' 'release-notes.log'
+        shell: bash
+        run: |
+          chmod +x ./bin/release-notes.sh
+          ./bin/release-notes.sh release-notes.log
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
@@ -143,6 +140,6 @@ jobs:
           makeLatest: true
       - name: Cleanup
         run: |
-          rm release-notes.log
-          rm .env
-          rm -rf _site
+          rm ./*.log
+          rm ./.env
+          rm -rf ./_site
