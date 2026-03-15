@@ -1,17 +1,13 @@
 name: Release
 
 on:
-  # Allow manual trigger via GitHub Repo
+  # Manual trigger via GitHub Repo > Actions > Release
   workflow_dispatch:
     inputs:
       confirmation_phrase:
         description: 'To deploy to production, type GOLIVE in lowercase.'
         type: string
         required: true
-  # Automatically trigger on push of a release tag
-  push:
-    tags:
-      - "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].[0-9][0-9][0-9][0-9]"
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -24,18 +20,10 @@ permissions:
   id-token: write
 
 jobs:
-  prepare:
-    name: Prepare
-    if: ${{ github.event.inputs.confirmation_phrase == 'golive' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Generate release tag
-        id: release
-        run: echo "tag_name=release-$(date +%Y%m%d.%H%M)" >> $GITHUB_OUTPUT
 
   build:
     name: Build
-    needs: prepare
+    if: ${{ github.event.inputs.confirmation_phrase == 'golive' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -124,7 +112,7 @@ jobs:
         run: |
           git config user.name "bot-release"
           git config user.email "bcm+bot-release@murty.au"
-          git tag ${{ steps.release.outputs.tag_name }}
+          git tag "release-$(date +%Y%m%d).${{ github.run_id }}"
           git push --tags --quiet
       - name: Generate release notes
         shell: bash
@@ -134,8 +122,8 @@ jobs:
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          name: ${{ steps.release.outputs.tag_name }}
-          tag: ${{ steps.release.outputs.tag_name }}
+          name: "release-$(date +%Y%m%d).${{ github.run_id }}"
+          tag: "release-$(date +%Y%m%d).${{ github.run_id }}"
           bodyFile: release-notes.log
           makeLatest: true
       - name: Cleanup
