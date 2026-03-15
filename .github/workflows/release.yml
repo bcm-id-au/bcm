@@ -4,10 +4,14 @@ on:
   # Manual trigger via GitHub Repo > Actions > Release
   workflow_dispatch:
     inputs:
-      confirmation_phrase:
-        description: 'To deploy to production, type GOLIVE in lowercase.'
-        type: string
+      continue_deployment:
+        description: 'Continue with deploy to production?'
+        type: choice
         required: true
+        default: 'no'
+        options:
+          - no
+          - yes
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -16,14 +20,13 @@ env:
   DENO_DEPLOY_TOKEN: ${{ secrets.DENO_DEPLOY_TOKEN }}
 
 permissions:
-  contents: write
-  id-token: write
+  contents: read
 
 jobs:
 
   build:
     name: Build
-    if: ${{ github.event.inputs.confirmation_phrase == 'golive' }}
+    if: ${{ inputs.continue_deployment == 'yes' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -80,6 +83,8 @@ jobs:
     name: Deploy
     needs: [build, test]
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -103,6 +108,8 @@ jobs:
     name: Release
     needs: deploy
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
