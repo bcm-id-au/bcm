@@ -70,7 +70,7 @@ jobs:
 
   test:
     name: Test
-    needs: prepare
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
