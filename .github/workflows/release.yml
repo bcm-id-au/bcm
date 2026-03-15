@@ -15,13 +15,13 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    outputs:
-      build-artifact-name:
-        description: "The name of the artifact containing the build files from this action."
-        value: ${{ steps.artifact.outputs.artifact-file-name }}
     steps:
       - name: Set build artifact name
         id: artifact
+        outputs:
+          build-artifact-name:
+            description: "The name of the artifact containing the build files from this action."
+            value: ${{ steps.artifact.outputs.artifact-file-name }}
         shell: bash
         run: echo "artifact-file-name=build-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
       - name: Set executable status on dev scripts
