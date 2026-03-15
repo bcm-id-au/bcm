@@ -6,24 +6,26 @@ This repository contains the [murty.au](https://murty.au/) website, which has be
 
 Tests, build and local server commands are available from local environments.
 
-Remote testing and [GitHub Pages](https://pages.github.com/), releases are started locally, then testing and deployment to [Deno Deploy](https://deno.com/deploy) is handled remotely by a [GitHub Actions workflow](.github/workflows/release.yml).
+Releases can be manually triggered via the `Release` [GitHub Action Workflow](.github/workflows/release.yml), which includes checking the test and build processed work before starting a new deployment [Deno Deploy](https://deno.com/deploy). It then publishes a new [GitHub Release](https://github.com/bmurty/site/releases).
+
+Third-party dependencies are kept up to date via a scheduled [GitHub Action Workflow](.github/workflows/dependencies.yml), which can also be triggered manually. If there are changes, it confirms they don't break tests or builds, then creates a Pull Request.
 
 ## Structure
 
-| Path | Description |
-| ---- | ---- |
-| [.github/workflows/release.yml](.github/workflows/release.yml) | Triggers when a release tag is pushed. Runs tests, deploys to [GitHub Pages](https://pages.github.com/) and publishes a new [GitHub release](https://github.com/bmurty/site/releases). |
-| [.vscode](.vscode/) | Customised [VS Code](https://code.visualstudio.com/) configuration for this repository. |
-| [assets](assets/) | Static files like images and PDFs. |
-| [bin](bin/) | Bash helper scripts, run `deno task` to show available options. |
-| [config](config/) | Supporting configuration files. |
-| [content](content/) | Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files. |
-| [src](src/) | Source code and related unit tests. |
-| [src/layouts](src/layouts/) | Nunjucks page layouts. |
-| [src/styles](src/styles/) | CSS styles. |
-| [src/templates](src/templates/) | Nunjucks page templates. |
-| [AGENTS.md](AGENTS.md) | AI Agent instructions, technical docs and guidance. |
-| [deno.json](deno.json) | [Deno](https://deno.land/) imports, tasks and configuration for this repository. |
+- [.github/workflows/dependencies.yml](.github/workflows/dependencies.yml) - Automatic dependency upgrade workflow.
+- [.github/workflows/release.yml](.github/workflows/release.yml) - Release and deployment workflow.
+- [.vscode](.vscode/) - Customised [VS Code](https://code.visualstudio.com/) project configuration.
+- [.zed](.zed/) - Customised [Zed Editor](https://zed.dev/) project configuration.
+- [assets](assets/) - Static files like images and PDFs.
+- [bin](bin/) - Bash helper scripts, run `deno task` to show available options.
+- [config](config/) - Supporting configuration files.
+- [content](content/) - Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files.
+- [src](src/) - Source code and related unit tests.
+- [src/layouts](src/layouts/) - Nunjucks page layouts.
+- [src/styles](src/styles/) - CSS styles.
+- [src/templates](src/templates/) - Nunjucks page templates.
+- [AGENTS.md](AGENTS.md) - AI Agent instructions, technical docs and guidance.
+- [deno.json](deno.json) - [Deno](https://deno.land/) imports, tasks and configuration.
 
 ## Initial Setup
 

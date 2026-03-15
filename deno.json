@@ -70,10 +70,6 @@
       "description": "Generate a Markdown file for a new post item.",
       "command": "bash ./bin/new-post.sh"
     },
-    "release": {
-      "description": "Release a new version to GitHub and deploy changes.",
-      "command": "bash ./bin/release.sh"
-    },
     "release-notes": {
       "description": "Generates content for the GitHub Release description.",
       "command": "bash ./bin/release-notes.sh"
