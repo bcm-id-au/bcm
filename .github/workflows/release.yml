@@ -3,10 +3,11 @@ name: Release
 on:
   # Allow manual trigger via GitHub Repo
   workflow_dispatch:
-    confirmation_phrase:
-      description: 'To deploy this to production, type DEPLOY in lowercase.'
-      type: string
-      required: true
+    inputs:
+      confirmation_phrase:
+        description: 'To deploy to production, type DEPLOY in lowercase.'
+        type: string
+        required: true
   # Automatically trigger on push of a release tag
   push:
     tags:
