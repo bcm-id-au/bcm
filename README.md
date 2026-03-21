@@ -45,7 +45,7 @@ Third-party dependencies are kept up to date via a scheduled [GitHub Action Work
 8. Update the Settings for your forked repository via GitHub:
 
 - Go to `Settings > Security > Secrets and variables > Actions`
-- Add new `Repository secrets` for `DENO_DEPLOY_ORG`, `DENO_DEPLOY_PROJECT` and `DENO_DEPLOY_TOKEN`
+- Add new `Repository secrets` for the variables in [.env.github.example](.env.github.example)
 
 9. Setup [Google Analytics](https://analytics.google.com/):
 
