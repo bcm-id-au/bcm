@@ -48,7 +48,7 @@
     },
     "deps-update": {
       "description": "Update the project's dependencies.",
-      "command": "deno outdated --quiet --update --latest || true"
+      "command": "deno outdated --quiet --update --compatible --lock ./deno.lock || true"
     },
     "docker-dev": {
       "description": "Build and run the development Docker container",
