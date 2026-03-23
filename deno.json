@@ -44,11 +44,11 @@
     },
     "deps-install": {
       "description": "Install the project's dependencies.",
-      "command": "deno install --entrypoint ./deno.json --config ./deno.json || true"
+      "command": "deno install --quiet --entrypoint ./deno.json --config ./deno.json || true"
     },
     "deps-update": {
       "description": "Update the project's dependencies.",
-      "command": "deno outdated --update --latest || true"
+      "command": "deno outdated --quiet --update --latest || true"
     },
     "docker-dev": {
       "description": "Build and run the development Docker container",
