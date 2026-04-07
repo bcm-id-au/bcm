@@ -75,13 +75,7 @@
     <link rel="stylesheet" href="/css/fontawesome/css/all.min.css" />
     <link rel="stylesheet" href="/css/fontawesome/css/fontawesome.min.css" />
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_ANALYTICS_SITE_CODE }}"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', '{{ GOOGLE_ANALYTICS_SITE_CODE }}');
-    </script>
+    <script src="https://cdn.usefathom.com/script.js" data-site="{{ FATHOM_SITE_CODE }}" defer></script>
   </head>
   <body{% if body_class %} class="{{ body_class }}"{% endif %}>
     <section class="container">

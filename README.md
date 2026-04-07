@@ -47,7 +47,7 @@ Third-party dependencies are kept up to date via a scheduled [GitHub Action Work
 - Go to `Settings > Security > Secrets and variables > Actions`
 - Add new `Repository secrets` for the variables in [.env.github.example](.env.github.example)
 
-9. Setup [Google Analytics](https://analytics.google.com/):
+9. Setup [Fathom Analytics](https://usefathom.com/):
 
 - Create a new site in your own account
-- Update your `.env` file's `GOOGLE_ANALYTICS_SITE_CODE` value to use your new `Measurement ID`
+- Update your `.env` file's `FATHOM_SITE_CODE` value to use your new `Fathom Site ID`
