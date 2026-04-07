@@ -46,6 +46,7 @@ Third-party dependencies are kept up to date via a scheduled [GitHub Action Work
 
 - Go to `Settings > Security > Secrets and variables > Actions`
 - Add new `Repository secrets` for the variables in [.env.github.example](.env.github.example)
+- Update the `deploy` section in [deno.json](deno.json) to use your own Deno Deploy org and app
 
 9. Setup [Fathom Analytics](https://usefathom.com/):
 
