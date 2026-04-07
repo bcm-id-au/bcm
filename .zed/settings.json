@@ -1,4 +1,53 @@
 {
+  "languages": {
+    "JSON": {
+      "format_on_save": "off",
+      "auto_indent_on_paste": false,
+      "auto_indent": "none",
+      "tab_size": 2,
+      "ensure_final_newline_on_save": false
+    },
+    "JSONC": {
+      "format_on_save": "off",
+      "auto_indent_on_paste": false,
+      "auto_indent": "none",
+      "tab_size": 2,
+      "ensure_final_newline_on_save": false
+    },
+    "JavaScript": {
+      "language_servers": [
+        "deno",
+        "!typescript-language-server",
+        "!vtsls",
+        "!eslint",
+      ],
+      "formatter": "language_server",
+    },
+    "Shell Script": {
+      "remove_trailing_whitespace_on_save": false,
+    },
+    "TypeScript": {
+      "language_servers": [
+        "deno",
+        "!typescript-language-server",
+        "!vtsls",
+        "!eslint",
+      ],
+      "formatter": "language_server",
+    },
+    "TSX": {
+      "language_servers": [
+        "deno",
+        "!typescript-language-server",
+        "!vtsls",
+        "!eslint",
+      ],
+      "formatter": "language_server",
+    },
+    "YAML": {
+      "formatter": "language_server",
+    },
+  },
   "lsp": {
     "deno": {
       "settings": {
@@ -33,41 +82,6 @@
           ],
         },
       },
-    },
-  },
-  "languages": {
-    "JavaScript": {
-      "language_servers": [
-        "deno",
-        "!typescript-language-server",
-        "!vtsls",
-        "!eslint",
-      ],
-      "formatter": "language_server",
-    },
-    "Shell Script": {
-      "remove_trailing_whitespace_on_save": false,
-    },
-    "TypeScript": {
-      "language_servers": [
-        "deno",
-        "!typescript-language-server",
-        "!vtsls",
-        "!eslint",
-      ],
-      "formatter": "language_server",
-    },
-    "TSX": {
-      "language_servers": [
-        "deno",
-        "!typescript-language-server",
-        "!vtsls",
-        "!eslint",
-      ],
-      "formatter": "language_server",
-    },
-    "YAML": {
-      "formatter": "language_server",
     },
   },
 }
