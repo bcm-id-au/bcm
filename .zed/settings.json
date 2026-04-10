@@ -23,9 +23,6 @@
       ],
       "formatter": "language_server",
     },
-    "Shell Script": {
-      "remove_trailing_whitespace_on_save": false,
-    },
     "TypeScript": {
       "language_servers": [
         "deno",
@@ -42,9 +39,6 @@
         "!vtsls",
         "!eslint",
       ],
-      "formatter": "language_server",
-    },
-    "YAML": {
       "formatter": "language_server",
     },
   },
@@ -66,18 +60,6 @@
             {
               "fileMatch": ["deno.json", "deno.jsonc"],
               "url": "https://raw.githubusercontent.com/denoland/deno/refs/heads/main/cli/schemas/config-file.v1.json",
-            },
-          ],
-        },
-      },
-    },
-    "yaml-language-server": {
-      "settings": {
-        "yaml": {
-          "schemas": [
-            {
-              "fileMatch": [".github/*.yml", ".github/**/*.yml"],
-              "url": "https://www.schemastore.org/github-workflow",
             },
           ],
         },
