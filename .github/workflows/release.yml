@@ -1,12 +1,12 @@
-name: Release
+name: Release and Deploy
 
 #
 #
 # ----
-# Manual Workflow: Release and Deployment
+# Manual Workflow: Release and Deploy
 # ----
 #
-# This is a
+# This workflow includes the test, release and deployment process for the site.
 #
 # ----
 #
