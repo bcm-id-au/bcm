@@ -1,7 +1,23 @@
 name: Release
 
+#
+#
+# ----
+# Manual Workflow: Release and Deployment
+# ----
+#
+# This is a
+#
+# ----
+#
+# Initial setup:
+#
+#  - Create the required GitHub Repository Secrets via Repo > Settings > Secrets > Actions
+#
+#
+
 on:
-  # Manual trigger via GitHub Repo > Actions > Release
+  # Allow manual triggers via GitHub Repo > Actions > Release
   workflow_dispatch:
     inputs:
       continue_deployment:
