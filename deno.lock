@@ -74,7 +74,7 @@
     "npm:markdown-it@14.1.0": "14.1.0",
     "npm:markdown-it@14.1.1": "14.1.1",
     "npm:meriyah@6.0.5": "6.0.5",
-    "npm:minify@^15.2.1": "15.2.1",
+    "npm:minify@^15.3.1": "15.3.1",
     "npm:nunjucks@3.2.4": "3.2.4",
     "npm:remove-markdown@0.6.2": "0.6.2",
     "npm:remove-markdown@0.6.3": "0.6.3"
@@ -635,8 +635,8 @@
         "@jridgewell/sourcemap-codec"
       ]
     },
-    "@napi-rs/wasm-runtime@1.1.3_@emnapi+core@1.9.2_@emnapi+runtime@1.9.2": {
-      "integrity": "sha512-xK9sGVbJWYb08+mTJt3/YV24WxvxpXcXtP6B172paPZ+Ts69Re9dAr7lKwJoeIx8OoeuimEiRZ7umkiUVClmmQ==",
+    "@napi-rs/wasm-runtime@1.1.4_@emnapi+core@1.9.2_@emnapi+runtime@1.9.2": {
+      "integrity": "sha512-3NQNNgA1YSlJb/kMH1ildASP9HW7/7kYnRI2szWJaofaS1hWmbGI4H+d3+22aGzXXN9IJ+n+GiFVcGipJP18ow==",
       "dependencies": [
         "@emnapi/core",
         "@emnapi/runtime",
@@ -1208,8 +1208,8 @@
     "meriyah@6.0.5": {
       "integrity": "sha512-SrMqQCox7TTwtftWKHy/ZaVe+ZRpRl20pAgDo+PS9hzcAJrMjYsBJQPPiLXTnjztrqdfGS+Zz99r6Bwvydta1w=="
     },
-    "minify@15.2.1": {
-      "integrity": "sha512-qe3LJyK7juYvwrzGJE+LlFrOKf1/aOd+B6bh6lM3uHM8b8LfysfYK6+OuuG/2QpI6aDW+igP8nkZcudGLkv9/Q==",
+    "minify@15.3.1": {
+      "integrity": "sha512-2Y8GurrLPo0OKwbA+O7oAsolVsxPDxMLd3VNzp9anVGr8tkQq03pwWOCNeXf6SircWrX54jWa+nrBG66AwBDxQ==",
       "dependencies": [
         "@putout/minify",
         "@swc/core",
@@ -1223,6 +1223,7 @@
         "montag",
         "oxc-minify",
         "readjson",
+        "redstd",
         "terser",
         "try-catch@4.0.9",
         "try-to-catch"
@@ -1302,6 +1303,9 @@
         "jju",
         "try-catch@3.0.1"
       ]
+    },
+    "redstd@1.0.2": {
+      "integrity": "sha512-s5Fh78Jh+g+UARkb972bsJzuYjgBUoEs/51ebXV8eensXzsF8kDzBdCDBX8psGBuC5+BNcqQtxXFJMbqc8zZgg=="
     },
     "remove-markdown@0.6.2": {
       "integrity": "sha512-EijDXJZbzpGbQBd852ViUzcqgpMujthM+SAEHiWCMcZonRbZ+xViWKLJA/vrwbDwYdxrs1aFDjpBhcGrZoJRGA=="
@@ -1771,7 +1775,7 @@
       "jsr:@std/http@^1.0.25",
       "jsr:@std/path@^1.1.4",
       "jsr:@std/yaml@^1.0.12",
-      "npm:minify@^15.2.1"
+      "npm:minify@^15.3.1"
     ]
   }
 }
