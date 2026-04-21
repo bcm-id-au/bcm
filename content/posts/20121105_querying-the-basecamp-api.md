@@ -12,4 +12,4 @@ After using [Basecamp 2](http://basecamp.com/2) for some time on my [Windows Pho
 
 One of the most basic requirements of the web client was that it needed to query the [Basecamp API](https://github.com/37signals/bcx-api) and return the results for display. Here's my _bc_results_ PHP function that got the job done:
 
-<script src="https://gist.github.com/bmurty/8d9e626dc58e44831c332208d15bda55.js"></script>
+<script src="https://gist.github.com/bcm-id-au/8d9e626dc58e44831c332208d15bda55.js"></script>

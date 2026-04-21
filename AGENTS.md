@@ -1,4 +1,4 @@
-# AI Agent Instructions for bmurty/site
+# AI Agent Instructions for bcm-id-au/site
 
 This is a static website built with Deno, Lume (static site generator), and deployed to GitHub Pages.
 

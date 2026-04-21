@@ -9,4 +9,4 @@ tags:
 
 If you need to customise the output of a webpage before the browser gets to it, you can use PHP to do so. Check out my minimal _is_mobile_ function:
 
-<script src="https://gist.github.com/bmurty/44f581642f25ab48825234d5fe3b70a5.js"></script>
+<script src="https://gist.github.com/bcm-id-au/44f581642f25ab48825234d5fe3b70a5.js"></script>

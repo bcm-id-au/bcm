@@ -11,7 +11,7 @@ In case you didn't know, UpcomingTasks is the simplified way to manage your Base
 
 I created UpcomingTasks in September 2012 out of frustration with the current offerings for managing [Basecamp 2](https://basecamp.com/) tasks on mobile devices.
 
-Earlier this year, I [open-sourced](https://github.com/bmurty/upcomingtasks) the entire project to give back to the web development community that has taught me so much over the last few years.
+Earlier this year, I [open-sourced](https://github.com/bcm-id-au/upcomingtasks) the entire project to give back to the web development community that has taught me so much over the last few years.
 
 UpcomingTasks has been running consistently over the years but with a busy full-time job and social life, I never put in a solid effort to build premium paid features. That has changed over the last few months. I've been busy in my free time building some features that I hope you'll enjoy using.
 

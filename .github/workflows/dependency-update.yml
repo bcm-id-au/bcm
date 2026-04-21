@@ -25,8 +25,8 @@ run-name: "Dependency Update - Branch ${{ github.ref_name }}, commit ${{ github.
 
 on:
   # Allow manual triggers via GitHub Repo > Actions > Release
-  workflow_dispatch:
-  # Run automatically on a schedule
+  workflow_dispatch: # Run automatically on a schedule
+
   schedule:
     # When to run this scheduled task
     #  - Run this workflow daily at 6am Sydney Time
@@ -101,7 +101,7 @@ jobs:
             --head "${{ steps.commit.outputs.branch_name }}" \
             --base develop \
             --title "Dependency Updates - deps-${{ github.run_id }}" \
-            --body "Automated [dependency update](https://github.com/bmurty/site/actions/runs/${{ github.run_id }})." \
+            --body "Automated [dependency update](https://github.com/bcm-id-au/site/actions/runs/${{ github.run_id }})." \
             --label "bot" \
             --label "deps" \
             --assignee "bmurty" \
