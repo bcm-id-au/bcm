@@ -46,9 +46,9 @@ site.use(robots(
       "PerplexityBot",
       "YouBot",
       "PerplexityBot",
-      "YouBot"
-    ]
-  }
+      "YouBot",
+    ],
+  },
 ));
 
 site.use(sitemap());

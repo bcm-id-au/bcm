@@ -97,7 +97,7 @@
     "app": "murty-site",
     "framework": "lume",
     "install": "deno task setup",
-    "build": "deno task build && cp -r public _site"
+    "build": "deno task build"
   },
   "permissions": {
     "lume": {
