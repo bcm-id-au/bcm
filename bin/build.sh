@@ -15,6 +15,11 @@ NC="\033[0m"
 BUILD_DIR="build"
 PUBLIC_DIR="_site"
 
+# Set the production domain and link
+
+PROD_DOMAIN="murty.au"
+PROD_LINK="https://$PROD_DOMAIN"
+
 # Format and lint code
 
 echo -e "${YELLOW}Running Deno Lint and Deno Format${NC}"
@@ -53,14 +58,15 @@ cp -r content/* "$BUILD_DIR"
 
 echo -e "${YELLOW}Building the front-end using Lume and '_config.ts'${NC}"
 
-cp 'config/lume.config.ts' '_config.ts'
 deno task lume
-rm '_config.ts'
 
 echo -e "${YELLOW}Updating '$PUBLIC_DIR/sitemap.xml' to use the production URL${NC}"
 
-sed -i -e "s/http:\/\/localhost\//https:\/\/murty.au\//g" "$PUBLIC_DIR/sitemap.xml"
-rm -rf "$PUBLIC_DIR/sitemap.xml-e"
+sed -i -e "s/http:\/\/localhost\//https:\/\/$PROD_DOMAIN\//g" "$PUBLIC_DIR/sitemap.xml"
+
+echo -e "${YELLOW}Updating '$PUBLIC_DIR/robots.txt' to use the production URL${NC}"
+
+sed -i -e "s/http:\/\/localhost\//https:\/\/$PROD_DOMAIN\//g" "$PUBLIC_DIR/robots.txt"
 
 echo -e "${YELLOW}Configuring GitHub Pages in the '$PUBLIC_DIR' directory${NC}"
 
@@ -71,12 +77,7 @@ echo -e "${YELLOW}Copying static files to the '$PUBLIC_DIR' directory${NC}"
 
 cp -r "assets/fonts" "$PUBLIC_DIR/fonts"
 cp -r "assets/images" "$PUBLIC_DIR/images"
-cp "assets/.nojekyll" "$PUBLIC_DIR/.nojekyll"
 cp "assets/favicon.ico" "$PUBLIC_DIR/favicon.ico"
-cp "config/robots.txt" "$PUBLIC_DIR/robots.txt"
-
-mkdir -p "$PUBLIC_DIR/.well-known"
-cp "config/security.txt" "$PUBLIC_DIR/.well-known/security.txt"
 
 echo -e "${YELLOW}Copying CSS files to the '$PUBLIC_DIR/css' directory${NC}"
 

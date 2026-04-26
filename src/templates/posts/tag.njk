@@ -14,20 +14,20 @@ body_class: page-tag
 </h2>
 
 <ul class="posts-list">
-{% for post in posts %}
-{% if post.url != '/posts/' %}
-  <li>
-    <span class="post-date">
-      {{ post.date | date('d LLL yyyy') }}
-    </span>
-    <a class="post-link" href="{{ post.url }}">
-      {% if post.title %}
-      {{ post.title }}
-      {% else %}
-      {{ post.url }}
-      {% endif %}
-    </a>
-  </li>
-{% endif %}
-{% endfor %}
+  {% for post in posts %}
+    {% if post.url != '/posts/' %}
+      <li>
+        <span class="post-date">
+          {{ post.date | date('d LLL yyyy') }}
+        </span>
+        <a class="post-link" href="{{ post.url }}">
+          {% if post.title %}
+            {{ post.title }}
+          {% else %}
+            {{ post.url }}
+          {% endif %}
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
 </ul>

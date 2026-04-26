@@ -2,7 +2,9 @@
   "compilerOptions": {
     "types": [
       "lume/types.ts"
-    ]
+    ],
+    "jsx": "react-jsx",
+    "jsxImportSource": "lume"
   },
   "fmt": {
     "include": [
@@ -20,7 +22,15 @@
       "src/",
       "config/lume.config.ts",
       "deno.json"
-    ]
+    ],
+    "plugins": [
+      "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.4/lint.ts"
+    ],
+    "rules": {
+      "exclude": [
+        "no-import-prefix"
+      ]
+    }
   },
   "imports": {
     "@gnome/exec": "jsr:@gnome/exec@^0.6",
@@ -32,9 +42,8 @@
     "@std/path": "jsr:@std/path@^1.1.4",
     "@std/yaml": "jsr:@std/yaml@^1.1.0",
     "is_json/": "https://deno.land/x/is_json@v1.0.2/",
-    "json2yaml/": "https://deno.land/x/json2yaml@v1.0.1/",
-    "lume/": "https://deno.land/x/lume@v3.2.2/",
-    "minify": "npm:minify@^15.3.1"
+    "lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.4/",
+    "lume/jsx-runtime": "https://cdn.jsdelivr.net/gh/oscarotero/ssx@0.1.14/jsx-runtime.ts"
   },
   "nodeModulesDir": "none",
   "tasks": {
@@ -53,10 +62,6 @@
     "lint": {
       "description": "Run Deno's linting and formatting tools with the configuration defined above.",
       "command": "deno lint && deno fmt"
-    },
-    "lume": {
-      "description": "Run Lume, a static site generator for Deno.",
-      "command": "echo \"import 'lume/cli.ts'\" | deno run -A -"
     },
     "new-post": {
       "description": "Generate a Markdown file for a new post item.",
@@ -81,10 +86,50 @@
     "test": {
       "description": "Run all Deno Test scripts in the 'src' directory.",
       "command": "deno test --allow-run=deno --allow-env --allow-read --allow-net src"
+    },
+    "lume": {
+      "description": "Run Lume command",
+      "command": "deno run -P=lume lume/cli.ts"
     }
   },
   "deploy": {
     "org": "murty",
     "app": "murty-site"
-  }
+  },
+  "permissions": {
+    "lume": {
+      "read": true,
+      "write": [
+        "./"
+      ],
+      "import": [
+        "cdn.jsdelivr.net:443",
+        "jsr.io:443",
+        "deno.land:443",
+        "esm.sh:443"
+      ],
+      "net": [
+        "0.0.0.0",
+        "cdn.jsdelivr.net:443",
+        "data.jsdelivr.com:443",
+        "jsr.io:443",
+        "deno.land:443",
+        "esm.sh:443",
+        "registry.npmjs.org:443"
+      ],
+      "env": true,
+      "run": true,
+      "ffi": true,
+      "sys": true
+    }
+  },
+  "unstable": [
+    "fmt-component"
+  ],
+  "allowScripts": {
+    "deny": [
+      "npm:sharp"
+    ]
+  },
+  "lock": true
 }

@@ -1,5 +1,0 @@
-Contact: mailto:brendan@murty.au
-Expires: 2025-12-31T12:59:00.000Z
-Encryption: https://keybase.io/bcmurty
-Preferred-Languages: en
-Canonical: https://murty.au/.well-known/security.txt

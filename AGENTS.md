@@ -37,13 +37,10 @@ The build is orchestrated by `bin/build.sh` which:
 7. Generates JSON Feed for blog posts via `src/json-feed.ts`
 8. Cleans up `build/` directory
 
-**Important**: Lume config (`config/lume.config.ts`) is temporarily copied to `_config.ts` at the project root during build.
-
 ### Directory Structure
 
 - **`assets/`**: Static files (fonts, images, PDFs, favicon, etc.)
 - **`bin/`**: Bash scripts for common tasks
-- **`config/`**: Configuration files (Lume config, robots.txt, security.txt, keybase.txt)
 - **`content/`**: Markdown files for pages and posts with frontmatter (e.g., `layout: home.njk`)
 - **`src/`**: TypeScript source code
   - `src/layouts/`: Nunjucks layout templates (`.njk`)

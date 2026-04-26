@@ -20,6 +20,8 @@ fi
 
 # Install project dependencies
 
+npm install @lume/cli --global
+
 deno task deps-install
 
 # Done

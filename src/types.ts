@@ -1,5 +1,4 @@
 // Define the accepted content in the Frontmatter of Post Markdown files
-//  - Adapted from https://github.com/lumeland/lume/blob/v1.0.0/types.ts
 export type YamlData = {
   tags?: string[];
   url?: string;

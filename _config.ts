@@ -2,12 +2,13 @@
 
 import lume from "lume/mod.ts";
 import date from "lume/plugins/date.ts";
+import nunjucks from "lume/plugins/nunjucks.ts";
+import robots from "lume/plugins/robots.ts";
 import redirects from "lume/plugins/redirects.ts";
 import sitemap from "lume/plugins/sitemap.ts";
-import nunjucks from "lume/plugins/nunjucks.ts";
-import "@std/dotenv/load";
 
 // Build the site using Lume
+
 const site = lume({
   src: "./build",
   dest: "./_site",
@@ -15,12 +16,44 @@ const site = lume({
 });
 
 // Enable plugins
+
 site.use(nunjucks());
 site.use(date());
 site.use(redirects());
+
+site.use(robots(
+  {
+    "disallow": [
+      "Mediapartners-Google",
+      "Adsbot-Google",
+      "Amazonbot",
+      "anthropic-ai",
+      "Applebot",
+      "Bytespider",
+      "CCBot",
+      "ChatGPT",
+      "Claude-Web",
+      "ClaudeBot",
+      "Diffbot",
+      "FacebookBot",
+      "Google-Extended",
+      "GPTBot",
+      "Image2dataset",
+      "ImagesiftBot",
+      "Omgili",
+      "Omgilibot",
+      "PerplexityBot",
+      "YouBot",
+      "PerplexityBot",
+      "YouBot"
+    ]
+  }
+));
+
 site.use(sitemap());
 
 // Load site config values from ".env"
+
 site.data("FATHOM_SITE_CODE", Deno.env.get("FATHOM_SITE_CODE"));
 site.data("BLOG_POSTS_DIR", Deno.env.get("BLOG_POSTS_DIR"));
 site.data("BLOG_POSTS_URL", Deno.env.get("BLOG_POSTS_URL"));
