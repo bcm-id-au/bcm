@@ -49,7 +49,7 @@ The build is orchestrated by `bin/build.sh` which:
   - `src/layouts/`: Nunjucks layout templates (`.njk`)
   - `src/templates/`: Nunjucks component templates
   - `src/styles/`: CSS files (combined and minified during build)
-  - `*.ts`: Utility modules (json-feed, posts-list, docker-server)
+  - `*.ts`: Utility modules (json-feed, posts-list)
   - `*.test.ts`: Deno tests (use `Deno.test()` with steps)
 - **`_site/`**: Built output (generated, not committed)
 - **`build/`**: Temporary directory during build (cleaned up after)
