@@ -5,7 +5,7 @@
 
 # Recreate build directories
 
-build_dirs=("./build" "./_site")
+build_dirs=("./build" "./public")
 
 for build_dir in "${build_dirs[@]}"; do
   rm -rf "$build_dir"

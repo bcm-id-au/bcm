@@ -73,11 +73,11 @@
     },
     "serve": {
       "description": "Start a local web server.",
-      "command": "deno run --allow-net --allow-read jsr:@std/http/file-server ./_site"
+      "command": "deno run --allow-net --allow-read jsr:@std/http/file-server ./public"
     },
     "tunnel": {
       "description": "Start a local web server and use the Deno Deploy tunnel.",
-      "command": "deno run --tunnel --allow-net --allow-read jsr:@std/http/file-server ./_site"
+      "command": "deno run --tunnel --allow-net --allow-read jsr:@std/http/file-server ./public"
     },
     "setup": {
       "description": "Setup directories, check for and install dependencies, used for local environments and in CI.",

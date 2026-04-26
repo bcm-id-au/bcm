@@ -11,8 +11,9 @@ import sitemap from "lume/plugins/sitemap.ts";
 
 const site = lume({
   src: "./build",
-  dest: "./_site",
+  dest: "./public",
   prettyUrls: true,
+  emptyDest: true,
 });
 
 // Enable plugins

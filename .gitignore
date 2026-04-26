@@ -12,6 +12,7 @@ $RECYCLE.BIN/
 !.envrc
 
 /build
+/dist
 /public
 /_site
 
