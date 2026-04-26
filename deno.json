@@ -9,7 +9,7 @@
   "fmt": {
     "include": [
       "src/",
-      "config/lume.config.ts",
+      "_config.ts",
       "deno.json"
     ],
     "useTabs": false,
@@ -97,8 +97,7 @@
     "app": "murty-site",
     "framework": "lume",
     "install": "deno task setup",
-    "build": "deno task build",
-    "predeploy": "cp -r ./public ./_site"
+    "build": "deno task build && cp -r public _site"
   },
   "permissions": {
     "lume": {
