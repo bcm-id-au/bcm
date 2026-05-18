@@ -41,6 +41,7 @@ Releases can be manually triggered via the `Release` [GitHub Action Workflow](.g
 7. Update the Settings for your forked repository via GitHub:
 
 - Pages > Source: _GitHub Actions_
-- Pages > Custom domain: _use your own domain_
+- Pages > Custom domain: _example-your-domain.com_
+- Actions > General > Workflow permissions: _Read and write permissions_
 
 8. Update `CNAME` to use the same domain as you configured above
