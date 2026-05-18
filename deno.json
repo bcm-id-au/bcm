@@ -67,6 +67,10 @@
       "description": "Run Deno's linting and formatting tools with the configuration defined above.",
       "command": "deno lint && deno fmt"
     },
+    "lume": {
+      "description": "Run Lume command",
+      "command": "deno run -P=lume lume/cli.ts"
+    },
     "new-post": {
       "description": "Generate a Markdown file for a new post item.",
       "command": "bash ./bin/new-post.sh"
@@ -79,10 +83,6 @@
       "description": "Start a local web server.",
       "command": "deno run --allow-net --allow-read jsr:@std/http/file-server ./public"
     },
-    "tunnel": {
-      "description": "Start a local web server and use the Deno Deploy tunnel.",
-      "command": "deno run --tunnel --allow-net --allow-read jsr:@std/http/file-server ./public"
-    },
     "setup": {
       "description": "Setup directories, check for and install dependencies, used for local environments and in CI.",
       "command": "bash ./bin/setup.sh"
@@ -91,9 +91,9 @@
       "description": "Run all Deno Test scripts in the 'src' directory.",
       "command": "deno test --allow-run=deno --allow-env --allow-read --allow-net src"
     },
-    "lume": {
-      "description": "Run Lume command",
-      "command": "deno run -P=lume lume/cli.ts"
+    "tunnel": {
+      "description": "Start a local web server and use the Deno Deploy tunnel.",
+      "command": "deno run --tunnel --allow-net --allow-read jsr:@std/http/file-server ./public"
     }
   },
   "deploy": {
