@@ -6,5 +6,4 @@ tags:
   - Career
 ---
 
-As the Technical Lead at [FOBOH](https://www.foboh.com.au/), I work directly with the CEO and CPO to ship new features, lead and mentor engineers, and build a high-performing engineering culture.
-
+As the Technical Lead at [FOBOH](https://www.foboh.com.au/), I worked directly with the CEO and CPO to ship new features, lead and mentor engineers, and build a high-performing engineering culture.
