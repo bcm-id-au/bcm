@@ -53,11 +53,11 @@
     },
     "deps-install": {
       "description": "Install the project's dependencies.",
-      "command": "deno install --quiet --entrypoint ./deno.json --config ./deno.json || true"
+      "command": "deno install --quiet --entrypoint ./deno.json --config ./deno.json"
     },
     "deps-update": {
       "description": "Update the project's dependencies.",
-      "command": "deno outdated --quiet --update --compatible --lock ./deno.lock || true"
+      "command": "deno outdated --quiet --update --compatible --lock ./deno.lock"
     },
     "json-feed": {
       "description": "Generate a JSON feed of blog posts.",
