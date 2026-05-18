@@ -55,7 +55,6 @@ site.use(sitemap());
 
 // Load site config values from ".env"
 
-site.data("FATHOM_SITE_CODE", Deno.env.get("FATHOM_SITE_CODE"));
 site.data("BLOG_POSTS_DIR", Deno.env.get("BLOG_POSTS_DIR"));
 site.data("BLOG_POSTS_URL", Deno.env.get("BLOG_POSTS_URL"));
 site.data("JSON_FEED_VERSION_URL", Deno.env.get("JSON_FEED_VERSION_URL"));

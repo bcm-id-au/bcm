@@ -54,7 +54,6 @@ The build is orchestrated by `bin/build.sh` which:
 
 Environment variables are loaded from `.env` (use `.env.example` as template):
 
-- `FATHOM_SITE_CODE`: Fathom Analytics Site ID
 - `BLOG_POSTS_DIR`, `BLOG_POSTS_URL`: Blog post paths
 - `JSON_FEED_*`: JSON Feed metadata (title, description, author, etc.)
 

@@ -22,12 +22,6 @@ on:
         required: true
         default: false
 
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  DENO_DEPLOY_ORG: ${{ secrets.DENO_DEPLOY_ORG }}
-  DENO_DEPLOY_PROJECT: ${{ secrets.DENO_DEPLOY_PROJECT }}
-  DENO_DEPLOY_TOKEN: ${{ secrets.DENO_DEPLOY_TOKEN }}
-
 permissions:
   contents: read
 
@@ -101,17 +95,15 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: ${{ steps.artifact.outputs.artifact_name }}
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v6
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v5
         with:
-          deno-version: latest
-      - name: Deploy to Deno Deploy
-        run: |
-          deno deploy \
-            --org=$DENO_DEPLOY_ORG \
-            --app=$DENO_DEPLOY_PROJECT \
-            --token=$DENO_DEPLOY_TOKEN \
-            --prod
+          path: public/
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
 
   release:
     name: Release
@@ -119,6 +111,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v6

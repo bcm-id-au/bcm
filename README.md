@@ -30,7 +30,7 @@ Releases can be manually triggered via the `Release` [GitHub Action Workflow](.g
 2. Make a local clone of that forked repository
 3. Install the [latest stable release of Deno](https://deno.com/)
 4. Run the setup script: `deno task setup`
-5. Update some files in the forked repository
+5. Update some files in the forked repository:
 
 - Update `.github/workflows/release.yml` to use your forked GitHub repository URL
 - All files in the `content` directory **must** contain your own content instead
@@ -38,14 +38,9 @@ Releases can be manually triggered via the `Release` [GitHub Action Workflow](.g
 - Purchase your own license to use the [Mass-Driver IO font](https://io.mass-driver.com/) or update the CSS to use other fonts
 
 6. Commit and push all of these changes to your forked repository
-7. Setup your own [Deno Deploy](https://deno.com/deploy) Org, Project and Personal Access Token
-8. Update the Settings for your forked repository via GitHub:
+7. Update the Settings for your forked repository via GitHub:
 
-- Go to `Settings > Security > Secrets and variables > Actions`
-- Add new `Repository secrets` for the variables in [.env.github.example](.env.github.example)
-- Update the `deploy` section in [deno.json](deno.json) to use your own Deno Deploy org and app
+- Pages > Source: _GitHub Actions_
+- Pages > Custom domain: _use your own domain_
 
-9. Setup [Fathom Analytics](https://usefathom.com/):
-
-- Create a new site in your own account
-- Update your `.env` file's `FATHOM_SITE_CODE` value to use your new `Fathom Site ID`
+8. Update `CNAME` to use the same domain as you configured above
