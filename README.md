@@ -8,8 +8,6 @@ Tests, build and local server commands are available from local environments.
 
 Releases can be manually triggered via the `Release` [GitHub Action Workflow](.github/workflows/release.yml), which includes checking the test and build processed work before starting a new deployment [Deno Deploy](https://deno.com/deploy). It then publishes a new [GitHub Release](https://github.com/bcm-id-au/site/releases).
 
-Third-party dependencies are kept up to date via a scheduled [GitHub Action Workflow](.github/workflows/dependencies.yml), which can also be triggered manually. If there are changes, it confirms they don't break tests or builds, then creates a Pull Request.
-
 ## Structure
 
 - [.github/workflows/release.yml](.github/workflows/release.yml) - Release and deployment workflow.
