@@ -59,6 +59,10 @@
       "description": "Update the project's dependencies.",
       "command": "deno outdated --quiet --update --compatible --lock ./deno.lock || true"
     },
+    "json-feed": {
+      "description": "Generate a JSON feed of blog posts.",
+      "command": "deno run --allow-read --allow-write --allow-env src/json-feed.ts"
+    },
     "lint": {
       "description": "Run Deno's linting and formatting tools with the configuration defined above.",
       "command": "deno lint && deno fmt"

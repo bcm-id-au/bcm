@@ -90,7 +90,7 @@ cp -r "src/styles/fontawesome" "$PUBLIC_DIR/css"
 echo -e "${YELLOW}Building the JSON Feed for Brendan's posts${NC}"
 
 mkdir -p "$PUBLIC_DIR/brendan"
-deno run --allow-read --allow-write --allow-env src/json-feed.ts
+deno task json-feed
 
 echo -e "${YELLOW}Copying '$PUBLIC_DIR' to '$DENO_DEPLOY_DIR' for Deno Deploy ${NC}"
 

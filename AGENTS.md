@@ -16,7 +16,6 @@ Other useful commands:
 
 - `deno task setup` - Initial setup (creates directories, installs dependencies)
 - `deno task new-post` - Generate a new blog post Markdown file
-- `deno task release` - Create and push a new release tag (triggers CI/CD)
 
 ## Architecture
 
@@ -59,7 +58,7 @@ Environment variables are loaded from `.env` (use `.env.example` as template):
 - `BLOG_POSTS_DIR`, `BLOG_POSTS_URL`: Blog post paths
 - `JSON_FEED_*`: JSON Feed metadata (title, description, author, etc.)
 
-These values are passed to Lume templates via `site.data()` in `config/lume.config.ts`.
+These values are passed to Lume templates via `site.data()` in `_config.ts`.
 
 ### Lume Plugins
 
@@ -74,7 +73,7 @@ The site uses these Lume plugins:
 
 Blog posts are published as a JSON Feed at `/brendan/posts.json`:
 
-- Run via `deno run --allow-read --allow-write --allow-env src/json-feed.ts`
+- Run via `deno task json-feed`
 - Reads Markdown files from `public/posts/`
 - Parses frontmatter and content
 - Outputs JSON Feed 1.1 format
@@ -88,7 +87,7 @@ Blog posts are published as a JSON Feed at `/brendan/posts.json`:
 - Tests use `test.step()` for sub-tests
 - Tests are co-located with source files (e.g., `json-feed.ts` and `json-feed.test.ts`)
 - Tests check for file existence and non-empty content in `public/` directory
-- Required permissions: `--allow-read --allow-write --allow-env --allow-net --allow-run=deno`
+- Run tests: `deno task test`
 
 ### CSS Organization
 
@@ -131,4 +130,4 @@ Releases use date-based version tags: `YYYYMMDD.HHMM` (e.g., `20240221.1430`)
   - Line width: 120
   - Semicolons required
   - No tabs
-- Linting and formatting scoped to `src/`, `config/lume.config.ts`, and `deno.json`
+- Linting and formatting scoped to `src/`, `_config.ts`, and `deno.json`
