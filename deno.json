@@ -90,10 +90,6 @@
     "test": {
       "description": "Run all Deno Test scripts in the 'src' directory.",
       "command": "deno test --allow-run=deno --allow-env --allow-read --allow-net src"
-    },
-    "tunnel": {
-      "description": "Start a local web server and use the Deno Deploy tunnel.",
-      "command": "deno run --tunnel --allow-net --allow-read jsr:@std/http/file-server ./public"
     }
   },
   "deploy": {
