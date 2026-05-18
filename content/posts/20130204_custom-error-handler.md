@@ -12,4 +12,4 @@ When a website or web app is viewable publically, it's a good idea to modify how
 ![Sample error messages](/images/brendan/error-messages.jpg)
 _Showing error details to the visitor isn't good_
 
-<script src="https://gist.github.com/bcm-id-au/dfd5ba0cd6769f16b19eedae1044e339.js"></script>
+<script src="https://gist.github.com/brendanmurty/dfd5ba0cd6769f16b19eedae1044e339.js"></script>

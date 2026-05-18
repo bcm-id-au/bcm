@@ -27,7 +27,7 @@ This method is designed around the idea of placing common styles in a file named
 
 For this example, the CSS files are placed in a top level folder named _styles_. Feel free to update this by changing the value of the **$folder** variables in the PHP functions.
 
-<script src="https://gist.github.com/bcm-id-au/24650665daf4fd0b37a740f642a46ce7.js"></script>
+<script src="https://gist.github.com/brendanmurty/24650665daf4fd0b37a740f642a46ce7.js"></script>
 
 ### Notes
 

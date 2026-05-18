@@ -12,4 +12,4 @@ A simple date picker designed for use on mobile devices. Creates three dropdown 
 ![Date picker](/images/brendan/date-picker.png)
 _The finished result_
 
-<script src="https://gist.github.com/bcm-id-au/70b1bafe1c2d520d891e7ce82239776e.js"></script>
+<script src="https://gist.github.com/brendanmurty/70b1bafe1c2d520d891e7ce82239776e.js"></script>
