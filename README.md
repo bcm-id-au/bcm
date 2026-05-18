@@ -12,7 +12,6 @@ Third-party dependencies are kept up to date via a scheduled [GitHub Action Work
 
 ## Structure
 
-- [.github/workflows/dependencies.yml](.github/workflows/dependencies.yml) - Automatic dependency upgrade workflow.
 - [.github/workflows/release.yml](.github/workflows/release.yml) - Release and deployment workflow.
 - [.vscode](.vscode/) - Customised [VS Code](https://code.visualstudio.com/) project configuration.
 - [.zed](.zed/) - Customised [Zed Editor](https://zed.dev/) project configuration.
