@@ -3,7 +3,7 @@
   <head>
     <meta charSet="utf-8" />
     <title>{% if title %}{{ title }}{% else %}Murty{% endif %}</title>
-    <meta property="og:title" content='{% if title %}"{{ title }}"{% else %}"Murty"{% endif %}' />
+    <meta property="og:title" content="{% if title %}{{ title }}{% else %}Murty{% endif %}" />
     <meta name="description" content="{{ description }}" />
     <meta name="theme-color" content="{{ theme }}" />
     <meta name="author" content="Brendan Murty" />
@@ -26,7 +26,6 @@
       <header>
         <h1>{{ title | safe }}</h1>
       </header>
-
       <article>{{ content | safe }}</article>
     </section>
   </body>
