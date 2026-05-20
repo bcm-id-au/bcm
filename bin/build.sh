@@ -70,24 +70,24 @@ echo -e "${YELLOW}Updating '$PUBLIC_DIR/robots.txt' to use the production URL${N
 
 sed -i -e "s/http:\/\/localhost\//https:\/\/$PROD_DOMAIN\//g" "$PUBLIC_DIR/robots.txt"
 
-echo -e "${YELLOW}Configuring GitHub Pages in the '$PUBLIC_DIR' directory${NC}"
+echo -e "${YELLOW}Configuring GitHub Pages in '$PUBLIC_DIR'${NC}"
 
 # Custom 404 page
 cp "assets/redirect.html" "$PUBLIC_DIR/404.html"
 
-echo -e "${YELLOW}Copying static files to the '$PUBLIC_DIR' directory${NC}"
+echo -e "${YELLOW}Copying static files to '$PUBLIC_DIR'${NC}"
 
 cp -r "assets/fonts" "$PUBLIC_DIR/fonts"
 cp -r "assets/images" "$PUBLIC_DIR/images"
 cp "assets/favicon.ico" "$PUBLIC_DIR/favicon.ico"
 
-echo -e "${YELLOW}Copying CSS files to the '$PUBLIC_DIR/css' directory${NC}"
+echo -e "${YELLOW}Copying CSS files to '$PUBLIC_DIR/css'${NC}"
 
 mkdir -p "$PUBLIC_DIR/css"
 cp "$BUILD_DIR/_assets/css/styles.min.css" "$PUBLIC_DIR/css/styles.min.css"
 cp -r "src/styles/fontawesome" "$PUBLIC_DIR/css"
 
-echo -e "${YELLOW}Building the JSON Feed for Brendan's posts${NC}"
+echo -e "${YELLOW}Building a JSON Feed with posts data${NC}"
 
 mkdir -p "$PUBLIC_DIR/brendan"
 deno task json-feed
@@ -96,4 +96,4 @@ echo -e "${YELLOW}Deleting '$BUILD_DIR'${NC}"
 
 rm -rf "$BUILD_DIR"
 
-echo -e "${GREEN}✓ Build complete!${NC}"
+echo -e "${GREEN}Build complete${NC}"
