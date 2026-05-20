@@ -92,11 +92,7 @@ echo -e "${YELLOW}Building the JSON Feed for Brendan's posts${NC}"
 mkdir -p "$PUBLIC_DIR/brendan"
 deno task json-feed
 
-echo -e "${YELLOW}Copying '$PUBLIC_DIR' to '$DENO_DEPLOY_DIR' for Deno Deploy ${NC}"
-
-cp -R "$PUBLIC_DIR" "$DENO_DEPLOY_DIR"
-
-echo -e "${YELLOW}Delete '$BUILD_DIR'${NC}"
+echo -e "${YELLOW}Deleting '$BUILD_DIR'${NC}"
 
 rm -rf "$BUILD_DIR"
 
