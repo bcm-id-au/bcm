@@ -65,7 +65,7 @@
     },
     "docker-run": {
       "description": "Start a container using the local Docker image",
-      "command": "docker run -d -p 8000:8000 --name=bcm-site --rm bcm-site-image"
+      "command": "deno task docker-stop && docker run -d -p 8000:8000 --name=bcm-site --rm bcm-site-image"
     },
     "docker-stop": {
       "description": "Stop and remove the Docker container",
