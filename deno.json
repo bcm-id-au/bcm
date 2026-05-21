@@ -59,6 +59,14 @@
       "description": "Update the project's dependencies.",
       "command": "deno outdated --quiet --update --compatible --lock ./deno.lock"
     },
+    "docker-build": {
+      "description": "Build a local Docker image",
+      "command": "docker build --tag bcm-site-image ."
+    },
+    "docker-run": {
+      "description": "Start a container using the local Docker image",
+      "command": "docker run -d --name=bcm-site bcm-site-image"
+    },
     "json-feed": {
       "description": "Generate a JSON feed of blog posts.",
       "command": "deno run --allow-read --allow-write --allow-env src/json-feed.ts"
@@ -81,7 +89,7 @@
     },
     "serve": {
       "description": "Start a local web server.",
-      "command": "deno run --allow-net --allow-read jsr:@std/http/file-server ./public"
+      "command": "deno run --allow-net --allow-read jsr:@std/http/file-server ./public --port 8000"
     },
     "setup": {
       "description": "Setup directories, check for and install dependencies, used for local environments and in CI.",
