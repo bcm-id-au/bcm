@@ -65,7 +65,7 @@
     },
     "docker-run": {
       "description": "Start a container using the local Docker image",
-      "command": "docker run -d --name=bcm-site bcm-site-image"
+      "command": "docker run -d -p 8000:8000 --name=bcm-site --rm bcm-site-image"
     },
     "json-feed": {
       "description": "Generate a JSON feed of blog posts.",
