@@ -67,6 +67,10 @@
       "description": "Start a container using the local Docker image",
       "command": "docker run -d -p 8000:8000 --name=bcm-site --rm bcm-site-image"
     },
+    "docker-stop": {
+      "description": "Stop and remove the Docker container",
+      "command": "docker stop bcm-site &>/dev/null && docker rm bcm-site &>/dev/null || true"
+    },
     "json-feed": {
       "description": "Generate a JSON feed of blog posts.",
       "command": "deno run --allow-read --allow-write --allow-env src/json-feed.ts"
