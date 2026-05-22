@@ -1,16 +1,12 @@
-name: Release and Deploy
+#
+#
+# Manual Workflow: Site - Release and Deploy
+#   - This workflow includes the test, release and deployment process for the site.
+#   - Requires GitHub Repository Secrets setup in Repo > Settings > Secrets > Actions.
+#
+#
 
-#
-#
-# ----
-# Manual Workflow: Release and Deploy
-# ----
-#
-# This workflow includes the test, release and deployment process for the site.
-#
-# Requires GitHub Repository Secrets setup in Repo > Settings > Secrets > Actions.
-#
-#
+name: Site - Release and Deploy
 
 on:
   # Allow manual triggers via GitHub Repo > Actions > Release

@@ -1,12 +1,11 @@
 #
 #
-# Deply Links to GCP
-#
-# Initial setup steps and documentation in: 'src/links/.infra/README.md'
+# Manual Workflow: Links - Deploy to GCP
+#   - Initial setup steps and documentation in: 'src/links/.infra/README.md'
 #
 #
 
-name: 'Deploy Links to GCP'
+name: 'Links - Deploy to GCP'
 
 on:
   workflow_dispatch:

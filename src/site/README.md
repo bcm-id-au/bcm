@@ -11,11 +11,8 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 
 ## Structure
 
-- [.github/workflows/release.yml](../../.github/workflows/release.yml) - Release and deployment workflow.
-- [.vscode](../../.vscode/) - Customised [VS Code](https://code.visualstudio.com/) project configuration.
-- [.zed](../../.zed/) - Customised [Zed Editor](https://zed.dev/) project configuration.
+- [.github/workflows/deploy-site.yml](../../.github/workflows/deploy-site.yml) - Manual deployment workflow.
 - [assets](assets/) - Static files like images and PDFs.
-- [bin](../../bin/) - Bash helper scripts, run `deno task` to show available options.
 - [config](config/) - Supporting configuration files.
 - [content](content/) - Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files.
 - [src](src/) - Source code and related unit tests.

@@ -1,6 +1,10 @@
 # Links: GCP Infrastructure
 
-## Initial Setup
+## Deployments
+
+Deployed manually in GitHub Actions via [deploy-links.yml](../../.github/workflows/deploy-links.yml)
+
+## Infrastructure Setup
 
 Login to GCP and enable the following APIs:
 
@@ -25,12 +29,12 @@ Setup the following GitHub Secrets:
 - `GCP_SERVICE_ACCOUNT`
 - `CLOUD_RUN_SERVICE`
 
-## Setup Script
+### Setup Script
 
 Run [setup-gcp-cloudrun.sh](setup-gcp-cloudrun.sh) to create the required GCP APIs and infrastructure.
 
 Environment variables are detailed in [.links.infra.sample.env](.links.infra.sample.env)
 
-## Storage
+### Storage
 
 The top-level named volumes in `src/links/.infra/docker-compose.yml` are handled by [Cloud Run Compose](https://docs.cloud.google.com/run/docs/deploy-run-compose) as [Cloud Storage Volumes](https://docs.cloud.google.com/run/docs/configuring/services/cloud-storage-volume-mounts).
