@@ -49,7 +49,7 @@
   "tasks": {
     "build": {
       "description": "Build the site and organise the required assets.",
-      "command": "bash ./bin/build.sh"
+      "command": "cd ../.. && bash ./bin/site/site-build.sh"
     },
     "deps-install": {
       "description": "Install the project's dependencies.",
@@ -85,11 +85,11 @@
     },
     "new-post": {
       "description": "Generate a Markdown file for a new post item.",
-      "command": "bash ./bin/new-post.sh"
+      "command": "cd ../.. && bash ./bin/site/site-new-post.sh"
     },
     "release-notes": {
       "description": "Generates content for the GitHub Release description.",
-      "command": "bash ./bin/release-notes.sh"
+      "command": "cd ../.. && bash ./bin/release/release-notes.sh"
     },
     "serve": {
       "description": "Start a local web server.",
@@ -97,19 +97,12 @@
     },
     "setup": {
       "description": "Setup directories, check for and install dependencies, used for local environments and in CI.",
-      "command": "bash ./bin/setup.sh"
+      "command": "cd ../.. && bash ./bin/site/site-setup.sh"
     },
     "test": {
       "description": "Run all Deno Test scripts in the 'src' directory.",
       "command": "deno test --allow-run=deno --allow-env --allow-read --allow-net src"
     }
-  },
-  "deploy": {
-    "org": "murty",
-    "app": "murty-site",
-    "framework": "lume",
-    "install": "deno task setup",
-    "build": "deno task build"
   },
   "permissions": {
     "lume": {

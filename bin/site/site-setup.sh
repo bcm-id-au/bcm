@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 #
+#
 # Setup directories, check for and install dependencies, used for local environments and in CI
 #  - Run via: deno task setup
+#
+#
+
+SITE_DIR="$(cd "$(dirname "$0")" && cd ../../src/site && pwd)"
+cd "$SITE_DIR"
 
 # Recreate build directories
 

@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
-
+#
+#
 # Build the site and organise the required assets
 #  - Run via: deno task build
+#
+#
+
+SITE_DIR="$(cd "$(dirname "$0")" && cd ../../src/site && pwd)"
+cd "$SITE_DIR"
 
 # Setup the message colour characters
 

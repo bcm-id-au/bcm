@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
-
+#
+#
 # Generate a Markdown file for a new post item
 #  - Run via: deno task new-post
+#
+#
+
+SITE_DIR="$(cd "$(dirname "$0")" && cd ../../src/site && pwd)"
+cd "$SITE_DIR"
 
 # Figure out the post date values based on the local machine's date
 
@@ -27,12 +33,11 @@ title: ${post_title}
 date: ${date_prop}
 url: /posts/${date_slug}_${post_text_slug}
 tags:
-  - 
+  -
 ---
 
 
 EOF
 
-
-echo "Finished, new file created: ${post_file}"
+echo "Finished, new file created at '${post_file}'"
 exit 0

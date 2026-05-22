@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
-
+#
+#
 # Generates content for the GitHub Release description
 #  - Run via: deno task release-notes
+#
+#
+
+REPO_DIR="$(cd "$(dirname "$0")" && cd ../.. && pwd)"
+cd "$REPO_DIR"
 
 # If an argument is provided when calling this script,
 # like "deno task release-notes changes.log", save the output
