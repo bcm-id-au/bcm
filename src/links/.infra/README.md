@@ -12,6 +12,7 @@ Login to GCP and enable the following APIs:
 - Cloud Run API
 - Cloud Storage API
 - IAM Credentials API
+- Cloud DNS API
 
 The workflow identity (used by `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER`) must have the following attached roles:
 
@@ -23,11 +24,12 @@ The workflow identity (used by `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER`) must have
 Setup the following GitHub Secrets:
 
 - `GCP_PROJECT_ID`
-- `GCP_REGION`
 - `LINKS_GCP_ARTIFACT_REPOSITORY`
 - `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER`
 - `LINKS_GCP_SERVICE_ACCOUNT`
 - `CLOUD_RUN_SERVICE`
+
+Links infrastructure is deployed to `us-west1`.
 
 ### Setup Script
 

@@ -37,11 +37,6 @@ if [[ -z "${GCP_PROJECT_ID:-}" ]]; then
   exit 1
 fi
 
-if [[ -z "${GCP_REGION:-}" ]]; then
-  echo "Missing required environment variable: GCP_REGION" >&2
-  exit 1
-fi
-
 if [[ -z "${GCP_ARTIFACT_REPOSITORY:-}" ]]; then
   echo "Missing required environment variable: GCP_ARTIFACT_REPOSITORY" >&2
   exit 1
@@ -73,7 +68,7 @@ if [[ -n "${LINKS_DOMAIN:-}" && -z "${GCP_DNS_NAME:-}" ]]; then
 fi
 
 project_id="$GCP_PROJECT_ID"
-region="$GCP_REGION"
+region="us-west1"
 artifact_repository="$GCP_ARTIFACT_REPOSITORY"
 cloud_run_service="$CLOUD_RUN_SERVICE"
 github_repository="$GITHUB_REPOSITORY"
@@ -83,7 +78,6 @@ service_account_input="${GCP_SERVICE_ACCOUNT:-${cloud_run_service}-deployer}"
 links_domain="${LINKS_DOMAIN:-}"
 dns_zone="${GCP_DNS_ZONE:-}"
 dns_name="${GCP_DNS_NAME:-}"
-domain_mapping_region="us-west1"
 
 if [[ -n "$dns_name" && "$dns_name" != *. ]]; then
   dns_name="${dns_name}."
@@ -100,7 +94,7 @@ fi
 echo "This script will configure the GCP project '$project_id'"
 
 if [[ -n "$links_domain" ]]; then
-  echo "It will also create/update Cloud DNS for '$dns_name' and map '$links_domain' to Cloud Run service '$cloud_run_service' in '$domain_mapping_region'."
+  echo "It will also create/update Cloud DNS for '$dns_name' and map '$links_domain' to Cloud Run service '$cloud_run_service' in '$region'."
 fi
 
 echo ''
@@ -211,12 +205,12 @@ if [[ -n "$links_domain" ]]; then
   echo "Ensuring Cloud Run domain mapping exists..."
   if ! gcloud beta run domain-mappings describe \
     --project "$project_id" \
-    --region "$domain_mapping_region" \
+    --region "$region" \
     --domain "$links_domain" \
     >/dev/null 2>&1; then
     gcloud beta run domain-mappings create \
       --project "$project_id" \
-      --region "$domain_mapping_region" \
+      --region "$region" \
       --service "$cloud_run_service" \
       --domain "$links_domain"
   fi
@@ -250,7 +244,7 @@ if [[ -n "$links_domain" ]]; then
   echo "Add these Cloud Run DNS records in Cloud DNS after delegation is active:"
   gcloud beta run domain-mappings describe \
     --project "$project_id" \
-    --region "$domain_mapping_region" \
+    --region "$region" \
     --domain "$links_domain" \
     --format "table(resourceRecords[].name,resourceRecords[].type,resourceRecords[].rrdata)"
 fi
