@@ -5,7 +5,7 @@
 - [.github/workflows](.github/workflows/) - GitHub Actions workflows.
 - [.vscode](.vscode/) - Customised [VS Code](https://code.visualstudio.com/) project configuration.
 - [.zed](.zed/) - Customised [Zed Editor](https://zed.dev/) project configuration.
-- [bin](bin/) - Bash helper scripts, run `deno task` to show available options.
+- [bin](bin/) - Bash helper scripts
 - [src](src/links/) - Source code for a self-hosted version of the [Karakeep](https://karakeep.app/) bookmarking service.
 - [src](src/site/) - Source code for the main public website at [murty.au](https://murty.au).
 - [storage](storage/) - Used for persistent storage by local Docker containers.
