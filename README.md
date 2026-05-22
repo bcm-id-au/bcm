@@ -14,7 +14,7 @@ This repository contains a set of self-hosted systems.
 
 ## Local Development
 
-This project assumes that your local machine:
+This systems in this respository assume that your local machine:
 
 - Has an up-to-date version of [Docker Desktop](https://docs.docker.com/desktop/) installed and ready
 - Has an up-to-date version of [Deno](https://deno.com/) installed and ready
