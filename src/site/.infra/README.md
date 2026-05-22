@@ -29,6 +29,6 @@ Setup the following GitHub Secrets:
 
 ### Setup Script
 
-Run [setup-gcp-cloudrun.sh](setup-gcp-cloudrun.sh) to create the required GCP APIs and infrastructure.
+Run [site-infra-setup.sh](site-infra-setup.sh) to create the required GCP APIs and infrastructure.
 
 Environment variables are detailed in [.site.infra.sample.env](.site.infra.sample.env).
