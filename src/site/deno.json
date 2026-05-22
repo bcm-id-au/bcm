@@ -49,7 +49,7 @@
   "tasks": {
     "build": {
       "description": "Build the site and organise the required assets.",
-      "command": "cd ../.. && bash ./bin/site/site-build.sh"
+      "command": "just site-build"
     },
     "deps-install": {
       "description": "Install the project's dependencies.",
@@ -58,18 +58,6 @@
     "deps-update": {
       "description": "Update the project's dependencies.",
       "command": "deno outdated --quiet --update --compatible --lock ./deno.lock"
-    },
-    "docker-build": {
-      "description": "Build a local Docker image",
-      "command": "cd ../.. && docker build --file src/site/Dockerfile --tag bcm-site-image ."
-    },
-    "docker-run": {
-      "description": "Start a container using the local Docker image",
-      "command": "deno task docker-stop && docker run -d -p 8000:8000 --name=bcm-site --rm bcm-site-image"
-    },
-    "docker-stop": {
-      "description": "Stop and remove the Docker container",
-      "command": "docker stop bcm-site &>/dev/null && docker rm bcm-site &>/dev/null || true"
     },
     "json-feed": {
       "description": "Generate a JSON feed of blog posts.",
@@ -85,7 +73,7 @@
     },
     "new-post": {
       "description": "Generate a Markdown file for a new post item.",
-      "command": "cd ../.. && bash ./bin/site/site-new-post.sh"
+      "command": "just site-new-post"
     },
     "release-notes": {
       "description": "Generates content for the GitHub Release description.",
@@ -97,7 +85,7 @@
     },
     "setup": {
       "description": "Setup directories, check for and install dependencies, used for local environments and in CI.",
-      "command": "cd ../.. && bash ./bin/site/site-setup.sh"
+      "command": "just site-setup"
     },
     "test": {
       "description": "Run all Deno Test scripts in the 'src' directory.",

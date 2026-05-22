@@ -46,4 +46,4 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 
 ## Deployment
 
-Releases can be manually triggered from GitHub Actions via the [Release and Deploy workflow](../../.github/workflows/release.yml).
+Releases can be manually triggered from GitHub Actions via [deploy-site.yml](../../.github/workflows/deploy-site.yml).

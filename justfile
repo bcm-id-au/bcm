@@ -49,7 +49,7 @@ release-notes output_file:
 # Run the build process for Site
 [group('site')]
 site-build:
-  bash ./bin/site/build-site.sh
+  bash ./bin/site/site-build.sh
 
 # Create a new post for Site
 [group('site')]
