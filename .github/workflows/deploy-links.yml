@@ -15,7 +15,7 @@ on:
 
 env:
   PROJECT_ID: '${{ secrets.GCP_PROJECT_ID }}'
-  REGION: 'us-west1'
+  REGION: 'asia-southeast1'
   ARTIFACT_REPOSITORY: '${{ secrets.LINKS_GCP_ARTIFACT_REPOSITORY }}'
   SERVICE: '${{ secrets.CLOUD_RUN_SERVICE }}'
   WORKLOAD_IDENTITY_PROVIDER: '${{ secrets.LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER }}'

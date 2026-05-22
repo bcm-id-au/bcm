@@ -29,7 +29,7 @@ Setup the following GitHub Secrets:
 - `LINKS_GCP_SERVICE_ACCOUNT`
 - `CLOUD_RUN_SERVICE`
 
-Links infrastructure is deployed to `us-west1`.
+Links infrastructure is deployed to `asia-southeast1`.
 
 ### Setup Script
 

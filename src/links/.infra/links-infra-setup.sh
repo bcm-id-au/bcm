@@ -68,7 +68,7 @@ if [[ -n "${LINKS_DOMAIN:-}" && -z "${GCP_DNS_NAME:-}" ]]; then
 fi
 
 project_id="$GCP_PROJECT_ID"
-region="us-west1"
+region="asia-southeast1"
 artifact_repository="$GCP_ARTIFACT_REPOSITORY"
 cloud_run_service="$CLOUD_RUN_SERVICE"
 github_repository="$GITHUB_REPOSITORY"
