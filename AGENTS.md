@@ -1,8 +1,74 @@
-# AI Agent Instructionsbrendanmurty
+# AI Agent Instructions
 
-This is a static website built with Deno, Lume (static site generator), and deployed to GitHub Pages.
+This repository contains a set of self-hosted systems.
 
-## Build, Test, and Lint Commands
+## Tech Stack
+
+- **OS Target:** Linux (Fedora Workstation, Ubuntu, etc)
+- **Shell:** Bash (`/usr/bin/env bash`)
+- **Containerization:** Docker (`docker`, `docker compose` and [Docker Desktop](https://docs.docker.com/desktop/)
+- **Code:** Deno, TypeScript, Deno Tests
+
+## Structure
+
+- [.github/workflows](.github/workflows/) - GitHub Actions workflows.
+- [.vscode](.vscode/) - Customised [VS Code](https://code.visualstudio.com/) project configuration.
+- [.zed](.zed/) - Customised [Zed Editor](https://zed.dev/) project configuration.
+- [bin](bin/) - Bash helper scripts, run `deno task` to show available options.
+- [src](src/links/) - Source code for a self-hosted version of the [Karakeep](https://karakeep.app/) bookmarking service.
+- [src](src/site/) - Source code for the main public website at [murty.au](https://murty.au).
+- [storage](storage/) - Used for persistent storage by local Docker containers.
+
+## Shell Scripting Standards
+
+To ensure scripts are safe, portable, and reliable across Fedora installations:
+
+- **Shebang:** Always start scripts with `#!/usr/bin/env bash`.
+- **Error Handling:** Use safe defaults and check execution status where appropriate.
+- **Variable Quoting:** Always quote variable references (e.g., `"$DIR"`) to prevent word splitting and globbing issues.
+- **Sudo Permissions:**
+  - Avoid running entire scripts as root.
+  - If a command requires `sudo`, ask the user to confirm and show the full suggested command
+
+## Required Tools
+
+If any of the below CLI commands aren't available, stop processing and explain the missing tool to the user.
+
+- `bash`
+- `git`
+- `deno`
+- `docker`
+- `docker compose`
+
+## Agent Guidelines & Safety Rules
+
+- **Concise Responses:** Keep responses concise and based on factual information
+- **Minimise Comments:** Minimise comments in code to only briefly explain the "why", contextual information and excess spacing is messy.
+- **Strict Command Banishment:** Under no circumstances should the agent ever run `git commit`, or `git push` commands. Doing so is strictly forbidden by the project configuration.
+- **No Destructive Operations:** Never delete system files or run modifying system commands without explaining their purpose and obtaining explicit permission from the user.
+- **Syntax Validation:** Always run syntax validation `bash -n <script>` before proposing modifications to shell scripts.
+- **Sandboxed Validation:** Validate all proposed changes locally within the sandbox before committing.
+
+## Helpful Commands
+
+- **Syntax check:** `bash -n script-file-name.sh`
+- **Execute installer:** `bash ./bin/setup.sh`
+
+## Links: `src/links/`
+
+The `src/links/` directory contains a self-hosted version of the [Karakeep](https://karakeep.app/) bookmarking service.
+
+### Tech Stack
+
+- **OS Target:** Linux (Fedora Workstation, Ubuntu, etc)
+- **Shell:** Bash (`/usr/bin/env bash`)
+- **Containerization:** Docker (`docker`, `docker compose` and [Docker Desktop](https://docs.docker.com/desktop/)
+
+## Site: `src/site/`
+
+The `src/site/` directory contains a static website built with Deno, Lume (static site generator), and deployed to GitHub Pages.
+
+### Build, Test, and Lint Commands
 
 All commands are run via `deno task <command>`:
 
@@ -17,9 +83,9 @@ Other useful commands:
 - `deno task setup` - Initial setup (creates directories, installs dependencies)
 - `deno task new-post` - Generate a new blog post Markdown file
 
-## Architecture
+### Architecture
 
-### Build Process
+#### Build Process
 
 The build is orchestrated by `bin/build.sh` which:
 
@@ -36,7 +102,7 @@ The build is orchestrated by `bin/build.sh` which:
 7. Generates JSON Feed for blog posts via `src/json-feed.ts`
 8. Cleans up `build/` directory
 
-### Directory Structure
+#### Directory Structure
 
 - **`assets/`**: Static files (fonts, images, PDFs, favicon, etc.)
 - **`bin/`**: Bash scripts for common tasks
@@ -50,7 +116,7 @@ The build is orchestrated by `bin/build.sh` which:
 - **`public/`**: Built output (generated, not committed)
 - **`build/`**: Temporary directory during build (cleaned up after)
 
-### Configuration
+#### Configuration
 
 Environment variables are loaded from `.env` (use `.env.example` as template):
 
@@ -59,7 +125,7 @@ Environment variables are loaded from `.env` (use `.env.example` as template):
 
 These values are passed to Lume templates via `site.data()` in `_config.ts`.
 
-### Lume Plugins
+#### Lume Plugins
 
 The site uses these Lume plugins:
 
@@ -68,7 +134,7 @@ The site uses these Lume plugins:
 - `redirects` - URL redirects
 - `sitemap` - Generate sitemap.xml
 
-### JSON Feed Generation
+#### JSON Feed Generation
 
 Blog posts are published as a JSON Feed at `/brendan/posts.json`:
 
@@ -78,9 +144,9 @@ Blog posts are published as a JSON Feed at `/brendan/posts.json`:
 - Outputs JSON Feed 1.1 format
 - See `src/types.ts` for type definitions
 
-## Key Conventions
+### Key Conventions
 
-### Testing
+#### Testing
 
 - Tests use Deno's built-in test framework with `Deno.test()`
 - Tests use `test.step()` for sub-tests
@@ -88,7 +154,7 @@ Blog posts are published as a JSON Feed at `/brendan/posts.json`:
 - Tests check for file existence and non-empty content in `public/` directory
 - Run tests: `deno task test`
 
-### CSS Organization
+#### CSS Organization
 
 CSS is split across multiple files that are concatenated in a specific order:
 
@@ -100,7 +166,7 @@ CSS is split across multiple files that are concatenated in a specific order:
 
 The build process concatenates and minifies these into `styles.min.css`.
 
-### Frontmatter in Content Files
+#### Frontmatter in Content Files
 
 Markdown files in `content/` use YAML frontmatter:
 
@@ -114,7 +180,7 @@ draft: false
 
 See `src/types.ts` for the `YamlData` type definition.
 
-### Version Tags
+#### Version Tags
 
 Releases use date-based version tags: `YYYYMMDD.HHMM` (e.g., `20240221.1430`)
 
@@ -122,7 +188,7 @@ Releases use date-based version tags: `YYYYMMDD.HHMM` (e.g., `20240221.1430`)
 - Triggers the `.github/workflows/release.yml` workflow
 - Workflow runs tests, deploys to GitHub Pages, and creates a GitHub release
 
-## Code Style
+### Code Style
 
 - Formatting configured in `deno.json`:
   - 2 space indentation
