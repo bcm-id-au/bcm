@@ -1,20 +1,21 @@
-# Murty Website
+# Website
 
-## Summary
+This directory contains the main [murty.au](https://murty.au/) public website.
 
-This repository contains the [murty.au](https://murty.au/) website, which has been built with [Deno](https://deno.land/), [Lume](https://lumeland.github.io/), a licensed version of the [IO font by Mass-Driver](https://io.mass-driver.com/), and the free [Font Awesome icon pack](https://fontawesome.com/).
+## Tech Stack
 
-Tests, build and local server commands are available from local environments.
-
-Releases can be manually triggered via the `Release` [GitHub Action Workflow](.github/workflows/release.yml), which includes checking the test and build processed work before starting a new deployment [Deno Deploy](https://deno.com/deploy). It then publishes a new [GitHub Release](https://github.com/brendanmurty/site/releases).
+- [Deno](https://deno.land/) - TypeScript, Deno Tests, Deno Tasks
+- [Lume](https://lumeland.github.io/)
+- [IO font by Mass-Driver](https://io.mass-driver.com/) - I have purchased a license for use here
+- [Font Awesome icon pack](https://fontawesome.com/) - Using the Free icon pack here
 
 ## Structure
 
-- [.github/workflows/release.yml](.github/workflows/release.yml) - Release and deployment workflow.
-- [.vscode](.vscode/) - Customised [VS Code](https://code.visualstudio.com/) project configuration.
-- [.zed](.zed/) - Customised [Zed Editor](https://zed.dev/) project configuration.
+- [.github/workflows/release.yml](../../.github/workflows/release.yml) - Release and deployment workflow.
+- [.vscode](../../.vscode/) - Customised [VS Code](https://code.visualstudio.com/) project configuration.
+- [.zed](../../.zed/) - Customised [Zed Editor](https://zed.dev/) project configuration.
 - [assets](assets/) - Static files like images and PDFs.
-- [bin](bin/) - Bash helper scripts, run `deno task` to show available options.
+- [bin](../../bin/) - Bash helper scripts, run `deno task` to show available options.
 - [config](config/) - Supporting configuration files.
 - [content](content/) - Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files.
 - [src](src/) - Source code and related unit tests.
@@ -45,3 +46,7 @@ Releases can be manually triggered via the `Release` [GitHub Action Workflow](.g
 - Actions > General > Workflow permissions: _Read and write permissions_
 
 8. Update `CNAME` to use the same domain as you configured above
+
+## Deployment
+
+Releases can be manually triggered from GitHub Actions via the [Release and Deploy workflow](../../.github/workflows/release.yml).

@@ -7,7 +7,9 @@ public
 
 .antigravitycli
 
-storage
+storage/**
+storage/*
+!storage/README.md
 
 .env
 *.env
