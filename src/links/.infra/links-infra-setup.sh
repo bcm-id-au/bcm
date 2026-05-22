@@ -83,33 +83,10 @@ service_account_input="${GCP_SERVICE_ACCOUNT:-${cloud_run_service}-deployer}"
 links_domain="${LINKS_DOMAIN:-}"
 dns_zone="${GCP_DNS_ZONE:-}"
 dns_name="${GCP_DNS_NAME:-}"
+domain_mapping_region="us-west1"
 
 if [[ -n "$dns_name" && "$dns_name" != *. ]]; then
   dns_name="${dns_name}."
-fi
-
-domain_mappings_supported=false
-for supported_region in \
-  asia-east1 \
-  asia-northeast1 \
-  asia-southeast1 \
-  europe-north1 \
-  europe-west1 \
-  europe-west4 \
-  us-central1 \
-  us-east1 \
-  us-east4 \
-  us-west1; do
-  if [[ "$region" == "$supported_region" ]]; then
-    domain_mappings_supported=true
-    break
-  fi
-done
-
-if [[ -n "$links_domain" && "$domain_mappings_supported" != true ]]; then
-  echo "Cloud Run domain mappings do not support region '$region'." >&2
-  echo "Use a supported region, Firebase Hosting, or an external HTTPS load balancer for '$links_domain'." >&2
-  exit 1
 fi
 
 if [[ "$service_account_input" == *@* ]]; then
@@ -121,9 +98,11 @@ else
 fi
 
 echo "This script will configure the GCP project '$project_id'"
+
 if [[ -n "$links_domain" ]]; then
-  echo "It will also create/update Cloud DNS for '$dns_name' and map '$links_domain' to Cloud Run service '$cloud_run_service'."
+  echo "It will also create/update Cloud DNS for '$dns_name' and map '$links_domain' to Cloud Run service '$cloud_run_service' in '$domain_mapping_region'."
 fi
+
 echo ''
 
 read -r -p "Continue creating/updating these GCP resources? [y/N] " answer
@@ -232,12 +211,12 @@ if [[ -n "$links_domain" ]]; then
   echo "Ensuring Cloud Run domain mapping exists..."
   if ! gcloud beta run domain-mappings describe \
     --project "$project_id" \
-    --region "$region" \
+    --region "$domain_mapping_region" \
     --domain "$links_domain" \
     >/dev/null 2>&1; then
     gcloud beta run domain-mappings create \
       --project "$project_id" \
-      --region "$region" \
+      --region "$domain_mapping_region" \
       --service "$cloud_run_service" \
       --domain "$links_domain"
   fi
@@ -271,7 +250,7 @@ if [[ -n "$links_domain" ]]; then
   echo "Add these Cloud Run DNS records in Cloud DNS after delegation is active:"
   gcloud beta run domain-mappings describe \
     --project "$project_id" \
-    --region "$region" \
+    --region "$domain_mapping_region" \
     --domain "$links_domain" \
     --format "table(resourceRecords[].name,resourceRecords[].type,resourceRecords[].rrdata)"
 fi
