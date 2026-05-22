@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+#
+#
+# Start the local version of Links
+#  - Run via: just links-start
+#
+#
 
 REPO_DIR="$(cd "$(dirname "$0")" && cd ../.. && pwd)"
 LINKS_DIR="$REPO_DIR/src/links"

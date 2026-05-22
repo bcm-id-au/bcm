@@ -2,7 +2,7 @@
 #
 #
 # Generate a Markdown file for a new post item
-#  - Run via: deno task new-post
+#  - Run via: just site-new-post
 #
 #
 

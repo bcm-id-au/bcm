@@ -2,7 +2,7 @@
 #
 #
 # Setup directories, check for and install dependencies, used for local environments and in CI
-#  - Run via: deno task setup
+#  - Run via: just site-setup
 #
 #
 
