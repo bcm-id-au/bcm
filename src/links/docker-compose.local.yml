@@ -1,0 +1,35 @@
+services:
+  bcm-links-web:
+    image: "ghcr.io/karakeep-app/karakeep:release"
+    restart: unless-stopped
+    volumes:
+      - ../../storage/links/app:/data
+    ports:
+      - "${PORT}:3000"
+    env_file:
+      - .links.env
+    environment:
+      MEILI_ADDR: http://bcm-links-search:7700
+      BROWSER_WEB_URL: http://bcm-links-browser:9222
+      OPENAI_API_KEY: "${OPENAI_API_KEY}"
+      DISABLE_SIGNUPS: "${DISABLE_SIGNUPS}"
+      DATA_DIR: /data
+  bcm-links-browser:
+    image: gcr.io/zenika-hub/alpine-chrome:124
+    restart: unless-stopped
+    command:
+      - --no-sandbox
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --remote-debugging-address=0.0.0.0
+      - --remote-debugging-port=9222
+      - --hide-scrollbars
+  bcm-links-search:
+    image: getmeili/meilisearch:v1.41.0
+    restart: unless-stopped
+    env_file:
+      - .links.env
+    environment:
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - ../../storage/links/search:/meili_data

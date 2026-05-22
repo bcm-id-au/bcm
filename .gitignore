@@ -1,20 +1,23 @@
-$RECYCLE.BIN/
-.DS_Store
+node_modules
+cache
+temp
 
-*.log
-/CHANGELOG.md
+build
+public
+
+.antigravitycli
+
+storage
 
 .env
+*.env
+*.env.*
 .env.*
-!.env.example
-!.env.github.example
+!.sample.env
+!.*.sample.env
 
-!.envrc
-
-/build
-/dist
-/public
-/_site
-
-node_modules
-.antigravitycli
+.tfvars
+*.tfvars
+terraform.tfvars
+terraform.tfvars.*
+!terraform.tfvars.sample
