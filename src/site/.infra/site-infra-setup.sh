@@ -62,7 +62,7 @@ region="$GCP_REGION"
 artifact_repository="$GCP_ARTIFACT_REPOSITORY"
 cloud_run_site_service="$CLOUD_RUN_SITE_SERVICE"
 github_repository="$GITHUB_REPOSITORY"
-workload_pool="${GCP_WORKLOAD_POOL:-bcm-site-github}"
+workload_pool="${GCP_WORKLOAD_POOL:-}"
 workload_provider="${GCP_WORKLOAD_PROVIDER:-github}"
 service_account_input="${GCP_SERVICE_ACCOUNT:-${cloud_run_site_service}-deployer}"
 
