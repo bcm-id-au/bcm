@@ -1,4 +1,6 @@
-# bcm.id.au
+# Site
+
+This repository contains a set of self-hosted systems.
 
 ## Structure
 
@@ -14,12 +16,6 @@
 
 This project assumes that your local machine:
 
-- Has [Docker Desktop](https://docs.docker.com/desktop/) installed and ready
-- Is running a modern Linux OS
-
-### Initial Setup
-
-```bash
-chmod +x ./bin/*.sh
-bash ./bin/setup.sh
-```
+- Has an up-to-date version of [Docker Desktop](https://docs.docker.com/desktop/) installed and ready
+- Has an up-to-date version of [Deno](https://deno.com/) installed and ready
+- Is running a modern Linux OS like Fedora or Ubuntu
