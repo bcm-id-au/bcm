@@ -62,6 +62,16 @@ if [[ "$GITHUB_REPOSITORY" != */* ]]; then
   exit 1
 fi
 
+if [[ -n "${LINKS_DOMAIN:-}" && -z "${GCP_DNS_ZONE:-}" ]]; then
+  echo "Missing required environment variable for LINKS_DOMAIN: GCP_DNS_ZONE" >&2
+  exit 1
+fi
+
+if [[ -n "${LINKS_DOMAIN:-}" && -z "${GCP_DNS_NAME:-}" ]]; then
+  echo "Missing required environment variable for LINKS_DOMAIN: GCP_DNS_NAME" >&2
+  exit 1
+fi
+
 project_id="$GCP_PROJECT_ID"
 region="$GCP_REGION"
 artifact_repository="$GCP_ARTIFACT_REPOSITORY"
@@ -70,6 +80,37 @@ github_repository="$GITHUB_REPOSITORY"
 workload_pool="${GCP_WORKLOAD_POOL:-bcm-links-github}"
 workload_provider="${GCP_WORKLOAD_PROVIDER:-github}"
 service_account_input="${GCP_SERVICE_ACCOUNT:-${cloud_run_service}-deployer}"
+links_domain="${LINKS_DOMAIN:-}"
+dns_zone="${GCP_DNS_ZONE:-}"
+dns_name="${GCP_DNS_NAME:-}"
+
+if [[ -n "$dns_name" && "$dns_name" != *. ]]; then
+  dns_name="${dns_name}."
+fi
+
+domain_mappings_supported=false
+for supported_region in \
+  asia-east1 \
+  asia-northeast1 \
+  asia-southeast1 \
+  europe-north1 \
+  europe-west1 \
+  europe-west4 \
+  us-central1 \
+  us-east1 \
+  us-east4 \
+  us-west1; do
+  if [[ "$region" == "$supported_region" ]]; then
+    domain_mappings_supported=true
+    break
+  fi
+done
+
+if [[ -n "$links_domain" && "$domain_mappings_supported" != true ]]; then
+  echo "Cloud Run domain mappings do not support region '$region'." >&2
+  echo "Use a supported region, Firebase Hosting, or an external HTTPS load balancer for '$links_domain'." >&2
+  exit 1
+fi
 
 if [[ "$service_account_input" == *@* ]]; then
   service_account_email="$service_account_input"
@@ -80,6 +121,9 @@ else
 fi
 
 echo "This script will configure the GCP project '$project_id'"
+if [[ -n "$links_domain" ]]; then
+  echo "It will also create/update Cloud DNS for '$dns_name' and map '$links_domain' to Cloud Run service '$cloud_run_service'."
+fi
 echo ''
 
 read -r -p "Continue creating/updating these GCP resources? [y/N] " answer
@@ -97,6 +141,7 @@ gcloud services enable \
   run.googleapis.com \
   storage.googleapis.com \
   iamcredentials.googleapis.com \
+  dns.googleapis.com \
   --project "$project_id"
 
 echo "Ensuring Artifact Registry repository exists..."
@@ -173,6 +218,31 @@ for role in \
     >/dev/null
 done
 
+if [[ -n "$links_domain" ]]; then
+  echo "Ensuring Cloud DNS public zone exists..."
+  if ! gcloud dns managed-zones describe "$dns_zone" \
+    --project "$project_id" \
+    >/dev/null 2>&1; then
+    gcloud dns managed-zones create "$dns_zone" \
+      --project "$project_id" \
+      --dns-name "$dns_name" \
+      --description "DNS zone for $dns_name"
+  fi
+
+  echo "Ensuring Cloud Run domain mapping exists..."
+  if ! gcloud beta run domain-mappings describe \
+    --project "$project_id" \
+    --region "$region" \
+    --domain "$links_domain" \
+    >/dev/null 2>&1; then
+    gcloud beta run domain-mappings create \
+      --project "$project_id" \
+      --region "$region" \
+      --service "$cloud_run_service" \
+      --domain "$links_domain"
+  fi
+fi
+
 workload_identity_provider="projects/${project_number}/locations/global/workloadIdentityPools/${workload_pool}/providers/${workload_provider}"
 
 echo ''
@@ -182,3 +252,26 @@ echo 'Add the following GitHub Secrets: '
 echo "  - LINKS_GCP_ARTIFACT_REPOSITORY=$artifact_repository"
 echo "  - LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER=$workload_identity_provider"
 echo "  - LINKS_GCP_SERVICE_ACCOUNT=$service_account_email"
+
+if [[ -n "$links_domain" ]]; then
+  echo ''
+  echo "Delegate '$dns_name' to these Cloud DNS name servers at your domain registrar:"
+  gcloud dns record-sets list \
+    --project "$project_id" \
+    --zone "$dns_zone" \
+    --name "$dns_name" \
+    --type NS \
+    --format "value(rrdatas[])"
+
+  echo ''
+  echo "Verify domain ownership if not already done:"
+  echo "  gcloud domains verify ${dns_name%.}"
+
+  echo ''
+  echo "Add these Cloud Run DNS records in Cloud DNS after delegation is active:"
+  gcloud beta run domain-mappings describe \
+    --project "$project_id" \
+    --region "$region" \
+    --domain "$links_domain" \
+    --format "table(resourceRecords[].name,resourceRecords[].type,resourceRecords[].rrdata)"
+fi
