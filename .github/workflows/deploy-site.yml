@@ -10,11 +10,11 @@
 name: Site - Release and Deploy
 
 on:
-  # Allow manual triggers via GitHub Repo > Actions > Release
+  # Allow manual triggers via GitHub Repo > Actions
   workflow_dispatch:
     inputs:
       continue_deployment:
-        description: 'Confirm production deployment'
+        description: 'Confirm production deployment for Public Website'
         type: boolean
         required: true
         default: false
@@ -32,9 +32,9 @@ env:
   IMAGE_TAG: '${{ github.sha }}'
 
 jobs:
-  validate:
-    name: Validate
+  test:
     if: ${{ inputs.continue_deployment == true }}
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -61,7 +61,7 @@ jobs:
 
   deploy:
     name: Deploy
-    needs: validate
+    needs: test
     runs-on: ubuntu-latest
     permissions:
       contents: read

@@ -8,10 +8,14 @@
 name: 'Links - Deploy to GCP'
 
 on:
+  # Allow manual triggers via GitHub Repo > Actions
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - 'main'
+    inputs:
+      continue_deployment:
+        description: 'Confirm production deployment for Links'
+        type: boolean
+        required: true
+        default: false
 
 env:
   PROJECT_ID: '${{ secrets.GCP_PROJECT_ID }}'
@@ -24,6 +28,8 @@ env:
 
 jobs:
   deploy-gcp-cloudrun:
+    if: ${{ inputs.continue_deployment == true }}
+    name: 'Deploy'
     runs-on: 'ubuntu-latest'
     permissions:
       contents: 'read'
