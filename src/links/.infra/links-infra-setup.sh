@@ -78,6 +78,7 @@ service_account_input="${GCP_SERVICE_ACCOUNT:-${cloud_run_service}-deployer}"
 links_domain="${LINKS_DOMAIN:-}"
 dns_zone="${GCP_DNS_ZONE:-}"
 dns_name="${GCP_DNS_NAME:-}"
+domain_mapping_exists=false
 
 if [[ -n "$dns_name" && "$dns_name" != *. ]]; then
   dns_name="${dns_name}."
@@ -203,16 +204,25 @@ if [[ -n "$links_domain" ]]; then
   fi
 
   echo "Ensuring Cloud Run domain mapping exists..."
-  if ! gcloud beta run domain-mappings describe \
+  if gcloud beta run domain-mappings describe \
     --project "$project_id" \
     --region "$region" \
     --domain "$links_domain" \
+    >/dev/null 2>&1; then
+    domain_mapping_exists=true
+  elif gcloud run services describe "$cloud_run_service" \
+    --project "$project_id" \
+    --region "$region" \
     >/dev/null 2>&1; then
     gcloud beta run domain-mappings create \
       --project "$project_id" \
       --region "$region" \
       --service "$cloud_run_service" \
       --domain "$links_domain"
+    domain_mapping_exists=true
+  else
+    echo "Skipping Cloud Run domain mapping because service '$cloud_run_service' does not exist in '$region' yet." >&2
+    echo "Deploy the service with the links GitHub Actions workflow, then run this script again." >&2
   fi
 fi
 
@@ -241,10 +251,15 @@ if [[ -n "$links_domain" ]]; then
   echo "  gcloud domains verify ${dns_name%.}"
 
   echo ''
-  echo "Add these Cloud Run DNS records in Cloud DNS after delegation is active:"
-  gcloud beta run domain-mappings describe \
-    --project "$project_id" \
-    --region "$region" \
-    --domain "$links_domain" \
-    --format "table(resourceRecords[].name,resourceRecords[].type,resourceRecords[].rrdata)"
+  if [[ "$domain_mapping_exists" == true ]]; then
+    echo "Add these Cloud Run DNS records in Cloud DNS after delegation is active:"
+    gcloud beta run domain-mappings describe \
+      --project "$project_id" \
+      --region "$region" \
+      --domain "$links_domain" \
+      --format "table(resourceRecords[].name,resourceRecords[].type,resourceRecords[].rrdata)"
+  else
+    echo "Cloud Run DNS records are not available yet because the domain mapping was not created."
+    echo "Deploy '$cloud_run_service' to '$region', then run this script again."
+  fi
 fi
