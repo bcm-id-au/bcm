@@ -1,4 +1,4 @@
-# Website
+# Public Website
 
 This directory contains the main [murty.au](https://murty.au/) public website.
 
