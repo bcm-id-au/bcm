@@ -13,7 +13,7 @@ Login to GCP and enable the following APIs:
 - Cloud Storage API
 - IAM Credentials API
 
-The workflow identity (used by `GCP_WORKLOAD_IDENTITY_PROVIDER`) must have the following attached roles:
+The workflow identity (used by `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER`) must have the following attached roles:
 
 - `roles/artifactregistry.admin`
 - `roles/run.developer`
@@ -24,9 +24,9 @@ Setup the following GitHub Secrets:
 
 - `GCP_PROJECT_ID`
 - `GCP_REGION`
-- `GCP_ARTIFACT_REPOSITORY`
-- `GCP_WORKLOAD_IDENTITY_PROVIDER`
-- `GCP_SERVICE_ACCOUNT`
+- `LINKS_GCP_ARTIFACT_REPOSITORY`
+- `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER`
+- `LINKS_GCP_SERVICE_ACCOUNT`
 - `CLOUD_RUN_SERVICE`
 
 ### Setup Script

@@ -2,8 +2,10 @@
 
 set -euo pipefail
 
-cp -n .site.infra.sample.env .site.infra.env
-source .site.infra.env
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+
+cp -n "$script_dir/.site.infra.sample.env" "$script_dir/.site.infra.env"
+source "$script_dir/.site.infra.env"
 
 if ! command -v bash >/dev/null 2>&1; then
   echo "Missing required tool: bash" >&2
@@ -170,5 +172,6 @@ echo ''
 echo 'Setup complete.'
 echo ''
 echo 'Add the following GitHub Secrets: '
-echo "  - GCP_WORKLOAD_IDENTITY_PROVIDER=$workload_identity_provider"
-echo "  - GCP_SERVICE_ACCOUNT=$service_account_email"
+echo "  - SITE_GCP_ARTIFACT_REPOSITORY=$artifact_repository"
+echo "  - SITE_GCP_WORKLOAD_IDENTITY_PROVIDER=$workload_identity_provider"
+echo "  - SITE_GCP_SERVICE_ACCOUNT=$service_account_email"
