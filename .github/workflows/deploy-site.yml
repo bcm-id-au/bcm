@@ -2,6 +2,7 @@
 #
 # Manual Workflow: Site - Release and Deploy
 #   - This workflow includes the test, release and deployment process for the site.
+#   - Initial setup steps and documentation in: 'src/site/.infra/README.md'
 #   - Requires GitHub Repository Secrets setup in Repo > Settings > Secrets > Actions.
 #
 #
@@ -21,89 +22,104 @@ on:
 permissions:
   contents: read
 
-jobs:
+env:
+  PROJECT_ID: '${{ secrets.GCP_PROJECT_ID }}'
+  REGION: '${{ secrets.GCP_REGION }}'
+  ARTIFACT_REPOSITORY: '${{ secrets.GCP_ARTIFACT_REPOSITORY }}'
+  SITE_SERVICE: '${{ secrets.CLOUD_RUN_SITE_SERVICE }}'
+  WORKLOAD_IDENTITY_PROVIDER: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+  SERVICE_ACCOUNT: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+  IMAGE_TAG: '${{ github.sha }}'
 
-  build:
-    name: Build
+jobs:
+  validate:
+    name: Validate
     if: ${{ inputs.continue_deployment == true }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Set build artifact name
-        id: artifact
-        shell: bash
-        run: echo "artifact_name=build-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
       - name: Update script file attributes
         shell: bash
-        run: chmod +x ./bin/*.sh
+        run: chmod +x ./bin/site/*.sh
       - name: Setup Deno
         uses: denoland/setup-deno@v2
         with:
           deno-version: latest
       - name: Setup environment
+        working-directory: src/site
         shell: bash
         run: deno task setup
       - name: Build site
+        working-directory: src/site
         shell: bash
         run: deno task build
-      - name: Upload build files
-        uses: actions/upload-artifact@v7
-        with:
-          name: ${{ steps.artifact.outputs.artifact_name }}
-          overwrite: true
-          include-hidden-files: true
-          retention-days: 1
-          compression-level: 9
-          path: |
-            public/
-            .env
-
-  test:
-    name: Test
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-      - name: Download build files
-        uses: actions/download-artifact@v8
-        with:
-          name: ${{ steps.artifact.outputs.artifact_name }}
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
-        with:
-          deno-version: latest
       - name: Run tests
+        working-directory: src/site
         shell: bash
         run: deno task test
 
   deploy:
     name: Deploy
-    needs: [build, test]
+    needs: validate
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      pages: write
       id-token: write
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Download build files
-        uses: actions/download-artifact@v8
+      - id: auth
+        name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
         with:
-          name: ${{ steps.artifact.outputs.artifact_name }}
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v6
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v5
+          workload_identity_provider: '${{ env.WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: '${{ env.SERVICE_ACCOUNT }}'
+          project_id: '${{ env.PROJECT_ID }}'
+          token_format: access_token
+      - name: Set up GCP
+        uses: google-github-actions/setup-gcloud@v2
+      - name: Docker Auth
+        uses: docker/login-action@v3
         with:
-          path: public/
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+          username: oauth2accesstoken
+          password: '${{ steps.auth.outputs.access_token }}'
+          registry: '${{ env.REGION }}-docker.pkg.dev'
+      - name: Create GCP Artifact Registry Repository
+        shell: bash
+        run: |-
+          set -euo pipefail
+          gcloud artifacts repositories describe "${ARTIFACT_REPOSITORY}" \
+            --project "${PROJECT_ID}" \
+            --location "${REGION}" \
+            >/dev/null 2>&1 || \
+          gcloud artifacts repositories create "${ARTIFACT_REPOSITORY}" \
+            --project "${PROJECT_ID}" \
+            --location "${REGION}" \
+            --repository-format docker \
+            --description "bcm site Cloud Run images"
+      - name: Build and Push Docker Image
+        shell: bash
+        run: |-
+          set -euo pipefail
+          image="${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPOSITORY}/${SITE_SERVICE}:${IMAGE_TAG}"
+          latest="${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPOSITORY}/${SITE_SERVICE}:latest"
+          docker build --file src/site/Dockerfile --tag "$image" --tag "$latest" .
+          docker push "$image"
+          docker push "$latest"
+      - name: Deploy to GCP Cloud Run
+        shell: bash
+        run: |-
+          set -euo pipefail
+          image="${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPOSITORY}/${SITE_SERVICE}:${IMAGE_TAG}"
+          gcloud run deploy "${SITE_SERVICE}" \
+            --image "$image" \
+            --project "${PROJECT_ID}" \
+            --region "${REGION}" \
+            --platform managed \
+            --allow-unauthenticated \
+            --port 8080 \
+            --quiet
 
   release:
     name: Release

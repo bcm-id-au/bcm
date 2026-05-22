@@ -61,7 +61,7 @@
     },
     "docker-build": {
       "description": "Build a local Docker image",
-      "command": "docker build --tag bcm-site-image ."
+      "command": "cd ../.. && docker build --file src/site/Dockerfile --tag bcm-site-image ."
     },
     "docker-run": {
       "description": "Start a container using the local Docker image",

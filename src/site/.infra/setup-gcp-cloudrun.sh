@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-cp -n .links.infra.sample.env .links.infra.env
-source .links.infra.env
+cp -n .site.infra.sample.env .site.infra.env
+source .site.infra.env
 
 if ! command -v bash >/dev/null 2>&1; then
   echo "Missing required tool: bash" >&2
@@ -25,11 +25,6 @@ if ! command -v gcloud >/dev/null 2>&1; then
   exit 1
 fi
 
-if ! docker compose version >/dev/null 2>&1; then
-  echo "Missing required tool: docker compose" >&2
-  exit 1
-fi
-
 if [[ -z "${GCP_PROJECT_ID:-}" ]]; then
   echo "Missing required environment variable: GCP_PROJECT_ID" >&2
   exit 1
@@ -45,8 +40,8 @@ if [[ -z "${GCP_ARTIFACT_REPOSITORY:-}" ]]; then
   exit 1
 fi
 
-if [[ -z "${CLOUD_RUN_SERVICE:-}" ]]; then
-  echo "Missing required environment variable: CLOUD_RUN_SERVICE" >&2
+if [[ -z "${CLOUD_RUN_SITE_SERVICE:-}" ]]; then
+  echo "Missing required environment variable: CLOUD_RUN_SITE_SERVICE" >&2
   exit 1
 fi
 
@@ -63,11 +58,11 @@ fi
 project_id="$GCP_PROJECT_ID"
 region="$GCP_REGION"
 artifact_repository="$GCP_ARTIFACT_REPOSITORY"
-cloud_run_service="$CLOUD_RUN_SERVICE"
+cloud_run_site_service="$CLOUD_RUN_SITE_SERVICE"
 github_repository="$GITHUB_REPOSITORY"
-workload_pool="${GCP_WORKLOAD_POOL:-bcm-links-github}"
+workload_pool="${GCP_WORKLOAD_POOL:-bcm-site-github}"
 workload_provider="${GCP_WORKLOAD_PROVIDER:-github}"
-service_account_input="${GCP_SERVICE_ACCOUNT:-${cloud_run_service}-deployer}"
+service_account_input="${GCP_SERVICE_ACCOUNT:-${cloud_run_site_service}-deployer}"
 
 if [[ "$service_account_input" == *@* ]]; then
   service_account_email="$service_account_input"
@@ -93,7 +88,6 @@ echo "Enabling required APIs..."
 gcloud services enable \
   artifactregistry.googleapis.com \
   run.googleapis.com \
-  storage.googleapis.com \
   iamcredentials.googleapis.com \
   --project "$project_id"
 
@@ -106,7 +100,7 @@ if ! gcloud artifacts repositories describe "$artifact_repository" \
     --project "$project_id" \
     --location "$region" \
     --repository-format docker \
-    --description "bcm links Cloud Run images"
+    --description "bcm site Cloud Run images"
 fi
 
 echo "Ensuring deployer service account exists..."
@@ -115,14 +109,13 @@ if ! gcloud iam service-accounts describe "$service_account_email" \
   >/dev/null 2>&1; then
   gcloud iam service-accounts create "$service_account_id" \
     --project "$project_id" \
-    --display-name "bcm links Cloud Run deployer"
+    --display-name "bcm site Cloud Run deployer"
 fi
 
 echo "Granting deployer project roles..."
 for role in \
   roles/artifactregistry.admin \
   roles/run.developer \
-  roles/storage.admin \
   roles/iam.serviceAccountUser; do
   gcloud projects add-iam-policy-binding "$project_id" \
     --member "serviceAccount:${service_account_email}" \
@@ -139,7 +132,7 @@ if ! gcloud iam workload-identity-pools describe "$workload_pool" \
   gcloud iam workload-identity-pools create "$workload_pool" \
     --project "$project_id" \
     --location global \
-    --display-name "bcm links GitHub"
+    --display-name "bcm site GitHub"
 fi
 
 echo "Ensuring GitHub OIDC provider exists..."
