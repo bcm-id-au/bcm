@@ -18,8 +18,8 @@ env:
   ARTIFACT_REPOSITORY: '${{ secrets.LINKS_GCP_ARTIFACT_REPOSITORY }}'
   CLOUD_RUN_SERVICE: '${{ secrets.GCP_CLOUD_RUN_SERVICE_PREFIX }}'
   GITHUB_REPOSITORY_FULL: '${{ github.repository }}'
-  WORKLOAD_POOL: '${{ secrets.LINKS_GCP_WORKLOAD_POOL }}'
-  WORKLOAD_PROVIDER: '${{ secrets.LINKS_GCP_WORKLOAD_PROVIDER_NAME }}'
+  WORKLOAD_POOL_INPUT: '${{ secrets.LINKS_GCP_WORKLOAD_POOL }}'
+  WORKLOAD_PROVIDER_INPUT: '${{ secrets.LINKS_GCP_WORKLOAD_PROVIDER_NAME }}'
   SERVICE_ACCOUNT_INPUT: '${{ secrets.LINKS_GCP_SERVICE_ACCOUNT }}'
   LINKS_DOMAIN: '${{ secrets.LINKS_DOMAIN }}'
   GCP_DNS_ZONE: '${{ secrets.LINKS_GCP_DNS_ZONE }}'
@@ -34,71 +34,65 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: 'actions/checkout@v4'
-      - name: 'Validate bootstrap credentials'
+
+      - name: 'Validate required secrets'
         shell: 'bash'
         env:
           BOOTSTRAP_CREDENTIALS_JSON: '${{ secrets.LINKS_GCP_INFRA_CREDENTIALS_JSON }}'
         run: |-
           set -euo pipefail
 
-          if [[ -z "${BOOTSTRAP_CREDENTIALS_JSON:-}" ]]; then
-            echo "Missing required secret: LINKS_GCP_INFRA_CREDENTIALS_JSON" >&2
+          missing=false
+
+          for secret in \
+            BOOTSTRAP_CREDENTIALS_JSON \
+            PROJECT_ID \
+            ARTIFACT_REPOSITORY \
+            CLOUD_RUN_SERVICE; do
+            if [[ -z "${!secret:-}" ]]; then
+              echo "Missing required secret-backed value: ${secret}" >&2
+              missing=true
+            fi
+          done
+
+          if [[ "${GITHUB_REPOSITORY_FULL}" != */* ]]; then
+            echo "GITHUB_REPOSITORY_FULL must use owner/repo format" >&2
+            missing=true
+          fi
+
+          if [[ -n "${LINKS_DOMAIN:-}" && -z "${GCP_DNS_ZONE:-}" ]]; then
+            echo "Missing required secret for LINKS_DOMAIN: LINKS_GCP_DNS_ZONE" >&2
+            missing=true
+          fi
+
+          if [[ -n "${LINKS_DOMAIN:-}" && -z "${GCP_DNS_NAME:-}" ]]; then
+            echo "Missing required secret for LINKS_DOMAIN: LINKS_GCP_DNS_NAME" >&2
+            missing=true
+          fi
+
+          if [[ "${missing}" == true ]]; then
             exit 1
           fi
+
       - name: 'Authenticate to GCP'
         uses: 'google-github-actions/auth@v2'
         with:
           credentials_json: '${{ secrets.LINKS_GCP_INFRA_CREDENTIALS_JSON }}'
           project_id: '${{ env.PROJECT_ID }}'
+
       - name: 'Set up GCP'
         uses: 'google-github-actions/setup-gcloud@v2'
-      - name: 'Deploy Infrastructure'
+
+      - name: 'Resolve infrastructure settings'
+        id: 'settings'
         shell: 'bash'
         run: |-
           set -euo pipefail
 
-          if [[ -z "${PROJECT_ID:-}" ]]; then
-            echo "Missing required secret: GCP_PROJECT_ID" >&2
-            exit 1
-          fi
-
-          if [[ -z "${ARTIFACT_REPOSITORY:-}" ]]; then
-            echo "Missing required secret: LINKS_GCP_ARTIFACT_REPOSITORY" >&2
-            exit 1
-          fi
-
-          if [[ -z "${CLOUD_RUN_SERVICE:-}" ]]; then
-            echo "Missing required secret: GCP_CLOUD_RUN_SERVICE_PREFIX" >&2
-            exit 1
-          fi
-
-          if [[ "${GITHUB_REPOSITORY_FULL}" != */* ]]; then
-            echo "GITHUB_REPOSITORY_FULL must use owner/repo format" >&2
-            exit 1
-          fi
-
-          if [[ -n "${LINKS_DOMAIN:-}" && -z "${GCP_DNS_ZONE:-}" ]]; then
-            echo "Missing required secret for LINKS_DOMAIN: LINKS_GCP_DNS_ZONE" >&2
-            exit 1
-          fi
-
-          if [[ -n "${LINKS_DOMAIN:-}" && -z "${GCP_DNS_NAME:-}" ]]; then
-            echo "Missing required secret for LINKS_DOMAIN: LINKS_GCP_DNS_NAME" >&2
-            exit 1
-          fi
-
-          project_id="${PROJECT_ID}"
-          region="${REGION}"
-          artifact_repository="${ARTIFACT_REPOSITORY}"
-          cloud_run_service="${CLOUD_RUN_SERVICE}"
-          github_repository="${GITHUB_REPOSITORY_FULL}"
-          workload_pool="${WORKLOAD_POOL:-bcm-links-github}"
-          workload_provider="${WORKLOAD_PROVIDER:-github}"
-          service_account_input="${SERVICE_ACCOUNT_INPUT:-${cloud_run_service}-deployer}"
-          links_domain="${LINKS_DOMAIN:-}"
-          dns_zone="${GCP_DNS_ZONE:-}"
+          workload_pool="${WORKLOAD_POOL_INPUT:-bcm-links-github}"
+          workload_provider="${WORKLOAD_PROVIDER_INPUT:-github}"
+          service_account_input="${SERVICE_ACCOUNT_INPUT:-${CLOUD_RUN_SERVICE}-deployer}"
           dns_name="${GCP_DNS_NAME:-}"
-          domain_mapping_exists=false
 
           if [[ -n "${dns_name}" && "${dns_name}" != *. ]]; then
             dns_name="${dns_name}."
@@ -109,19 +103,35 @@ jobs:
             service_account_id="${service_account_input%@*}"
           else
             service_account_id="${service_account_input}"
-            service_account_email="${service_account_id}@${project_id}.iam.gserviceaccount.com"
+            service_account_email="${service_account_id}@${PROJECT_ID}.iam.gserviceaccount.com"
           fi
 
-          echo "Configuring GCP project '${project_id}'"
+          project_number="$(gcloud projects describe "${PROJECT_ID}" --format='value(projectNumber)')"
+          workload_identity_provider="projects/${project_number}/locations/global/workloadIdentityPools/${workload_pool}/providers/${workload_provider}"
+          principal="principalSet://iam.googleapis.com/projects/${project_number}/locations/global/workloadIdentityPools/${workload_pool}/attribute.repository/${GITHUB_REPOSITORY_FULL}"
 
-          if [[ -n "${links_domain}" ]]; then
-            echo "Configuring Cloud DNS '${dns_name}' and mapping '${links_domain}' to '${cloud_run_service}' in '${region}'."
+          {
+            echo "PROJECT_NUMBER=${project_number}"
+            echo "WORKLOAD_POOL=${workload_pool}"
+            echo "WORKLOAD_PROVIDER=${workload_provider}"
+            echo "WORKLOAD_IDENTITY_PROVIDER=${workload_identity_provider}"
+            echo "SERVICE_ACCOUNT_ID=${service_account_id}"
+            echo "SERVICE_ACCOUNT_EMAIL=${service_account_email}"
+            echo "PRINCIPAL=${principal}"
+            echo "RESOLVED_DNS_NAME=${dns_name}"
+            echo "DOMAIN_MAPPING_CREATED=false"
+          } >>"${GITHUB_ENV}"
+
+          echo "Configuring GCP project '${PROJECT_ID}'"
+          if [[ -n "${LINKS_DOMAIN}" ]]; then
+            echo "Configuring Cloud DNS '${dns_name}' and mapping '${LINKS_DOMAIN}' to '${CLOUD_RUN_SERVICE}' in '${REGION}'."
           fi
 
-          echo "Reading project number..."
-          project_number="$(gcloud projects describe "${project_id}" --format='value(projectNumber)')"
+      - name: 'Enable GCP APIs'
+        shell: 'bash'
+        run: |-
+          set -euo pipefail
 
-          echo "Enabling required APIs..."
           gcloud services enable \
             artifactregistry.googleapis.com \
             run.googleapis.com \
@@ -129,153 +139,230 @@ jobs:
             iamcredentials.googleapis.com \
             dns.googleapis.com \
             secretmanager.googleapis.com \
-            --project "${project_id}"
+            --project "${PROJECT_ID}"
 
-          echo "Ensuring Artifact Registry repository exists..."
-          if ! gcloud artifacts repositories describe "${artifact_repository}" \
-            --project "${project_id}" \
-            --location "${region}" \
+      - name: 'Ensure Artifact Registry repository'
+        shell: 'bash'
+        run: |-
+          set -euo pipefail
+
+          if gcloud artifacts repositories describe "${ARTIFACT_REPOSITORY}" \
+            --project "${PROJECT_ID}" \
+            --location "${REGION}" \
             >/dev/null 2>&1; then
-            gcloud artifacts repositories create "${artifact_repository}" \
-              --project "${project_id}" \
-              --location "${region}" \
-              --repository-format docker \
-              --description "bcm links Cloud Run images"
+            exit 0
           fi
 
-          echo "Ensuring deployer service account exists..."
-          if ! gcloud iam service-accounts describe "${service_account_email}" \
-            --project "${project_id}" \
+          gcloud artifacts repositories create "${ARTIFACT_REPOSITORY}" \
+            --project "${PROJECT_ID}" \
+            --location "${REGION}" \
+            --repository-format docker \
+            --description "bcm links Cloud Run images"
+
+      - name: 'Ensure deployer service account'
+        shell: 'bash'
+        run: |-
+          set -euo pipefail
+
+          if gcloud iam service-accounts describe "${SERVICE_ACCOUNT_EMAIL}" \
+            --project "${PROJECT_ID}" \
             >/dev/null 2>&1; then
-            gcloud iam service-accounts create "${service_account_id}" \
-              --project "${project_id}" \
-              --display-name "bcm links Cloud Run deployer"
+            exit 0
           fi
 
-          echo "Granting deployer project roles..."
+          gcloud iam service-accounts create "${SERVICE_ACCOUNT_ID}" \
+            --project "${PROJECT_ID}" \
+            --display-name "bcm links Cloud Run deployer"
+
+      - name: 'Grant deployer project roles'
+        shell: 'bash'
+        run: |-
+          set -euo pipefail
+
           for role in \
             roles/artifactregistry.admin \
             roles/run.developer \
             roles/storage.admin \
             roles/iam.serviceAccountUser; do
-            gcloud projects add-iam-policy-binding "${project_id}" \
-              --member "serviceAccount:${service_account_email}" \
+            gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+              --member "serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
               --role "${role}" \
               --condition=None \
               >/dev/null
           done
 
-          echo "Ensuring Workload Identity pool exists..."
-          if ! gcloud iam workload-identity-pools describe "${workload_pool}" \
-            --project "${project_id}" \
+      - name: 'Ensure Workload Identity pool'
+        shell: 'bash'
+        run: |-
+          set -euo pipefail
+
+          if gcloud iam workload-identity-pools describe "${WORKLOAD_POOL}" \
+            --project "${PROJECT_ID}" \
             --location global \
             >/dev/null 2>&1; then
-            gcloud iam workload-identity-pools create "${workload_pool}" \
-              --project "${project_id}" \
-              --location global \
-              --display-name "bcm links GitHub"
+            exit 0
           fi
 
-          echo "Ensuring GitHub OIDC provider exists..."
-          if ! gcloud iam workload-identity-pools providers describe "${workload_provider}" \
-            --project "${project_id}" \
+          gcloud iam workload-identity-pools create "${WORKLOAD_POOL}" \
+            --project "${PROJECT_ID}" \
             --location global \
-            --workload-identity-pool "${workload_pool}" \
+            --display-name "bcm links GitHub"
+
+      - name: 'Ensure GitHub OIDC provider'
+        shell: 'bash'
+        run: |-
+          set -euo pipefail
+
+          if gcloud iam workload-identity-pools providers describe "${WORKLOAD_PROVIDER}" \
+            --project "${PROJECT_ID}" \
+            --location global \
+            --workload-identity-pool "${WORKLOAD_POOL}" \
             >/dev/null 2>&1; then
-            gcloud iam workload-identity-pools providers create-oidc "${workload_provider}" \
-              --project "${project_id}" \
-              --location global \
-              --workload-identity-pool "${workload_pool}" \
-              --display-name "GitHub Actions" \
-              --issuer-uri "https://token.actions.githubusercontent.com" \
-              --attribute-mapping "google.subject=assertion.sub,attribute.actor=assertion.actor,attribute.repository=assertion.repository,attribute.repository_owner=assertion.repository_owner" \
-              --attribute-condition "assertion.repository == '${github_repository}'"
+            exit 0
           fi
 
-          principal="principalSet://iam.googleapis.com/projects/${project_number}/locations/global/workloadIdentityPools/${workload_pool}/attribute.repository/${github_repository}"
+          gcloud iam workload-identity-pools providers create-oidc "${WORKLOAD_PROVIDER}" \
+            --project "${PROJECT_ID}" \
+            --location global \
+            --workload-identity-pool "${WORKLOAD_POOL}" \
+            --display-name "GitHub Actions" \
+            --issuer-uri "https://token.actions.githubusercontent.com" \
+            --attribute-mapping "google.subject=assertion.sub,attribute.actor=assertion.actor,attribute.repository=assertion.repository,attribute.repository_owner=assertion.repository_owner" \
+            --attribute-condition "assertion.repository == '${GITHUB_REPOSITORY_FULL}'"
 
-          echo "Granting GitHub repository permission to impersonate deployer..."
+      - name: 'Grant GitHub repository impersonation'
+        shell: 'bash'
+        run: |-
+          set -euo pipefail
+
           for role in \
             roles/iam.workloadIdentityUser \
             roles/iam.serviceAccountTokenCreator; do
-            gcloud iam service-accounts add-iam-policy-binding "${service_account_email}" \
-              --project "${project_id}" \
-              --member "${principal}" \
+            gcloud iam service-accounts add-iam-policy-binding "${SERVICE_ACCOUNT_EMAIL}" \
+              --project "${PROJECT_ID}" \
+              --member "${PRINCIPAL}" \
               --role "${role}" \
               >/dev/null
           done
 
-          if [[ -n "${links_domain}" ]]; then
-            echo "Ensuring Cloud DNS public zone exists..."
-            if ! gcloud dns managed-zones describe "${dns_zone}" \
-              --project "${project_id}" \
-              >/dev/null 2>&1; then
-              gcloud dns managed-zones create "${dns_zone}" \
-                --project "${project_id}" \
-                --dns-name "${dns_name}" \
-                --description "DNS zone for ${dns_name}"
-            fi
+      - name: 'Ensure Cloud DNS public zone'
+        if: ${{ env.LINKS_DOMAIN != '' }}
+        shell: 'bash'
+        run: |-
+          set -euo pipefail
 
-            echo "Ensuring Cloud Run domain mapping exists..."
-            if gcloud beta run domain-mappings describe \
-              --project "${project_id}" \
-              --region "${region}" \
-              --domain "${links_domain}" \
-              >/dev/null 2>&1; then
-              domain_mapping_exists=true
-            elif gcloud run services describe "${cloud_run_service}" \
-              --project "${project_id}" \
-              --region "${region}" \
-              >/dev/null 2>&1; then
-              gcloud beta run domain-mappings create \
-                --project "${project_id}" \
-                --region "${region}" \
-                --service "${cloud_run_service}" \
-                --domain "${links_domain}"
-              domain_mapping_exists=true
-            else
-              echo "Skipping Cloud Run domain mapping because service '${cloud_run_service}' does not exist in '${region}' yet." >&2
-              echo "Deploy the service with the links GitHub Actions workflow, then run this workflow again." >&2
-            fi
+          if gcloud dns managed-zones describe "${GCP_DNS_ZONE}" \
+            --project "${PROJECT_ID}" \
+            >/dev/null 2>&1; then
+            exit 0
           fi
 
-          workload_identity_provider="projects/${project_number}/locations/global/workloadIdentityPools/${workload_pool}/providers/${workload_provider}"
+          gcloud dns managed-zones create "${GCP_DNS_ZONE}" \
+            --project "${PROJECT_ID}" \
+            --dns-name "${RESOLVED_DNS_NAME}" \
+            --description "DNS zone for ${RESOLVED_DNS_NAME}"
 
-          echo ''
-          echo 'GCP setup completed.'
-          echo ''
-          echo 'Add or update the following GitHub Secrets:'
-          echo "  - LINKS_GCP_ARTIFACT_REPOSITORY=${artifact_repository}"
-          echo "  - LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER=${workload_identity_provider}"
-          echo "  - LINKS_GCP_SERVICE_ACCOUNT=${service_account_email}"
-          echo ''
-          echo 'Manually create or update the app env vars defined in ".links.sample.env" with suitable production values:'
-          echo "  https://console.cloud.google.com/security/secret-manager?project=${project_id}"
+      - name: 'Ensure Cloud Run domain mapping'
+        if: ${{ env.LINKS_DOMAIN != '' }}
+        shell: 'bash'
+        run: |-
+          set -euo pipefail
 
-          if [[ -n "${links_domain}" ]]; then
+          if gcloud beta run domain-mappings describe \
+            --project "${PROJECT_ID}" \
+            --region "${REGION}" \
+            --domain "${LINKS_DOMAIN}" \
+            >/dev/null 2>&1; then
+            echo "DOMAIN_MAPPING_CREATED=true" >>"${GITHUB_ENV}"
+            exit 0
+          fi
+
+          if ! gcloud run services describe "${CLOUD_RUN_SERVICE}" \
+            --project "${PROJECT_ID}" \
+            --region "${REGION}" \
+            >/dev/null 2>&1; then
+            echo "Skipping Cloud Run domain mapping because service '${CLOUD_RUN_SERVICE}' does not exist in '${REGION}' yet." >&2
+            echo "Deploy the service with the links GitHub Actions workflow, then run this workflow again." >&2
+            exit 0
+          fi
+
+          gcloud beta run domain-mappings create \
+            --project "${PROJECT_ID}" \
+            --region "${REGION}" \
+            --service "${CLOUD_RUN_SERVICE}" \
+            --domain "${LINKS_DOMAIN}"
+
+          echo "DOMAIN_MAPPING_CREATED=true" >>"${GITHUB_ENV}"
+
+      - name: 'Write deployment summary'
+        shell: 'bash'
+        run: |-
+          set -euo pipefail
+
+          {
+            echo '## Links GCP Infrastructure'
             echo ''
-            echo "Delegate '${dns_name}' to these Cloud DNS name servers at your domain registrar:"
+            echo 'GCP setup completed.'
+            echo ''
+            echo '### GitHub Secrets'
+            echo ''
+            echo 'Add or update the following GitHub Secrets:'
+            echo ''
+            echo "- \`LINKS_GCP_ARTIFACT_REPOSITORY=${ARTIFACT_REPOSITORY}\`"
+            echo "- \`LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER=${WORKLOAD_IDENTITY_PROVIDER}\`"
+            echo "- \`LINKS_GCP_SERVICE_ACCOUNT=${SERVICE_ACCOUNT_EMAIL}\`"
+            echo ''
+            echo '### App Secrets'
+            echo ''
+            echo 'Manually create or update the app env vars defined in `.links.sample.env` with suitable production values:'
+            echo ''
+            echo "https://console.cloud.google.com/security/secret-manager?project=${PROJECT_ID}"
+          } >>"${GITHUB_STEP_SUMMARY}"
+
+          if [[ -z "${LINKS_DOMAIN}" ]]; then
+            exit 0
+          fi
+
+          {
+            echo ''
+            echo '### Domain Setup'
+            echo ''
+            echo "Delegate \`${RESOLVED_DNS_NAME}\` to these Cloud DNS name servers at your domain registrar:"
+            echo ''
+            echo '```'
             gcloud dns record-sets list \
-              --project "${project_id}" \
-              --zone "${dns_zone}" \
-              --name "${dns_name}" \
+              --project "${PROJECT_ID}" \
+              --zone "${GCP_DNS_ZONE}" \
+              --name "${RESOLVED_DNS_NAME}" \
               --type NS \
               --format "value(rrdatas[])"
-
+            echo '```'
             echo ''
-            echo "Verify domain ownership if not already done:"
-            echo "  gcloud domains verify ${dns_name%.}"
-
+            echo 'Verify domain ownership if not already done:'
             echo ''
-            if [[ "${domain_mapping_exists}" == true ]]; then
-              echo "Add these Cloud Run DNS records in Cloud DNS after delegation is active:"
-              gcloud beta run domain-mappings describe \
-                --project "${project_id}" \
-                --region "${region}" \
-                --domain "${links_domain}" \
-                --format "table(resourceRecords[].name,resourceRecords[].type,resourceRecords[].rrdata)"
-            else
-              echo "Cloud Run DNS records are not available yet because the domain mapping was not created."
-              echo "Deploy '${cloud_run_service}' to '${region}', then run this workflow again."
-            fi
+            echo '```bash'
+            echo "gcloud domains verify ${RESOLVED_DNS_NAME%.}"
+            echo '```'
+          } >>"${GITHUB_STEP_SUMMARY}"
+
+          if [[ "${DOMAIN_MAPPING_CREATED}" != true ]]; then
+            {
+              echo ''
+              echo 'Cloud Run DNS records are not available yet because the domain mapping was not created.'
+              echo "Deploy \`${CLOUD_RUN_SERVICE}\` to \`${REGION}\`, then run this workflow again."
+            } >>"${GITHUB_STEP_SUMMARY}"
+            exit 0
           fi
+
+          {
+            echo ''
+            echo 'Add these Cloud Run DNS records in Cloud DNS after delegation is active:'
+            echo ''
+            echo '```'
+            gcloud beta run domain-mappings describe \
+              --project "${PROJECT_ID}" \
+              --region "${REGION}" \
+              --domain "${LINKS_DOMAIN}" \
+              --format "table(resourceRecords[].name,resourceRecords[].type,resourceRecords[].rrdata)"
+            echo '```'
+          } >>"${GITHUB_STEP_SUMMARY}"
