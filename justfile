@@ -42,9 +42,20 @@ links-stop:
   bash ./src/links/bin/stop-links.sh
 
 # Generate release notes and save them to a file
-[group('release')]
+[group('tools')]
 release-notes output_file:
   bash ./bin/release-notes.sh "$output_file"
+
+# Login to the GitHub CLI
+[group('tools')]
+gh-login:
+  gh auth login --web --git-protocol ssh
+
+# Lint GitHub Actions Workflows
+[group('tools')]
+gh-actions-lint:
+  gh extension install cschleiden/gh-actionlint
+  gh actionlint
 
 # Run the build process for Site
 [group('site')]

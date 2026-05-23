@@ -21,16 +21,11 @@ The systems in this respository assume that your local machine:
 - Has an up-to-date version of [Docker Desktop](https://docs.docker.com/desktop/) installed and ready
 - Has an up-to-date version of [Deno](https://deno.com/) installed and ready
 - Has an up-to-date version of [Just](https://github.com/casey/just) installed and ready
-
-## Local Setup
-
-```bash
-bash ./bin/setup.sh
-```
+- Has an up-to-date version of [GitHub CLI](https://cli.github.com/) installed and ready
 
 ## Tools
 
-This repository uses [Just](https://github.com/casey/just) to run commands from [justfile](justfile).
+This repository uses [Just](https://github.com/casey/just) to run commands defined in [justfile](justfile).
 
 To see the available options for the `just` CLI, run:
 
