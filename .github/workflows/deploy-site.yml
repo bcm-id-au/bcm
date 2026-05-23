@@ -27,6 +27,8 @@ jobs:
     name: Build
     if: ${{ inputs.continue_deployment == true }}
     runs-on: ubuntu-latest
+    outputs:
+      artifact_name: ${{ steps.artifact.outputs.artifact_name }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -71,7 +73,7 @@ jobs:
       - name: Download build files
         uses: actions/download-artifact@v8
         with:
-          name: ${{ steps.artifact.outputs.artifact_name }}
+          name: ${{ needs.build.outputs.artifact_name }}
       - name: Setup Deno
         uses: denoland/setup-deno@v2
         with:
@@ -96,7 +98,7 @@ jobs:
       - name: Download build files
         uses: actions/download-artifact@v8
         with:
-          name: ${{ steps.artifact.outputs.artifact_name }}
+          name: ${{ needs.build.outputs.artifact_name }}
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v6
       - name: Upload GitHub Pages artifact
