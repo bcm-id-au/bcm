@@ -1,0 +1,28 @@
+#
+#
+# OpenAI Codex config - https://developers.openai.com/codex/config-reference
+#
+#
+
+analytics.enabled = false
+feedback.enabled = false
+
+approval_policy = "on-request"
+approvals_reviewer = "user"
+
+personality = "pragmatic"
+model_reasoning_effort = "medium"
+model_reasoning_summary = "concise"
+model_verbosity = "low"
+
+sandbox_mode = "workspace-write"
+web_search = "cached"
+
+file_opener = "none"
+
+[shell_environment_policy]
+include_only = ["PATH", "HOME"]
+
+[features]
+codex_git_commit = false
+personality = false

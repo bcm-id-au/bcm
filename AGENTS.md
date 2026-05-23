@@ -28,7 +28,7 @@ To ensure scripts are safe, portable, and reliable across Fedora installations:
 - **Variable Quoting:** Always quote variable references (e.g., `"$DIR"`) to prevent word splitting and globbing issues.
 - **Sudo Permissions:**
   - Avoid running entire scripts as root.
-  - If a command requires `sudo`, ask the user to confirm and show the full suggested command
+  - If a command requires `sudo`, stop processing and show the full suggested command along with an explanation as to why `sudo` is required
 
 ## Required Tools
 
@@ -44,7 +44,7 @@ If any of the below CLI commands aren't available, stop processing and explain t
 
 - **Concise Responses:** Keep responses concise and based on factual information
 - **Minimise Comments:** Minimise comments in code to only briefly explain the "why", contextual information and excess spacing is messy.
-- **Strict Command Banishment:** Under no circumstances should the agent ever run `git commit`, or `git push` commands. Doing so is strictly forbidden by the project configuration.
+- **Strict Command Banishment:** Under no circumstances should the agent ever run `git commit`, `git push`, `rm` or `kill` commands. Doing so is strictly forbidden by the project configuration.
 - **No Destructive Operations:** Never delete system files or run modifying system commands without explaining their purpose and obtaining explicit permission from the user.
 - **Syntax Validation:** Always run syntax validation `bash -n <script>` before proposing modifications to shell scripts.
 - **Sandboxed Validation:** Validate all proposed changes locally within the sandbox before committing.
@@ -178,14 +178,6 @@ draft: false
 ```
 
 See `src/types.ts` for the `YamlData` type definition.
-
-#### Version Tags
-
-Releases use date-based version tags: `YYYYMMDD.HHMM` (e.g., `20240221.1430`)
-
-- Created via `deno task release` script
-- Triggers the `.github/workflows/release.yml` workflow
-- Workflow runs tests, deploys to GitHub Pages, and creates a GitHub release
 
 ### Code Style
 
