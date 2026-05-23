@@ -22,6 +22,12 @@ The systems in this respository assume that your local machine:
 - Has an up-to-date version of [Deno](https://deno.com/) installed and ready
 - Has an up-to-date version of [Just](https://github.com/casey/just) installed and ready
 
+## Local Setup
+
+```bash
+bash ./bin/setup.sh
+```
+
 ## Tools
 
 This repository uses [Just](https://github.com/casey/just) to run commands from [justfile](justfile).

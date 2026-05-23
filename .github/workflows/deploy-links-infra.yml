@@ -1,6 +1,6 @@
 #
 #
-# Manual Workflow: Links - Deploy GCP Infrastructure
+# Manual Workflow: Links - Create and update GCP infrastructure
 #   - Creates/updates the infrastructure required by '.github/workflows/deploy-links.yml'.
 #   - Initial setup steps and documentation in: 'src/links/.infra/README.md'
 #   - Requires a bootstrap GCP credentials JSON secret with permission to manage these resources.

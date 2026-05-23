@@ -4,14 +4,23 @@ This directory contains a self-hosted version of the [Karakeep](https://karakeep
 
 ## Local Environment
 
-- Start the local server: `just links-start`
-- Stop the local server: `just links-stop`
+Start the local server:
+
+```bash
+just links-start
+```
+
+Stop the local server:
+
+```bash
+just links-stop
+```
 
 ## Online Infrastructure
 
 ### Deployments
 
-Deployed to GCP manually in GitHub Actions via [deploy-links.yml](../../.github/workflows/deploy-links.yml)
+Deployed to GCP manually in GitHub Actions via [deploy-links-app.yml](../../.github/workflows/deploy-links-app.yml)
 
 ### Infrastructure Setup
 

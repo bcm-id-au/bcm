@@ -1,6 +1,6 @@
 #
 #
-# Manual Workflow: Links - Deploy to GCP
+# Manual Workflow: Links - Deploy app build to GCP Cloud Run
 #   - Initial setup steps and documentation in: 'src/links/.infra/README.md'
 #
 #
