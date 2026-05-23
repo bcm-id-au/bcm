@@ -77,7 +77,7 @@
     },
     "release-notes": {
       "description": "Generates content for the GitHub Release description.",
-      "command": "cd ../.. && bash ./bin/release/release-notes.sh"
+      "command": "cd ../.. && bash ./bin/release-notes.sh"
     },
     "serve": {
       "description": "Start a local web server.",

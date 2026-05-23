@@ -135,8 +135,8 @@ jobs:
       - name: Generate release notes
         shell: bash
         run: |
-          chmod +x ./bin/release/release-notes.sh
-          ./bin/release/release-notes.sh release-notes.log
+          chmod +x ./bin/release-notes.sh
+          bash ./bin/release-notes.sh release-notes.log
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
