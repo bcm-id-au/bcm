@@ -9,6 +9,7 @@ This repository contains a set of self-hosted systems.
 - [.zed](.zed/) - Customised [Zed Editor](https://zed.dev/) project configuration.
 - [bin](bin/) - Bash helper scripts
 - [src/links](src/links/) - Source code for a self-hosted version of the [Karakeep](https://karakeep.app/) bookmarking service.
+- [src/links/.infra](src/links/.infra/) - GCP infrastructure setup for the Links system.
 - [src/site](src/site/) - Source code for the main public website at [murty.au](https://murty.au).
 - [storage](storage/) - Used for persistent storage by local Docker containers.
 
