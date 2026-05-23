@@ -79,6 +79,57 @@ links_domain="${LINKS_DOMAIN:-}"
 dns_zone="${GCP_DNS_ZONE:-}"
 dns_name="${GCP_DNS_NAME:-}"
 domain_mapping_exists=false
+NEXTAUTH_SECRET="${NEXTAUTH_SECRET:-replace-with-production-nextauth-secret}"
+NEXTAUTH_URL="${NEXTAUTH_URL:-https://links.example-domain.com}"
+MEILI_MASTER_KEY="${MEILI_MASTER_KEY:-replace-with-production-meili-master-key}"
+OPENAI_API_KEY="${OPENAI_API_KEY:-replace-with-production-openai-api-key}"
+INFERENCE_TEXT_MODEL="${INFERENCE_TEXT_MODEL:-gpt-4.1-mini}"
+INFERENCE_IMAGE_MODEL="${INFERENCE_IMAGE_MODEL:-gpt-4o-mini}"
+DISABLE_SIGNUPS="${DISABLE_SIGNUPS:-true}"
+KARAKEEP_DISABLE_SIGNUPS="${KARAKEEP_DISABLE_SIGNUPS:-true}"
+runtime_secret_names=(
+  NEXTAUTH_SECRET
+  NEXTAUTH_URL
+  MEILI_MASTER_KEY
+  OPENAI_API_KEY
+  INFERENCE_TEXT_MODEL
+  INFERENCE_IMAGE_MODEL
+  DISABLE_SIGNUPS
+  KARAKEEP_DISABLE_SIGNUPS
+)
+
+secret_id_for_env_name() {
+  case "$1" in
+    NEXTAUTH_SECRET)
+      echo "${cloud_run_service}-nextauth-secret"
+      ;;
+    NEXTAUTH_URL)
+      echo "${cloud_run_service}-nextauth-url"
+      ;;
+    MEILI_MASTER_KEY)
+      echo "${cloud_run_service}-meili-master-key"
+      ;;
+    OPENAI_API_KEY)
+      echo "${cloud_run_service}-openai-api-key"
+      ;;
+    INFERENCE_TEXT_MODEL)
+      echo "${cloud_run_service}-inference-text-model"
+      ;;
+    INFERENCE_IMAGE_MODEL)
+      echo "${cloud_run_service}-inference-image-model"
+      ;;
+    DISABLE_SIGNUPS)
+      echo "${cloud_run_service}-disable-signups"
+      ;;
+    KARAKEEP_DISABLE_SIGNUPS)
+      echo "${cloud_run_service}-karakeep-disable-signups"
+      ;;
+    *)
+      echo "Unknown runtime secret environment variable: $1" >&2
+      return 1
+      ;;
+  esac
+}
 
 if [[ -n "$dns_name" && "$dns_name" != *. ]]; then
   dns_name="${dns_name}."
@@ -116,6 +167,7 @@ gcloud services enable \
   storage.googleapis.com \
   iamcredentials.googleapis.com \
   dns.googleapis.com \
+  secretmanager.googleapis.com \
   --project "$project_id"
 
 echo "Ensuring Artifact Registry repository exists..."
@@ -229,12 +281,15 @@ fi
 workload_identity_provider="projects/${project_number}/locations/global/workloadIdentityPools/${workload_pool}/providers/${workload_provider}"
 
 echo ''
-echo 'Setup complete.'
+echo 'GCP setup completed.'
 echo ''
-echo 'Add the following GitHub Secrets: '
+echo '1. Add the following GitHub Secrets: '
 echo "  - LINKS_GCP_ARTIFACT_REPOSITORY=$artifact_repository"
 echo "  - LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER=$workload_identity_provider"
 echo "  - LINKS_GCP_SERVICE_ACCOUNT=$service_account_email"
+echo ''
+echo '2. Manually create or update the app env vars defined in ".links.sample.env" with suitable production values:'
+echo "  https://console.cloud.google.com/security/secret-manager?project=${project_id}"
 
 if [[ -n "$links_domain" ]]; then
   echo ''
