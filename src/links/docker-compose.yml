@@ -1,7 +1,7 @@
 services:
   bcm-links-web:
     image: "ghcr.io/karakeep-app/karakeep:release"
-    restart: unless-stopped
+    restart: no
     volumes:
       - ../../storage/links/app:/data
     ports:
@@ -16,7 +16,7 @@ services:
       DATA_DIR: /data
   bcm-links-browser:
     image: gcr.io/zenika-hub/alpine-chrome:124
-    restart: unless-stopped
+    restart: no
     command:
       - --no-sandbox
       - --disable-gpu
@@ -26,7 +26,7 @@ services:
       - --hide-scrollbars
   bcm-links-search:
     image: getmeili/meilisearch:v1.41.0
-    restart: unless-stopped
+    restart: no
     env_file:
       - .links.env
     environment:
