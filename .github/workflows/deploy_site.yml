@@ -19,6 +19,11 @@ on:
         required: true
         default: false
 
+defaults:
+  run:
+    working-directory: ./src/site
+    shell: bash
+
 permissions:
   contents: read
 
@@ -41,12 +46,8 @@ jobs:
         with:
           deno-version: latest
       - name: Setup environment
-        working-directory: ./src/site
-        shell: bash
         run: deno task setup
       - name: Build site
-        working-directory: ./src/site
-        shell: bash
         run: deno task build
       - name: Upload build files
         uses: actions/upload-artifact@v7
@@ -70,17 +71,15 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: ${{ needs.build.outputs.artifact_name }}
+          path: ./src/site
       - name: Setup Deno
         uses: denoland/setup-deno@v2
         with:
           deno-version: latest
       - name: Run tests
-        working-directory: ./
+        working-directory: ./src/site
         shell: bash
-        run: |
-          cd ./src/site
-          ls -lah
-          deno task test
+        run: deno task test
   deploy:
     name: Deploy
     needs: [build, test]
@@ -134,18 +133,20 @@ jobs:
           git tag ${{ steps.release.outputs.tag }}
           git push --tags --quiet
       - name: Generate release notes
-        shell: bash
+        working-directory: ${{ github.workspace }}
         run: |
           chmod +x ./bin/release-notes.sh
-          bash ./bin/release-notes.sh release-notes.log
+          bash ./bin/release-notes.sh ${{ github.workspace }}/release-notes.log
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
           name: ${{ steps.release.outputs.name }}
           tag: ${{ steps.release.outputs.tag }}
-          bodyFile: release-notes.log
+          bodyFile: ${{ github.workspace }}/release-notes.log
           makeLatest: true
       - name: Cleanup
+        working-directory: ${{ github.workspace }}
         run: |
-          rm ./src/site/*.log
+          rm ./release-notes.log
+          rm ./src/site/.env
           rm -rf ./src/site/public
