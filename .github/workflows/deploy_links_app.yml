@@ -23,7 +23,7 @@ env:
   ARTIFACT_REPOSITORY: '${{ secrets.LINKS_GCP_ARTIFACT_REPOSITORY }}'
   SERVICE: '${{ secrets.GCP_CLOUD_RUN_SERVICE_PREFIX }}'
   WORKLOAD_IDENTITY_PROVIDER: '${{ secrets.LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER }}'
-  SERVICE_ACCOUNT: '${{ secrets.LINKS_GCP_APP_CREDENTIALS_JSON }}'
+  SERVICE_ACCOUNT: '${{ secrets.LINKS_GCP_APP_CREDENTIALS_EMAIL }}'
   IMAGE_TAG: '${{ github.sha }}'
 
 jobs:
@@ -42,7 +42,7 @@ jobs:
         uses: 'google-github-actions/auth@v3'
         with:
           workload_identity_provider: '${{ env.WORKLOAD_IDENTITY_PROVIDER }}'
-          service_account: '${{ env.SERVICE_ACCOUNT }}'
+          service_account: '${{ env.LINKS_GCP_APP_CREDENTIALS_EMAIL }}'
           project_id: '${{ env.PROJECT_ID }}'
           token_format: 'access_token'
       - name: 'Set up GCP'

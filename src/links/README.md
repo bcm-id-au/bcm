@@ -51,20 +51,21 @@ Add the below items to the list at `GitHub Repo > Settings > Secrets and variabl
 - `LINKS_GCP_ARTIFACT_REPOSITORY`
 - `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER`
 - `LINKS_GCP_CLOUD_RUN_SERVICE_PREFIX`
+- `LINKS_GCP_APP_CREDENTIALS_EMAIL` - email for a GCP Service Account with roles below
 - `LINKS_GCP_APP_CREDENTIALS_JSON` - JSON key for a GCP Service Account with roles below
 - `LINKS_GCP_INFRA_CREDENTIALS_JSON` - JSON key for a GCP Service Account with roles below
 - `LINKS_DOMAIN` - Optional, eg: `links.example-domain.com`
 - `GCP_DNS_ZONE` - Optional, eg: `example-domain-com`
 - `GCP_DNS_NAME` - Optional, eg: `example-domain.com.`
 
-Required GCP Roles for the Service Account set in `LINKS_GCP_APP_CREDENTIALS_JSON`:
+Required GCP Roles for the **Apps Service Account**:
 
 - `roles/artifactregistry.admin`
 - `roles/run.developer`
 - `roles/iam.serviceAccountUser`
 - `roles/storage.admin`
 
-Required GCP Roles for the Service Account set in `LINKS_GCP_SERVICE_ACCOUNT`:
+Required GCP Roles for the **Infra Service Account**:
 
 - `roles/artifactregistry.admin`
 - `roles/run.developer`
