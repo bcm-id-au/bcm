@@ -27,7 +27,7 @@ env:
   IMAGE_TAG: '${{ github.sha }}'
 
 jobs:
-  deploy-links-app:
+  deploy_links_app:
     if: ${{ inputs.continue_deployment == true }}
     name: 'Deploy Links App'
     runs-on: 'ubuntu-latest'

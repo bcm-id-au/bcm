@@ -33,7 +33,7 @@ env:
   GCP_DNS_NAME: '${{ secrets.LINKS_GCP_DNS_NAME }}'
 
 jobs:
-  deploy-links-infra:
+  deploy_links_infra:
     name: 'Deploy Links Infrastructure'
     if: ${{ inputs.continue_deployment == true }}
     runs-on: 'ubuntu-latest'

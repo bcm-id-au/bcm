@@ -18,9 +18,11 @@ just links-stop
 
 ## Online Infrastructure
 
-### Deployments
+### Deployment
 
-Deployed to GCP manually in GitHub Actions via [deploy-links-app.yml](../../.github/workflows/deploy-links-app.yml)
+App builds can be deployed to GCP manually in GitHub Actions via [deploy_links_app.yml](../../.github/workflows/deploy_links_app.yml)
+
+Infrastructure configuration can be deployed to GCP manually in GitHub Actions via [deploy_links_infra.yml](../../.github/workflows/deploy_links_infra.yml)
 
 Links infrastructure is deployed to `asia-southeast1` due to limitations around region availability of some required GCP features.
 
