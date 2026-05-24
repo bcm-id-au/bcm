@@ -1,20 +1,19 @@
-$RECYCLE.BIN/
-.DS_Store
+node_modules
+cache
+temp
 
-*.log
-/CHANGELOG.md
+build
+public
+
+.antigravitycli
+
+storage/**
+storage/*
+!storage/README.md
 
 .env
+*.env
+*.env.*
 .env.*
-!.env.example
-!.env.github.example
-
-!.envrc
-
-/build
-/dist
-/public
-/_site
-
-node_modules
-.antigravitycli
+!.sample.env
+!.*.sample.env

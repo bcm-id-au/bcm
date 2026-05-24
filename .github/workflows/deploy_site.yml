@@ -1,0 +1,152 @@
+#
+#
+# Manual Workflow: Site - Release and Deploy
+#   - This workflow includes the test, release and deployment process for the site.
+#   - Initial setup steps and documentation in: 'src/site/.infra/README.md'
+#   - Requires GitHub Repository Secrets setup in Repo > Settings > Secrets > Actions.
+#
+#
+
+name: Site - Release and Deploy
+
+on:
+  # Allow manual triggers via GitHub Repo > Actions
+  workflow_dispatch:
+    inputs:
+      continue_deployment:
+        description: 'Confirm production deployment for Public Website'
+        type: boolean
+        required: true
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    if: ${{ inputs.continue_deployment == true }}
+    runs-on: ubuntu-latest
+    outputs:
+      artifact_name: ${{ steps.artifact.outputs.artifact_name }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Set build artifact name
+        id: artifact
+        shell: bash
+        run: echo "artifact_name=build-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
+      - name: Update script file attributes
+        working-directory: ./
+        shell: bash
+        run: chmod +x ./bin/*.sh
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: latest
+      - name: Setup environment
+        working-directory: ./src/site
+        shell: bash
+        run: deno task setup
+      - name: Build site
+        working-directory: ./src/site
+        shell: bash
+        run: deno task build
+      - name: Upload build files
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ steps.artifact.outputs.artifact_name }}
+          overwrite: true
+          include-hidden-files: true
+          retention-days: 1
+          compression-level: 9
+          path: |
+            ./src/site/public/
+            ./src/site/.env
+  test:
+    name: Test
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Download build files
+        uses: actions/download-artifact@v8
+        with:
+          name: ${{ needs.build.outputs.artifact_name }}
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: latest
+      - name: Run tests
+        working-directory: ./src/site
+        shell: bash
+        run: deno task test
+  deploy:
+    name: Deploy
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Download build files
+        uses: actions/download-artifact@v8
+        with:
+          name: ${{ needs.build.outputs.artifact_name }}
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v6
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./src/site/public
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+  release:
+    name: Release
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Set release tag name
+        id: release
+        shell: bash
+        run: |
+          DATE_RELEASE=$(TZ='Australia/Sydney' date +%Y%m%d.%H%M)
+          echo "name=$DATE_RELEASE" >> $GITHUB_OUTPUT
+          echo "tag=release-$DATE_RELEASE" >> $GITHUB_OUTPUT
+      - name: Create release tag
+        run: |
+          git config user.name "bot-release"
+          git config user.email "bcm+bot-release@murty.au"
+          git tag ${{ steps.release.outputs.tag }}
+          git push --tags --quiet
+      - name: Generate release notes
+        shell: bash
+        run: |
+          chmod +x ./bin/release-notes.sh
+          bash ./bin/release-notes.sh release-notes.log
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          name: ${{ steps.release.outputs.name }}
+          tag: ${{ steps.release.outputs.tag }}
+          bodyFile: release-notes.log
+          makeLatest: true
+      - name: Cleanup
+        run: |
+          rm ./src/site/*.log
+          rm -rf ./src/site/public

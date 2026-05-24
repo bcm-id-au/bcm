@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+  <head>
+    <title>{% if title %}Brendan Murty - {{ title }}{% else %}Brendan Murty{% endif %}</title>
+    <meta charset="utf-8" />
+    <meta name="handheldfriendly" content="true" />
+    <meta name="mobileoptimized" content="480" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="theme-color"
+      content="{% if theme %}{{ theme }}{% else %}#23c5b0{% endif %}"
+    />
+    <meta name="author" content="Brendan Murty" />
+    <meta
+      name="description"
+      content="{% if description %}{{ description }}{% else %}Brendan is a Father, Schnitzel Reviewer, Software Engineering Manager and Technical Lead.{% endif %}"
+    />
+    {% if date %}<meta property="article:published_time" content="{{ date | date('yyyy-MM-dd') }}" />{% endif %}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_GB" />
+    <meta
+      property="og:title"
+      content="{% if title %}Brendan Murty - {{ title }}{% else %}Brendan Murty{% endif %}"
+    />
+    <meta property="og:url" content="https://murty.au{{ url }}" />
+    <meta
+      name="og:description"
+      content="{% if description %}{{ description }}{% else %}Brendan is a Father, Schnitzel Reviewer, Software Engineering Manager and Technical Lead.{% endif %}"
+    />
+    {% if photo_thumb_url %}
+      <meta property="og:image" content="https://murty.au{{ photo_thumb_url }}">
+    {% elif photo_url %}
+      <meta property="og:image" content="https://murty.au{{ photo_url }}">
+    {% else %}
+      <meta property="og:image" content="https://murty.au/images/brendan/brendan-2026_750.png">
+    {% endif %}
+    <link
+      rel="alternate"
+      title="Posts by Brendan Murty"
+      type="application/json"
+      href="https://murty.au/brendan/posts.json"
+    />
+    <link rel="icon" sizes="192x192" href="/images/logos/android-chrome-192x192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/logos/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/logos/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/logos/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="preload" href="/fonts/MDIO-Black.woff" as="font" crossOrigin="anonymous" />
+    <link rel="preload" href="/fonts/MDIO-Regular.woff" as="font" crossOrigin="anonymous" />
+    <link rel="preload" href="/css/styles.min.css" as="style" />
+    <link rel="preload" href="/css/fontawesome/css/all.min.css" as="style" />
+    <link rel="preload" href="/css/fontawesome/css/fontawesome.min.css" as="style" />
+    <link rel="stylesheet" href="/css/styles.min.css" />
+    <link rel="stylesheet" href="/css/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="/css/fontawesome/css/fontawesome.min.css" />
+  </head>
+  <body {% if body_class %}class="{{ body_class }}"{% endif %}>
+    <section class="container">
+      <header>
+        <h1>
+          <a href="/" title="Go to the home page">
+            <img
+              class="avatar"
+              alt=""
+              width="150"
+              height="150"
+              src="/images/brendan/brendan-2026_150.webp"
+            />
+            Brendan Murty
+          </a>
+        </h1>
+      </header>
+      <article>{{ content | safe }}</article>
+      <footer></footer>
+    </section>
+  </body>
+</html>

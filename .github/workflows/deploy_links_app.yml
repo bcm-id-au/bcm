@@ -1,0 +1,91 @@
+#
+#
+# Manual Workflow: Links - Deploy app build to GCP Cloud Run
+#   - Initial setup steps and documentation in: 'src/links/.infra/README.md'
+#
+#
+
+name: 'Links - Deploy to GCP'
+
+on:
+  # Allow manual triggers via GitHub Repo > Actions
+  workflow_dispatch:
+    inputs:
+      continue_deployment:
+        description: 'Confirm production deployment for Links'
+        type: boolean
+        required: true
+        default: false
+
+env:
+  PROJECT_ID: '${{ secrets.GCP_PROJECT_ID }}'
+  REGION: 'asia-southeast1'
+  ARTIFACT_REPOSITORY: '${{ secrets.LINKS_GCP_ARTIFACT_REPOSITORY }}'
+  SERVICE: '${{ secrets.GCP_CLOUD_RUN_SERVICE_PREFIX }}'
+  WORKLOAD_IDENTITY_PROVIDER: '${{ secrets.LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+  SERVICE_ACCOUNT: '${{ secrets.LINKS_GCP_SERVICE_ACCOUNT }}'
+  IMAGE_TAG: '${{ github.sha }}'
+
+jobs:
+  deploy_links_app:
+    if: ${{ inputs.continue_deployment == true }}
+    name: 'Deploy Links App'
+    runs-on: 'ubuntu-latest'
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    steps:
+      - name: 'Checkout'
+        uses: 'actions/checkout@v4'
+      - id: 'auth'
+        name: 'Authenticate to GCP'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: '${{ env.WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: '${{ env.SERVICE_ACCOUNT }}'
+          project_id: '${{ env.PROJECT_ID }}'
+          token_format: 'access_token'
+      - name: 'Set up GCP'
+        uses: 'google-github-actions/setup-gcloud@v2'
+      - name: 'Docker Auth'
+        uses: 'docker/login-action@v3'
+        with:
+          username: 'oauth2accesstoken'
+          password: '${{ steps.auth.outputs.access_token }}'
+          registry: '${{ env.REGION }}-docker.pkg.dev'
+      - name: 'Create GCP Artifact Registry Repository'
+        run: |-
+          set -euo pipefail
+          gcloud artifacts repositories describe "${ARTIFACT_REPOSITORY}" \
+            --project "${PROJECT_ID}" \
+            --location "${REGION}" \
+            >/dev/null 2>&1 || \
+          gcloud artifacts repositories create "${ARTIFACT_REPOSITORY}" \
+            --project "${PROJECT_ID}" \
+            --location "${REGION}" \
+            --repository-format docker \
+            --description "bcm links Cloud Run images"
+      - name: 'Update Docker Images'
+        run: |-
+          set -euo pipefail
+          repo="${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPOSITORY}"
+          docker pull ghcr.io/karakeep-app/karakeep:release
+          docker tag ghcr.io/karakeep-app/karakeep:release "${repo}/${SERVICE}-web:${IMAGE_TAG}"
+          docker tag ghcr.io/karakeep-app/karakeep:release "${repo}/${SERVICE}-web:latest"
+          docker push "${repo}/${SERVICE}-web:${IMAGE_TAG}"
+          docker pull gcr.io/zenika-hub/alpine-chrome:124
+          docker tag gcr.io/zenika-hub/alpine-chrome:124 "${repo}/${SERVICE}-browser:${IMAGE_TAG}"
+          docker tag gcr.io/zenika-hub/alpine-chrome:124 "${repo}/${SERVICE}-browser:latest"
+          docker push "${repo}/${SERVICE}-browser:${IMAGE_TAG}"
+          docker pull getmeili/meilisearch:v1.41.0
+          docker tag getmeili/meilisearch:v1.41.0 "${repo}/${SERVICE}-search:${IMAGE_TAG}"
+          docker tag getmeili/meilisearch:v1.41.0 "${repo}/${SERVICE}-search:latest"
+          docker push "${repo}/${SERVICE}-search:${IMAGE_TAG}"
+      - name: 'Deploy to GCP Cloud Run'
+        working-directory: 'src/links'
+        run: |-
+          set -euo pipefail
+          gcloud beta run compose up .infra/docker-compose.infra.yml \
+            --project "${PROJECT_ID}" \
+            --region "${REGION}" \
+            --quiet
