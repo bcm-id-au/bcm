@@ -75,9 +75,11 @@ jobs:
         with:
           deno-version: latest
       - name: Run tests
-        working-directory: ./src/site
+        working-directory: ./
         shell: bash
-        run: deno task test
+        run: |
+          cd ./src/site
+          deno task test
   deploy:
     name: Deploy
     needs: [build, test]
