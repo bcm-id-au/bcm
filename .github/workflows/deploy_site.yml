@@ -56,6 +56,9 @@ jobs:
           include-hidden-files: true
           retention-days: 1
           compression-level: 9
+          path: |
+            src/site/public
+            src/site/.env
   test:
     name: Test
     needs: build
