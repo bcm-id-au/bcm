@@ -20,9 +20,7 @@ done
 
 # Setup an initial ENV file if it doesn't already exist
 
-if [ ! -f "./.env" ]; then
-  cp "./.env.sample" "./.env"
-fi
+cp -n "./.env.sample" "./.env"
 
 # Install project dependencies
 

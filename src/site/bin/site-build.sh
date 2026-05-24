@@ -20,7 +20,6 @@ NC="\033[0m"
 
 BUILD_DIR="build"
 PUBLIC_DIR="public"
-DENO_DEPLOY_DIR="_site"
 
 # Set the production domain and link
 
@@ -43,7 +42,6 @@ mkdir -p "$PUBLIC_DIR"
 echo -e "${YELLOW}Clearing the '$BUILD_DIR' directory and recreating subdirectories${NC}"
 
 rm -rf "$BUILD_DIR"
-rm -rf "$DENO_DEPLOY_DIR"
 mkdir -p "$BUILD_DIR"
 mkdir -p "$BUILD_DIR/_data"
 cp -r "src/styles" $BUILD_DIR/_styles
