@@ -50,7 +50,16 @@ Add the below items to the list at `GitHub Repo > Settings > Secrets and variabl
 - `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER`
 - `LINKS_GCP_SERVICE_ACCOUNT`
 - `LINKS_GCP_CLOUD_RUN_SERVICE_PREFIX`
-- `LINKS_GCP_INFRA_CREDENTIALS_JSON` - the full JSON output of a GCP service account with infra create and update permissions
+- `LINKS_GCP_INFRA_CREDENTIALS_JSON` - the full JSON output of a GCP service account with the permissions listed below
+
+Required permissions for `LINKS_GCP_SERVICE_ACCOUNT`:
+
+- `roles/artifactregistry.admin` - create/read/update the Links Docker repository and push images.
+- `roles/run.developer` - deploy and update Cloud Run services.
+- `roles/storage.admin` - create and manage Cloud Storage resources used by Cloud Run volumes.
+- `roles/iam.serviceAccountUser` - attach service accounts while deploying Cloud Run services.
+- `roles/iam.workloadIdentityUser` - allow GitHub Actions OIDC tokens from this repo to impersonate the service account.
+- `roles/iam.serviceAccountTokenCreator` - allow the GitHub Actions auth step to mint access tokens for Docker and `gcloud`.
 
 Optional:
 
