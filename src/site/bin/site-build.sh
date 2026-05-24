@@ -84,7 +84,7 @@ echo -e "${YELLOW}Copying static files to '$PUBLIC_DIR'${NC}"
 cp -r "assets/fonts" "$PUBLIC_DIR/fonts"
 cp -r "assets/images" "$PUBLIC_DIR/images"
 cp "assets/favicon.ico" "$PUBLIC_DIR/favicon.ico"
-cp "site.webmanifest" "$PUBLIC_DIR/site.webmanifest"
+cp "assets/site.webmanifest" "$PUBLIC_DIR/site.webmanifest"
 
 echo -e "${YELLOW}Copying CSS files to '$PUBLIC_DIR/css'${NC}"
 

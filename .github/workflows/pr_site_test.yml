@@ -13,6 +13,11 @@ on:
       - develop
       - main
 
+defaults:
+  run:
+    working-directory: ./src/site
+    shell: bash
+
 permissions:
   contents: read
 
@@ -30,21 +35,13 @@ jobs:
         id: artifact
         shell: bash
         run: echo "artifact_name=build-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
-      - name: Update script file attributes
-        working-directory: ./
-        shell: bash
-        run: chmod +x ./bin/*.sh
       - name: Setup Deno
         uses: denoland/setup-deno@v2
         with:
           deno-version: latest
       - name: Setup environment
-        working-directory: ./src/site
-        shell: bash
         run: deno task setup
       - name: Build site
-        working-directory: ./src/site
-        shell: bash
         run: deno task build
       - name: Upload build files
         uses: actions/upload-artifact@v7
@@ -55,8 +52,8 @@ jobs:
           retention-days: 1
           compression-level: 9
           path: |
-            ./src/site/public/
-            ./src/site/.env
+            src/site/public
+            src/site/.env
   test:
     name: Test
     needs: build
@@ -68,6 +65,7 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: ${{ needs.build.outputs.artifact_name }}
+          path: ./src/site
       - name: Setup Deno
         uses: denoland/setup-deno@v2
         with:
