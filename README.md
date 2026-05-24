@@ -4,13 +4,12 @@ This repository contains a set of self-hosted systems.
 
 ## Structure
 
-- [.github/workflows](.github/workflows/) - GitHub Actions workflows.
+- [.github/workflows](.github/workflows/) - GitHub Actions workflows to deploy apps and infrastructure.
 - [.vscode](.vscode/) - Customised [VS Code](https://code.visualstudio.com/) project configuration.
 - [.zed](.zed/) - Customised [Zed Editor](https://zed.dev/) project configuration.
 - [bin](bin/) - Bash helper scripts
 - [design](design/) - Page layout and icon design files
 - [src/links](src/links/) - Source code for a self-hosted version of the [Karakeep](https://karakeep.app/) bookmarking service.
-- [src/links/.infra](src/links/.infra/) - GCP infrastructure setup for the Links system.
 - [src/site](src/site/) - Source code for the main public website at [murty.au](https://murty.au).
 - [storage](storage/) - Used for persistent storage by local Docker containers.
 
