@@ -76,3 +76,8 @@ site-setup:
 [group('site')]
 site-start:
   cd ./src/site && deno task serve
+
+# Run tests for Site
+[group('site')]
+site-test:
+  cd ./src/site && deno task test
