@@ -6,7 +6,7 @@
 #
 #
 
-SITE_DIR="$(cd "$(dirname "$0")" && cd ../../src/site && pwd)"
+SITE_DIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
 cd "$SITE_DIR"
 
 # Figure out the post date values based on the local machine's date

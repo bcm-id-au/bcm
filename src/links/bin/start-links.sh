@@ -6,7 +6,7 @@
 #
 #
 
-REPO_DIR="$(cd "$(dirname "$0")" && cd ../.. && pwd)"
+REPO_DIR="$(cd "$(dirname "$0")" && cd ../../.. && pwd)"
 LINKS_DIR="$REPO_DIR/src/links"
 
 mkdir -p "$REPO_DIR/storage/links/"{app,search}

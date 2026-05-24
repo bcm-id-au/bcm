@@ -6,7 +6,7 @@
 #
 #
 
-LINKS_DIR="$(cd "$(dirname "$0")" && cd ../src/links && pwd)"
+LINKS_DIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
 
 cd "$LINKS_DIR"
 
