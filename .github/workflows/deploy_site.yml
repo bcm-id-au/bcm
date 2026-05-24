@@ -36,10 +36,6 @@ jobs:
         id: artifact
         shell: bash
         run: echo "artifact_name=build-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
-      - name: Update script file attributes
-        working-directory: ./
-        shell: bash
-        run: chmod +x ./bin/*.sh
       - name: Setup Deno
         uses: denoland/setup-deno@v2
         with:
@@ -60,9 +56,6 @@ jobs:
           include-hidden-files: true
           retention-days: 1
           compression-level: 9
-          path: |
-            ./src/site/public/
-            ./src/site/.env
   test:
     name: Test
     needs: build
