@@ -17,9 +17,3 @@ storage/*
 .env.*
 !.sample.env
 !.*.sample.env
-
-.tfvars
-*.tfvars
-terraform.tfvars
-terraform.tfvars.*
-!terraform.tfvars.sample
