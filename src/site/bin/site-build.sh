@@ -86,11 +86,13 @@ echo -e "${YELLOW}Copying static files to '$PUBLIC_DIR'${NC}"
 cp -r "assets/fonts" "$PUBLIC_DIR/fonts"
 cp -r "assets/images" "$PUBLIC_DIR/images"
 cp "assets/favicon.ico" "$PUBLIC_DIR/favicon.ico"
+cp "site.webmanifest" "$PUBLIC_DIR/site.webmanifest"
 
 echo -e "${YELLOW}Copying CSS files to '$PUBLIC_DIR/css'${NC}"
 
 mkdir -p "$PUBLIC_DIR/css"
 cp "$BUILD_DIR/_assets/css/styles.min.css" "$PUBLIC_DIR/css/styles.min.css"
+
 cp -r "src/styles/fontawesome" "$PUBLIC_DIR/css"
 
 echo -e "${YELLOW}Building a JSON Feed with posts data${NC}"
