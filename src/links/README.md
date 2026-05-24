@@ -47,27 +47,31 @@ The workflow identity (used by `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER`) must have
 
 Add the below items to the list at `GitHub Repo > Settings > Secrets and variables > Actions > Repository secrets`.
 
-- `GCP_PROJECT_ID`
+- `GCP_PROJECT_ID` - Required, eg: `example-project-111222`
 - `LINKS_GCP_ARTIFACT_REPOSITORY`
 - `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER`
-- `LINKS_GCP_SERVICE_ACCOUNT`
 - `LINKS_GCP_CLOUD_RUN_SERVICE_PREFIX`
-- `LINKS_GCP_INFRA_CREDENTIALS_JSON` - the full JSON output of a GCP service account with the permissions listed below
+- `LINKS_GCP_APP_CREDENTIALS_JSON` - JSON key for a GCP Service Account with roles below
+- `LINKS_GCP_INFRA_CREDENTIALS_JSON` - JSON key for a GCP Service Account with roles below
+- `LINKS_DOMAIN` - Optional, eg: `links.example-domain.com`
+- `GCP_DNS_ZONE` - Optional, eg: `example-domain-com`
+- `GCP_DNS_NAME` - Optional, eg: `example-domain.com.`
 
-Required permissions for `LINKS_GCP_SERVICE_ACCOUNT`:
+Required GCP Roles for the Service Account set in `LINKS_GCP_APP_CREDENTIALS_JSON`:
 
-- `roles/artifactregistry.admin` - create/read/update the Links Docker repository and push images.
-- `roles/run.developer` - deploy and update Cloud Run services.
-- `roles/storage.admin` - create and manage Cloud Storage resources used by Cloud Run volumes.
-- `roles/iam.serviceAccountUser` - attach service accounts while deploying Cloud Run services.
-- `roles/iam.workloadIdentityUser` - allow GitHub Actions OIDC tokens from this repo to impersonate the service account.
-- `roles/iam.serviceAccountTokenCreator` - allow the GitHub Actions auth step to mint access tokens for Docker and `gcloud`.
+- `roles/artifactregistry.admin`
+- `roles/run.developer`
+- `roles/iam.serviceAccountUser`
+- `roles/storage.admin`
 
-Optional:
+Required GCP Roles for the Service Account set in `LINKS_GCP_SERVICE_ACCOUNT`:
 
-- `LINKS_DOMAIN` - eg `links.example-domain.com`
-- `GCP_DNS_ZONE` - eg `example-domain-com`
-- `GCP_DNS_NAME` - eg `example-domain.com.`
+- `roles/artifactregistry.admin`
+- `roles/run.developer`
+- `roles/storage.admin`
+- `roles/iam.serviceAccountUser`
+- `roles/iam.workloadIdentityUser`
+- `roles/iam.serviceAccountTokenCreator`
 
 ### Storage
 
