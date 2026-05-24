@@ -1,0 +1,78 @@
+#
+#
+# Automatic PR Workflow: Site - Test
+#
+#
+
+name: Site - Release and Deploy
+
+on:
+  # Automatically run on PRs that are aiming to merge to certain branches
+  pull_request:
+    branches:
+      - develop
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    if: ${{ inputs.continue_deployment == true }}
+    runs-on: ubuntu-latest
+    outputs:
+      artifact_name: ${{ steps.artifact.outputs.artifact_name }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Set build artifact name
+        id: artifact
+        shell: bash
+        run: echo "artifact_name=build-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
+      - name: Update script file attributes
+        working-directory: ./
+        shell: bash
+        run: chmod +x ./bin/*.sh
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: latest
+      - name: Setup environment
+        working-directory: ./src/site
+        shell: bash
+        run: deno task setup
+      - name: Build site
+        working-directory: ./src/site
+        shell: bash
+        run: deno task build
+      - name: Upload build files
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ steps.artifact.outputs.artifact_name }}
+          overwrite: true
+          include-hidden-files: true
+          retention-days: 1
+          compression-level: 9
+          path: |
+            ./src/site/public/
+            ./src/site/.env
+  test:
+    name: Test
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Download build files
+        uses: actions/download-artifact@v8
+        with:
+          name: ${{ needs.build.outputs.artifact_name }}
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: latest
+      - name: Run tests
+        working-directory: ./src/site
+        shell: bash
+        run: deno task test
