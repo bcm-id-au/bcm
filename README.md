@@ -8,6 +8,7 @@ This repository contains a set of self-hosted systems.
 - [.vscode](.vscode/) - Customised [VS Code](https://code.visualstudio.com/) project configuration.
 - [.zed](.zed/) - Customised [Zed Editor](https://zed.dev/) project configuration.
 - [bin](bin/) - Bash helper scripts
+- [docs](docs/) - Documentation and contextual information
 - [design](design/) - Page layout and icon design files
 - [src/links](src/links/) - Source code for a self-hosted version of the [Karakeep](https://karakeep.app/) bookmarking service.
 - [src/site](src/site/) - Source code for the main public website at [murty.au](https://murty.au).
