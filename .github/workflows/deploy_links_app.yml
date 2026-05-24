@@ -29,7 +29,6 @@ env:
   SERVICE: '${{ secrets.LINKS_GCP_CLOUD_RUN_SERVICE_PREFIX }}'
   WORKLOAD_IDENTITY_PROVIDER: '${{ secrets.LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER }}'
   SERVICE_ACCOUNT: '${{ secrets.LINKS_GCP_APP_CREDENTIALS_EMAIL }}'
-  IMAGE_TAG: '${{ github.sha }}'
 
 jobs:
   deploy_links_app:
@@ -42,6 +41,8 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: 'actions/checkout@v6'
+      - name: 'Set short commit variable'
+        run: echo "COMMIT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
       - id: 'auth'
         name: 'Authenticate to GCP'
         uses: 'google-github-actions/auth@v3'
@@ -70,22 +71,24 @@ jobs:
             --location "${REGION}" \
             --repository-format docker \
             --description "bcm links Cloud Run images"
-      - name: 'Update Docker Images'
+      - name: 'Push Docker images'
         run: |-
           set -euo pipefail
           repo="${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPOSITORY}"
           docker pull ghcr.io/karakeep-app/karakeep:release
-          docker tag ghcr.io/karakeep-app/karakeep:release "${repo}/${SERVICE}-web:${IMAGE_TAG}"
+          docker tag ghcr.io/karakeep-app/karakeep:release "${repo}/${SERVICE}-web:${COMMIT}"
           docker tag ghcr.io/karakeep-app/karakeep:release "${repo}/${SERVICE}-web:latest"
-          docker push "${repo}/${SERVICE}-web:${IMAGE_TAG}"
+          docker push "${repo}/${SERVICE}-web:${COMMIT}"
+          docker push "${repo}/${SERVICE}-web:latest"
           docker pull gcr.io/zenika-hub/alpine-chrome:124
-          docker tag gcr.io/zenika-hub/alpine-chrome:124 "${repo}/${SERVICE}-browser:${IMAGE_TAG}"
+          docker tag gcr.io/zenika-hub/alpine-chrome:124 "${repo}/${SERVICE}-browser:${COMMIT}"
           docker tag gcr.io/zenika-hub/alpine-chrome:124 "${repo}/${SERVICE}-browser:latest"
-          docker push "${repo}/${SERVICE}-browser:${IMAGE_TAG}"
+          docker push "${repo}/${SERVICE}-browser:${COMMIT}"
           docker pull getmeili/meilisearch:v1.41.0
-          docker tag getmeili/meilisearch:v1.41.0 "${repo}/${SERVICE}-search:${IMAGE_TAG}"
+          docker tag getmeili/meilisearch:v1.41.0 "${repo}/${SERVICE}-search:${COMMIT}"
           docker tag getmeili/meilisearch:v1.41.0 "${repo}/${SERVICE}-search:latest"
-          docker push "${repo}/${SERVICE}-search:${IMAGE_TAG}"
+          docker push "${repo}/${SERVICE}-search:${COMMIT}"
+          docker push "${repo}/${SERVICE}-search:latest"
       - name: 'Deploy to GCP Cloud Run'
         working-directory: 'src/links'
         run: |-
