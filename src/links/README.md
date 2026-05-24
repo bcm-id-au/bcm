@@ -22,6 +22,8 @@ just links-stop
 
 Deployed to GCP manually in GitHub Actions via [deploy-links-app.yml](../../.github/workflows/deploy-links-app.yml)
 
+Links infrastructure is deployed to `asia-southeast1` due to limitations around region availability of some required GCP features.
+
 ### Infrastructure Setup
 
 Login to GCP and enable the following APIs:
@@ -39,18 +41,23 @@ The workflow identity (used by `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER`) must have
 - `roles/storage.admin`
 - `roles/iam.serviceAccountUser`
 
-Setup the following GitHub Secrets:
+#### GitHub Secrets
+
+Add the below items to the list at `GitHub Repo > Settings > Secrets and variables > Actions > Repository secrets`.
 
 - `GCP_PROJECT_ID`
 - `LINKS_GCP_ARTIFACT_REPOSITORY`
 - `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER`
 - `LINKS_GCP_SERVICE_ACCOUNT`
-- `CLOUD_RUN_SERVICE`
-- `LINKS_GCP_INFRA_CREDENTIALS_JSON` - the full JSON output of a GCP service account that has permission to create and update the infra resources
+- `LINKS_GCP_CLOUD_RUN_SERVICE_PREFIX`
+- `LINKS_GCP_INFRA_CREDENTIALS_JSON` - the full JSON output of a GCP service account with infra create and update permissions
 
-Links infrastructure is deployed to `asia-southeast1` due to limitations around region availability of some required GCP features.
+Optional:
+
+- `LINKS_DOMAIN` - eg `links.example-domain.com`
+- `GCP_DNS_ZONE` - eg `example-domain-com`
+- `GCP_DNS_NAME` - eg `example-domain.com.`
 
 ### Storage
 
 The top-level named volumes in `src/links/.infra/docker-compose.yml` are handled by [Cloud Run Compose](https://docs.cloud.google.com/run/docs/deploy-run-compose) as [Cloud Storage Volumes](https://docs.cloud.google.com/run/docs/configuring/services/cloud-storage-volume-mounts).
-

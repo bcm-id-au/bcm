@@ -27,9 +27,9 @@ env:
   IMAGE_TAG: '${{ github.sha }}'
 
 jobs:
-  deploy-gcp-cloudrun:
+  deploy-links-app:
     if: ${{ inputs.continue_deployment == true }}
-    name: 'Deploy'
+    name: 'Deploy Links App'
     runs-on: 'ubuntu-latest'
     permissions:
       contents: 'read'

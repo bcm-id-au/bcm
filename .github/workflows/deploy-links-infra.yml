@@ -9,14 +9,21 @@
 
 name: 'Links - Deploy GCP Infrastructure'
 
-'on':
+on:
+  # Allow manual triggers via GitHub Repo > Actions
   workflow_dispatch:
+    inputs:
+      continue_deployment:
+        description: 'Confirm production infrastructure deployment for Links'
+        type: boolean
+        required: true
+        default: false
 
 env:
-  PROJECT_ID: '${{ secrets.GCP_PROJECT_ID }}'
+  PROJECT_ID: '${{ secrets.LINKS_GCP_PROJECT_ID }}'
   REGION: 'asia-southeast1'
   ARTIFACT_REPOSITORY: '${{ secrets.LINKS_GCP_ARTIFACT_REPOSITORY }}'
-  CLOUD_RUN_SERVICE: '${{ secrets.GCP_CLOUD_RUN_SERVICE_PREFIX }}'
+  CLOUD_RUN_SERVICE: '${{ secrets.LINKS_GCP_CLOUD_RUN_SERVICE_PREFIX }}'
   GITHUB_REPOSITORY_FULL: '${{ github.repository }}'
   WORKLOAD_POOL_INPUT: '${{ secrets.LINKS_GCP_WORKLOAD_POOL }}'
   WORKLOAD_PROVIDER_INPUT: '${{ secrets.LINKS_GCP_WORKLOAD_PROVIDER_NAME }}'
@@ -26,8 +33,9 @@ env:
   GCP_DNS_NAME: '${{ secrets.LINKS_GCP_DNS_NAME }}'
 
 jobs:
-  deploy-gcp-infra:
-    name: 'Deploy Infrastructure'
+  deploy-links-infra:
+    name: 'Deploy Links Infrastructure'
+    if: ${{ inputs.continue_deployment == true }}
     runs-on: 'ubuntu-latest'
     permissions:
       contents: 'read'
