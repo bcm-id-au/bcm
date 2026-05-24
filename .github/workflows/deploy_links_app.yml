@@ -17,6 +17,11 @@ on:
         required: true
         default: false
 
+defaults:
+  run:
+    working-directory: ./src/links
+    shell: bash
+
 env:
   PROJECT_ID: '${{ secrets.GCP_PROJECT_ID }}'
   REGION: 'asia-southeast1'
@@ -85,7 +90,7 @@ jobs:
         working-directory: 'src/links'
         run: |-
           set -euo pipefail
-          gcloud beta run compose up .infra/docker-compose.infra.yml \
+          gcloud beta run compose up docker-compose.prod.yml \
             --project "${PROJECT_ID}" \
             --region "${REGION}" \
             --quiet
