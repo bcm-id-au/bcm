@@ -79,6 +79,7 @@ jobs:
         shell: bash
         run: |
           cd ./src/site
+          ls -lah
           deno task test
   deploy:
     name: Deploy
