@@ -4,7 +4,7 @@
 #
 #
 
-name: Site - Release and Deploy
+name: Site - PR Test
 
 on:
   # Automatically run on PRs that are aiming to merge to certain branches

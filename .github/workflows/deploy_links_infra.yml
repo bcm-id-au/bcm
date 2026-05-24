@@ -7,7 +7,7 @@
 #
 #
 
-name: 'Links - Deploy GCP Infrastructure'
+name: 'Links - Deploy GCP Infra'
 
 on:
   # Allow manual triggers via GitHub Repo > Actions

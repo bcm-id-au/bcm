@@ -7,7 +7,7 @@
 #
 #
 
-name: Site - Release and Deploy
+name: Site - Deploy
 
 on:
   # Allow manual triggers via GitHub Repo > Actions

@@ -5,7 +5,7 @@
 #
 #
 
-name: 'Links - Deploy to GCP'
+name: 'Links - Deploy App'
 
 on:
   # Allow manual triggers via GitHub Repo > Actions
