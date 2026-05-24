@@ -145,9 +145,3 @@ jobs:
           tag: ${{ steps.release.outputs.tag }}
           bodyFile: ${{ github.workspace }}/release-notes.log
           makeLatest: true
-      - name: Cleanup
-        working-directory: ${{ github.workspace }}
-        run: |
-          rm ./release-notes.log
-          rm ./src/site/.env
-          rm -rf ./src/site/public
