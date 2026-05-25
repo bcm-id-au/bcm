@@ -20,9 +20,9 @@ RUN set -eux; \
   fi
 
 COPY --from=meilisearch /bin/meilisearch /usr/local/bin/meilisearch
-COPY entrypoint.sh /usr/local/bin/bcm-karakeep-all-in-one
+COPY entrypoint.sh /usr/local/bin/bcm-links
 
-RUN chmod 0755 /usr/local/bin/bcm-karakeep-all-in-one
+RUN chmod 0755 /usr/local/bin/bcm-links
 
 ENV DATA_DIR=/data \
   MEILI_ADDR=http://127.0.0.1:7700 \
