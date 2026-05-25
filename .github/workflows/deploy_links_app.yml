@@ -41,8 +41,6 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: 'actions/checkout@v6'
-      - name: 'Set commit variable'
-        run: echo "COMMIT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
       - id: 'auth'
         name: 'Authenticate with GCP'
         uses: 'google-github-actions/auth@v3'
@@ -55,7 +53,7 @@ jobs:
         uses: 'docker/login-action@v4'
         with:
           username: 'oauth2accesstoken'
-          password: '${{ steps.auth.outputs.access_token }}'
+          password: '${{ env.GOOGLE_APPLICATION_CREDENTIALS }}'
           registry: '${{ env.REGION }}-docker.pkg.dev'
       - name: 'Create GCP Artifact Registry Repository'
         run: |
@@ -68,24 +66,19 @@ jobs:
             --location "${{ env.REGION }}" \
             --description "${{ env.SERVICE }}" \
             --repository-format docker
-      - name: 'Push Docker images'
+      - name: 'Update Docker images'
         run: |
           repo="${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPOSITORY}"
           docker pull ghcr.io/karakeep-app/karakeep:release
-          docker tag ghcr.io/karakeep-app/karakeep:release "${repo}/${SERVICE}-web:${COMMIT}"
           docker tag ghcr.io/karakeep-app/karakeep:release "${repo}/${SERVICE}-web:latest"
-          docker push "${repo}/${SERVICE}-web:${COMMIT}"
           docker push "${repo}/${SERVICE}-web:latest"
           docker pull gcr.io/zenika-hub/alpine-chrome:124
-          docker tag gcr.io/zenika-hub/alpine-chrome:124 "${repo}/${SERVICE}-browser:${COMMIT}"
           docker tag gcr.io/zenika-hub/alpine-chrome:124 "${repo}/${SERVICE}-browser:latest"
-          docker push "${repo}/${SERVICE}-browser:${COMMIT}"
+          docker push "${repo}/${SERVICE}-browser:latest"
           docker pull getmeili/meilisearch:v1.41.0
-          docker tag getmeili/meilisearch:v1.41.0 "${repo}/${SERVICE}-search:${COMMIT}"
           docker tag getmeili/meilisearch:v1.41.0 "${repo}/${SERVICE}-search:latest"
-          docker push "${repo}/${SERVICE}-search:${COMMIT}"
           docker push "${repo}/${SERVICE}-search:latest"
-      - name: 'Deploy to GCP Cloud Run'
+      - name: 'Deploy to GCP Cloud Run with Docker Compose'
         run: |
           gcloud run compose up docker-compose.prod.yml \
             --project "${PROJECT_ID}" \
