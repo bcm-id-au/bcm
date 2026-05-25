@@ -41,16 +41,15 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: 'actions/checkout@v6'
-      - name: 'Set short commit variable'
+      - name: 'Set commit variable'
         run: echo "COMMIT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
       - id: 'auth'
-        name: 'Authenticate to GCP'
+        name: 'Authenticate with GCP'
         uses: 'google-github-actions/auth@v3'
         with:
           project_id: '${{ env.PROJECT_ID }}'
           workload_identity_provider: '${{ env.WORKLOAD_IDENTITY_PROVIDER }}'
           service_account: '${{ env.LINKS_GCP_APP_CREDENTIALS_EMAIL }}'
-          token_format: 'access_token'
       - name: 'Set up GCP'
         uses: 'google-github-actions/setup-gcloud@v3'
       - name: 'Docker Auth'
@@ -72,8 +71,7 @@ jobs:
             --repository-format docker \
             --description "bcm links Cloud Run images"
       - name: 'Push Docker images'
-        run: |-
-          set -euo pipefail
+        run: |
           repo="${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPOSITORY}"
           docker pull ghcr.io/karakeep-app/karakeep:release
           docker tag ghcr.io/karakeep-app/karakeep:release "${repo}/${SERVICE}-web:${COMMIT}"
@@ -90,9 +88,7 @@ jobs:
           docker push "${repo}/${SERVICE}-search:${COMMIT}"
           docker push "${repo}/${SERVICE}-search:latest"
       - name: 'Deploy to GCP Cloud Run'
-        working-directory: 'src/links'
-        run: |-
-          set -euo pipefail
+        run: |
           gcloud beta run compose up docker-compose.prod.yml \
             --project "${PROJECT_ID}" \
             --region "${REGION}" \

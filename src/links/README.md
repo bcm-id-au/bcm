@@ -49,7 +49,7 @@ Add the below items to the list at `GitHub Repo > Settings > Secrets and variabl
 
 - `GCP_PROJECT_ID` - Required, eg: `example-project-111222`
 - `LINKS_GCP_ARTIFACT_REPOSITORY`
-- `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER`
+- `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER` - eg: `projects/1234/locations/global/workloadIdentityPools/links-example-domain`
 - `LINKS_GCP_CLOUD_RUN_SERVICE_PREFIX`
 - `LINKS_GCP_APP_CREDENTIALS_EMAIL` - email for a GCP Service Account with roles below
 - `LINKS_GCP_APP_CREDENTIALS_JSON` - JSON key for a GCP Service Account with roles below
