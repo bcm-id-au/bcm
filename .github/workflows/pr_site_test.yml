@@ -5,7 +5,7 @@
 #
 
 name: Site - PR Test
-run-name: Site PR Test by ${{ github.actor }} for PR#${{ github.event.pull_request.number }}
+run-name: PR Site Test - ${{ github.actor }} for PR#${{ github.event.pull_request.number }}
 
 on:
   # Automatically run on PRs that are aiming to merge to certain branches
