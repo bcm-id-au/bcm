@@ -50,7 +50,7 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
           token_format: access_token
           workload_identity_provider: ${{ env.AUTH_ID }}
-          credentials_json: ${{ env.AUTH_JSON }}
+          service_account: ${{ env.AUTH_JSON }}
       - name: Setup GCP
         uses: google-github-actions/setup-gcloud@v3
       - name: Setup GCP Artifact Registry Repository
