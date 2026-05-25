@@ -25,7 +25,6 @@ permissions:
 jobs:
   build:
     name: Build
-    if: ${{ inputs.continue_deployment == true }}
     runs-on: ubuntu-latest
     outputs:
       artifact_name: ${{ steps.artifact.outputs.artifact_name }}
