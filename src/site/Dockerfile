@@ -1,4 +1,4 @@
-FROM denoland/deno:latest
+FROM denoland/deno:latest AS build
 WORKDIR /app
 
 # Copy over the Deno config files and install
@@ -40,7 +40,16 @@ ENV JSON_FEED_AUTHOR_URL=${JSON_FEED_AUTHOR_URL}
 ENV JSON_FEED_FILE_OUTPUT=${JSON_FEED_FILE_OUTPUT}
 ENV JSON_FEED_URL_FEED=${JSON_FEED_URL_FEED}
 
+# Build the site
 RUN deno task build
+
+# Create a new Docker Image layer to run the site using only the static files.
+# Minimises the resulting Docker Image size, speeding up build and push times.
+FROM denoland/deno:latest AS serve
+
+COPY --from=build /app/public /app/public
+COPY --from=build /app/deno.lock /app/deno.lock
+COPY --from=build /app/deno.json /app/deno.json
 
 EXPOSE 8000
 CMD ["deno", "task", "serve"]
