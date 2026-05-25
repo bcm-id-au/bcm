@@ -1,18 +1,18 @@
 #
 #
-# Manual Workflow: Links - Deploy app build to GCP Cloud Run
+# Manual Workflow: Links - Deploy App build to GCP Cloud Run
 #   - Initial setup steps and documentation in: 'src/links/.infra/README.md'
 #
 #
 
-name: 'Links - Deploy App'
+name: Links - Deploy App
 
 on:
   # Allow manual triggers via GitHub Repo > Actions
   workflow_dispatch:
     inputs:
       continue_deployment:
-        description: 'Confirm production deployment for Links'
+        description: Confirm production deployment for Links
         type: boolean
         required: true
         default: false
@@ -23,62 +23,65 @@ defaults:
     shell: bash
 
 env:
-  PROJECT_ID: '${{ secrets.LINKS_GCP_PROJECT_ID }}'
-  REGION: 'asia-southeast1'
-  ARTIFACT_REPOSITORY: '${{ secrets.LINKS_GCP_ARTIFACT_REPOSITORY }}'
-  SERVICE: '${{ secrets.LINKS_GCP_CLOUD_RUN_SERVICE_PREFIX }}'
-  WORKLOAD_IDENTITY_PROVIDER: '${{ secrets.LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER }}'
-  SERVICE_ACCOUNT: '${{ secrets.LINKS_GCP_APP_CREDENTIALS_JSON }}'
+  PROJECT_ID: ${{ secrets.LINKS_GCP_PROJECT_ID }}
+  REGION: asia-southeast1
+  SERVICE: ${{ secrets.LINKS_GCP_CLOUD_RUN_SERVICE_PREFIX }}
+  ARTIFACT: ${{ secrets.LINKS_GCP_ARTIFACT_REPOSITORY }}
+  AUTH_ID: ${{ secrets.LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER }}
+  AUTH_JSON: ${{ secrets.LINKS_GCP_APP_CREDENTIALS_JSON }}
+  AUTH_EMAIL: ${{ secrets.LINKS_GCP_APP_CREDENTIALS_EMAIL }}
 
 jobs:
   deploy_links_app:
     if: ${{ inputs.continue_deployment == true }}
-    name: 'Deploy Links App'
-    runs-on: 'ubuntu-latest'
+    name: Links - Deploy App
+    runs-on: ubuntu-latest
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: read
+      id-token: write
     steps:
-      - name: 'Checkout'
-        uses: 'actions/checkout@v6'
-      - id: 'auth'
-        name: 'Authenticate with GCP'
-        uses: 'google-github-actions/auth@v3'
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Authenticate with GCP
+        id: auth
+        uses: google-github-actions/auth@v3
         with:
-          project_id: '${{ env.PROJECT_ID }}'
-          credentials_json: '${{ env.SERVICE_ACCOUNT }}'
-      - name: 'Setup GCP'
-        uses: 'google-github-actions/setup-gcloud@v3'
-      - name: 'Docker Login'
-        uses: 'docker/login-action@v4'
-        with:
-          username: 'oauth2accesstoken'
-          password: '${{ env.GOOGLE_APPLICATION_CREDENTIALS }}'
-          registry: '${{ env.REGION }}-docker.pkg.dev'
-      - name: 'Setup GCP Artifact Registry Repository'
+          project_id: ${{ env.PROJECT_ID }}
+          token_format: access_token
+          workload_identity_provider: ${{ env.AUTH_ID }}
+          credentials_json: ${{ env.AUTH_JSON }}
+      - name: Setup GCP
+        uses: google-github-actions/setup-gcloud@v3
+      - name: Setup GCP Artifact Registry Repository
         run: |
-          gcloud artifacts repositories describe "${ARTIFACT_REPOSITORY}" \
-            --project "${PROJECT_ID}" \
-            --location "${REGION}" \
+          gcloud artifacts repositories describe "${{ env.ARTIFACT }}" \
+            --project "${{ env.PROJECT_ID }}" \
+            --location "${{ env.REGION }}" \
             >/dev/null 2>&1 || \
-          gcloud artifacts repositories create "${{ env.ARTIFACT_REPOSITORY }}" \
+          gcloud artifacts repositories create "${{ env.ARTIFACT }}" \
             --project "${{ env.PROJECT_ID }}" \
             --location "${{ env.REGION }}" \
             --description "${{ env.SERVICE }}" \
             --repository-format docker
-      - name: 'Update Docker images'
+      - name: Login to GCP Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
+      - name: Update Docker images
         run: |
-          repo="${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPOSITORY}"
+          TAG_PREFIX="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT }}/${{ env.SERVICE }}"
           docker pull ghcr.io/karakeep-app/karakeep:release
-          docker tag ghcr.io/karakeep-app/karakeep:release "${repo}/${SERVICE}-web:latest"
-          docker push "${repo}/${SERVICE}-web:latest"
+          docker tag ghcr.io/karakeep-app/karakeep:release "${TAG_PREFIX}-web:latest"
+          docker push "${TAG_PREFIX}-web:latest"
           docker pull gcr.io/zenika-hub/alpine-chrome:124
-          docker tag gcr.io/zenika-hub/alpine-chrome:124 "${repo}/${SERVICE}-browser:latest"
-          docker push "${repo}/${SERVICE}-browser:latest"
+          docker tag gcr.io/zenika-hub/alpine-chrome:124 "${TAG_PREFIX}-browser:latest"
+          docker push "${TAG_PREFIX}-browser:latest"
           docker pull getmeili/meilisearch:v1.41.0
-          docker tag getmeili/meilisearch:v1.41.0 "${repo}/${SERVICE}-search:latest"
-          docker push "${repo}/${SERVICE}-search:latest"
-      - name: 'Deploy to GCP Cloud Run with Docker Compose'
+          docker tag getmeili/meilisearch:v1.41.0 "${TAG_PREFIX}-search:latest"
+          docker push "${TAG_PREFIX}-search:latest"
+      - name: Deploy to GCP Cloud Run with Docker Compose
         run: |
           gcloud run compose up docker-compose.prod.yml \
             --project "${PROJECT_ID}" \
