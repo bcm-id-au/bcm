@@ -9,17 +9,14 @@ USER root
 
 RUN set -eux; \
   if command -v apk >/dev/null 2>&1; then \
-    apk add --no-cache bash chromium tini; \
+    apk add --no-cache bash chromium; \
   elif command -v apt-get >/dev/null 2>&1; then \
     apt-get update; \
-    apt-get install -y --no-install-recommends bash chromium tini ca-certificates; \
+    apt-get install -y --no-install-recommends bash chromium ca-certificates musl; \
     apt-get clean; \
   else \
     echo "Unsupported Karakeep base image: neither apk nor apt-get is available" >&2; \
     exit 1; \
-  fi; \
-  if [ ! -x /sbin/tini ] && [ -x /usr/bin/tini ]; then \
-    ln -s /usr/bin/tini /sbin/tini; \
   fi
 
 COPY --from=meilisearch /bin/meilisearch /usr/local/bin/meilisearch
@@ -37,4 +34,4 @@ ENV DATA_DIR=/data \
 VOLUME ["/data", "/meili_data"]
 EXPOSE 3000
 
-ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/bcm-karakeep-all-in-one"]
+ENTRYPOINT ["/usr/local/bin/bcm-karakeep-all-in-one"]

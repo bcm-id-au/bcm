@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-declare -a child_pids=()
-
 log() {
   printf '[bcm-karakeep-all-in-one] %s\n' "$*"
 }
@@ -31,8 +29,6 @@ find_chromium() {
   return 1
 }
 
-trap 'log "received termination signal"; exit 143' TERM INT
-
 require_env NEXTAUTH_SECRET
 require_env NEXTAUTH_URL
 require_env MEILI_MASTER_KEY
@@ -55,7 +51,6 @@ log "starting meilisearch at $MEILI_ADDR"
 meilisearch \
   --http-addr "127.0.0.1:7700" \
   --db-path "$MEILI_DB_PATH" &
-child_pids+=("$!")
 
 chromium_bin="$(find_chromium)" || fail "chromium is not installed in the image"
 
@@ -69,21 +64,14 @@ log "starting chromium remote debugging at $BROWSER_WEB_URL"
   --remote-debugging-port=9222 \
   --hide-scrollbars \
   about:blank &
-child_pids+=("$!")
 
 if [[ "$#" -eq 0 ]]; then
-  if command -v start.sh >/dev/null 2>&1; then
-    set -- start.sh
-  elif [[ -x /app/start.sh ]]; then
-    set -- /app/start.sh
+  if [[ -x /init ]]; then
+    set -- /init
   else
-    fail "no Karakeep command was provided and no start.sh was found"
+    fail "no Karakeep command was provided and /init was not found"
   fi
 fi
 
 log "starting karakeep"
-"$@" &
-child_pids+=("$!")
-karakeep_pid="$!"
-
-wait "$karakeep_pid"
+exec "$@"
