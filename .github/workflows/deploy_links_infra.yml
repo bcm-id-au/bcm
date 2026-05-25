@@ -8,6 +8,7 @@
 #
 
 name: 'Links - Deploy GCP Infra'
+run-name: Links Infra Deploy by ${{ github.actor }} on ${{ github.ref_name }} at ${{ github.sha::0:7 }}
 
 on:
   # Allow manual triggers via GitHub Repo > Actions

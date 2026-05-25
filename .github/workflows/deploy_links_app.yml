@@ -1,11 +1,12 @@
 #
 #
 # Manual Workflow: Links - Deploy App build to GCP Cloud Run
-#   - Initial setup steps and documentation in: 'src/links/.infra/README.md'
+#   - Initial setup steps and documentation in: 'src/links/README.md'
 #
 #
 
 name: Links - Deploy App
+run-name: Links App Deploy by ${{ github.actor }} on ${{ github.ref_name }} at ${{ github.sha::0:7 }}
 
 on:
   # Allow manual triggers via GitHub Repo > Actions
