@@ -42,12 +42,19 @@ links-stop:
   bash ./src/links/bin/stop-links.sh
 
 # Generate release notes and save them to a file
-[group('tools')]
+[group('release')]
 release-notes output_file:
   bash ./bin/release-notes.sh "$output_file"
 
+# Update local Git branch statuses and Submodules
+[group('git')]
+git-update:
+  git fetch
+  git pull --recurse-submodules
+  git submodule update --remote --merge
+
 # Login to the GitHub CLI
-[group('tools')]
+[group('git')]
 gh-login:
   gh auth login --web --git-protocol ssh
 

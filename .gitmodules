@@ -1,0 +1,6 @@
+[submodule "src/upcomingtasks"]
+	path = src/upcomingtasks
+	url = git@github.com:brendanmurty/upcomingtasks.git
+[submodule "src/schnitmydadsays"]
+	path = src/schnitmydadsays
+	url = git@github.com:brendanmurty/schnitmydadsays.git

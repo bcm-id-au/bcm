@@ -10,8 +10,10 @@ This repository contains a set of self-hosted systems.
 - [bin](bin/) - Bash helper scripts
 - [docs](docs/) - Documentation and contextual information
 - [design](design/) - Page layout and icon design files
-- [src/links](src/links/) - Source code for a self-hosted version of the [Karakeep](https://karakeep.app/) bookmarking service.
-- [src/site](src/site/) - Source code for the main public website at [murty.au](https://murty.au).
+- [src/links](src/links/) - A self-hosted version of the [Karakeep](https://karakeep.app/) bookmarking service.
+- [src/schnitmydadsays](src/schnitmydadsays/) - Schnitzel review website.
+- [src/site](src/site/) - My main public website at [murty.au](https://murty.au).
+- [src/upcomingtasks](src/upcomingtasks/) - A web-based Basecamp 2 client.
 - [storage](storage/) - Used for persistent storage by local Docker containers.
 
 ## Local Setup
