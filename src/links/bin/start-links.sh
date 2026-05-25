@@ -19,6 +19,7 @@ source .links.env
 PORT="$KARAKEEP_PORT" \
   DISABLE_SIGNUPS="$KARAKEEP_DISABLE_SIGNUPS" \
   OPENAI_API_KEY="$OPENAI_API_KEY" \
+  MEILI_MASTER_KEY="$MEILI_MASTER_KEY" \
   docker compose \
   --file "$LINKS_DIR/docker-compose.local.yml" \
   up --pull always --build -d
