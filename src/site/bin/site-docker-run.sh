@@ -11,7 +11,8 @@ cd "$SITE_DIR"
 
 docker run \
   -d \
-  -p 8000:8000 \
   --name "bcm-site" \
+  --publish 8000:8000 \
+  --rm \
   --env-file "./.env" \
   "bcm-site:latest"
