@@ -20,43 +20,66 @@ just links-stop
 
 ### Deployment
 
-App builds can be deployed to GCP manually in GitHub Actions via [deploy_links_app.yml](../../.github/workflows/deploy_links_app.yml)
-
-Infrastructure configuration can be deployed to GCP manually in GitHub Actions via [deploy_links_infra.yml](../../.github/workflows/deploy_links_infra.yml)
-
-Links infrastructure is deployed to `asia-southeast1` due to limitations around region availability of some required GCP features.
+App builds can be deployed to GCP manually in GitHub Actions via [deploy_links.yml](../../.github/workflows/deploy_links.yml)
 
 ### Infrastructure Setup
 
-Login to GCP and enable the following APIs:
+Manual setup steps for GCP detailed below.
 
-- Artifact Registry API
-- Cloud Run API
-- Cloud Storage API
-- IAM Credentials API
-- Cloud DNS API
+Use the `asia-southeast1` region as some required GCP features aren't supported in the Sydney region.
 
-The workflow identity (used by `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER`) must have the following attached roles:
+1. Login to GCP and select the target project.
+2. Enable the required APIs:
+   - Artifact Registry API
+   - Cloud Run API
+   - Cloud Storage API
+   - IAM Credentials API
+   - Cloud DNS API
+   - Secret Manager API
+3. Create an Artifact Registry Docker repository for Links in `asia-southeast1`.
+4. Create the Links deployer service account. By default this is `<cloud-run-service>-deployer`, unless a service account name or email is supplied.
+5. Grant the deployer service account these project roles:
+   - `roles/artifactregistry.admin`
+   - `roles/run.developer`
+   - `roles/storage.admin`
+   - `roles/iam.serviceAccountUser`
+6. Create a Workload Identity pool for GitHub Actions. The workflow default is `bcm-links-github`.
+7. Create a GitHub OIDC provider in that pool. The workflow default provider name is `github`.
+   - Issuer: `https://token.actions.githubusercontent.com`
+   - Attribute mapping: `google.subject=assertion.sub,attribute.actor=assertion.actor,attribute.repository=assertion.repository,attribute.repository_owner=assertion.repository_owner`
+   - Attribute condition: `assertion.repository == '<github-owner>/<github-repo>'`
+8. Grant the GitHub repository principal access to impersonate the deployer service account:
+   - `roles/iam.workloadIdentityUser`
+   - `roles/iam.serviceAccountTokenCreator`
+9. If `LINKS_DOMAIN` is configured, create a public Cloud DNS managed zone for `LINKS_GCP_DNS_NAME`.
+10. Deploy the Cloud Run service with the app deployment workflow.
+11. If `LINKS_DOMAIN` is configured, create the Cloud Run domain mapping for the deployed service.
+12. Delegate the DNS name to the Cloud DNS name servers at the domain registrar, verify domain ownership if required, then add the Cloud Run DNS records shown by the domain mapping.
 
-- `roles/artifactregistry.admin`
-- `roles/run.developer`
-- `roles/storage.admin`
-- `roles/iam.serviceAccountUser`
+The resulting values required by the app deployment workflow are:
+
+- `LINKS_GCP_ARTIFACT_REPOSITORY`
+- `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER`
+- `LINKS_GCP_SERVICE_ACCOUNT`
+
+Manual production app secrets should be created in Secret Manager from the values defined in `.links.sample.env`.
 
 #### GitHub Secrets
 
 Add the below items to the list at `GitHub Repo > Settings > Secrets and variables > Actions > Repository secrets`.
 
-- `GCP_PROJECT_ID` - Required, eg: `example-project-111222`
+- `LINKS_GCP_PROJECT_ID` - Required, eg: `example-project-111222`
 - `LINKS_GCP_ARTIFACT_REPOSITORY`
 - `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER` - eg: `projects/1234/locations/global/workloadIdentityPools/links-example-domain`
+- `LINKS_GCP_WORKLOAD_POOL` - Optional, defaults to `bcm-links-github`
+- `LINKS_GCP_WORKLOAD_PROVIDER_NAME` - Optional, defaults to `github`
 - `LINKS_GCP_CLOUD_RUN_SERVICE_PREFIX`
 - `LINKS_GCP_APP_CREDENTIALS_EMAIL` - email for a GCP Service Account with roles below
 - `LINKS_GCP_APP_CREDENTIALS_JSON` - JSON key for a GCP Service Account with roles below
 - `LINKS_GCP_INFRA_CREDENTIALS_JSON` - JSON key for a GCP Service Account with roles below
 - `LINKS_DOMAIN` - Optional, eg: `links.example-domain.com`
-- `GCP_DNS_ZONE` - Optional, eg: `example-domain-com`
-- `GCP_DNS_NAME` - Optional, eg: `example-domain.com.`
+- `LINKS_GCP_DNS_ZONE` - Required if `LINKS_DOMAIN` is set, eg: `example-domain-com`
+- `LINKS_GCP_DNS_NAME` - Required if `LINKS_DOMAIN` is set, eg: `example-domain.com.`
 
 Required GCP Roles for the **Apps Service Account**:
 

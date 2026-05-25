@@ -5,8 +5,8 @@
 #
 #
 
-name: Links - Deploy App
-run-name: Deploy Links App - ${{ github.actor }} on ${{ github.ref_name }}
+name: Links - Deploy
+run-name: Deploy of Links by ${{ github.actor }} at commit ${{ github.ref_name }}
 
 on:
   # Allow manual triggers via GitHub Repo > Actions
@@ -33,7 +33,7 @@ env:
   AUTH_EMAIL: ${{ secrets.LINKS_GCP_APP_CREDENTIALS_EMAIL }}
 
 jobs:
-  deploy_links_app:
+  deploy_links:
     if: ${{ inputs.continue_deployment == true }}
     name: Links - Deploy App
     runs-on: ubuntu-latest
