@@ -3,6 +3,8 @@
 #
 # Start the Docker container
 #  - Run via: just site-docker-start
+#  - Port can be customised by exporting the SITE_PORT before running the script
+#  - Env File Path can be customised by exporting the SITE_ENV before running the script
 #
 #
 
@@ -14,6 +16,6 @@ just site-docker-stop
 docker run \
   -d \
   --name "bcm-site" \
-  --publish 8000:8000 \
-  --env-file "./.env" \
+  --publish "${SITE_PORT:-8000}:8000" \
+  --env-file "${SITE_ENV:-./.env}" \
   "bcm-site:latest"
