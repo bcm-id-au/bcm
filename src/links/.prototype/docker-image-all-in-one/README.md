@@ -12,17 +12,17 @@ The official Karakeep Docker docs use separate Compose services for the app, bro
 
 - `Dockerfile` builds from the upstream Karakeep image, copies in Meilisearch and installs Chromium.
 - `entrypoint.sh` validates required environment variables and starts Meilisearch, Chromium and Karakeep.
-- `.env.example` contains the minimum runtime configuration.
+- `.links.sample.env` contains the minimum runtime configuration.
 - `docker-compose.yml` is a local runner for building and testing the image.
 
 ## Build
 
 ```bash
-cp -n .env.example .env
+cp -n .links.sample.env .links.env
 docker compose build
 ```
 
-Edit `.env` before running. `NEXTAUTH_SECRET` and `MEILI_MASTER_KEY` must be long random strings.
+Edit `.links.env` before running. `NEXTAUTH_SECRET` and `MEILI_MASTER_KEY` must be long random strings.
 
 ## Run
 
@@ -40,13 +40,13 @@ Persistent data is mounted from the repository storage paths:
 ## Direct Docker Run
 
 ```bash
-docker build -t bcm-karakeep-all-in-one:0.32.0 .
+docker build -t bcm-links:0.32.0 .
 docker run \
   --env-file .env \
   -p 3333:3000 \
   -v "$(pwd)/../../../../storage/links/app:/data" \
   -v "$(pwd)/../../../../storage/links/search:/meili_data" \
-  bcm-karakeep-all-in-one:0.32.0
+  bcm-links:0.32.0
 ```
 
 ## Notes
@@ -55,4 +55,4 @@ docker run \
 - Version pins are build args in `docker-compose.yml`.
 - `MEILI_ADDR` defaults to `http://127.0.0.1:7700`.
 - `BROWSER_WEB_URL` defaults to `http://127.0.0.1:9222`.
-- Keep secrets in `.env`; do not bake them into the image.
+- Keep secrets in `.links.env`; do not bake them into the image.

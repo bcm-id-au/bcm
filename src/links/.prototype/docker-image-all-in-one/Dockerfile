@@ -32,8 +32,7 @@ ENV DATA_DIR=/data \
   MEILI_DB_PATH=/meili_data \
   MEILI_NO_ANALYTICS=true \
   BROWSER_WEB_URL=http://127.0.0.1:9222 \
-  DISABLE_SIGNUPS=true \
-  KARAKEEP_DISABLE_SIGNUPS=true
+  DISABLE_SIGNUPS=true
 
 VOLUME ["/data", "/meili_data"]
 EXPOSE 3000
