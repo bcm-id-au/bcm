@@ -1,16 +1,17 @@
 FROM denoland/deno:latest
 WORKDIR /app
 
-# Copy dependency files first for layer caching
+# Copy over the Deno config files and install
+# third-party dependencies first.
 COPY deno.json deno.lock ./
 RUN deno task deps-install
 
-# Copy the rest of the application source,
-# besides those filtered out by .dockerignore
+# Copy the rest of the 'src/site' directory,
+# besides items filtered out by '.dockerignore'.
 COPY . .
 
-# Build args for site config (pass via --build-arg or --env-file)
-# Defaults align with .env.sample — override for your deployment
+# Set default build arguments based on values from '.env.sample'.
+# These can be overridden via the Docker --build-arg or --env-file params.
 ARG BLOG_POSTS_DIR=public/posts
 ARG BLOG_POSTS_URL=https://murty.au/posts/
 ARG JSON_FEED_VERSION_URL=https://jsonfeed.org/version/1.1
@@ -23,7 +24,8 @@ ARG JSON_FEED_AUTHOR_URL=https://murty.au/
 ARG JSON_FEED_FILE_OUTPUT=public/brendan/posts.json
 ARG JSON_FEED_URL_FEED=https://murty.au/brendan/posts.json
 
-# Persist build args as env vars for the build step (and runtime, if needed)
+# Persist build arguments as environment variables so
+# resulting Docker Containers can access the values.
 ENV BLOG_POSTS_DIR=${BLOG_POSTS_DIR}
 ENV BLOG_POSTS_URL=${BLOG_POSTS_URL}
 ENV JSON_FEED_VERSION_URL=${JSON_FEED_VERSION_URL}
