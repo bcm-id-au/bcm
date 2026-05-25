@@ -12,4 +12,4 @@ cd "$SITE_DIR"
 docker build \
   --tag "bcm-site:latest" \
   --tag "bcm-site:$(git rev-parse --short HEAD)" \
-  "./Dockerfile"
+  "."
