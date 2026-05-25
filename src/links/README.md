@@ -20,7 +20,7 @@ just links-stop
 
 ### Deployment
 
-App builds can be deployed to GCP manually in GitHub Actions via [deploy_links_app.yml](../../.github/workflows/deploy_links_app.yml)
+App builds can be deployed to GCP manually in GitHub Actions via [deploy_links.yml](../../.github/workflows/deploy_links.yml)
 
 ### Infrastructure Setup
 
