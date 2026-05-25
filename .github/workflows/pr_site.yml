@@ -1,11 +1,11 @@
 #
 #
-# Automatic PR Workflow: Site - Test
+# Automatic Workflow: PR - Site
 #
 #
 
-name: Site - PR Test
-run-name: PR Test of Site by ${{ github.actor }} for PR#${{ github.event.pull_request.number }}
+name: Site - PR Check
+run-name: PR Site by ${{ github.actor }} for PR#${{ github.event.pull_request.number }}
 
 on:
   # Automatically run on PRs that are aiming to merge to certain branches
