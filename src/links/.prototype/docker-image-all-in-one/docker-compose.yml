@@ -1,0 +1,17 @@
+services:
+  bcm-links-all-in-one:
+    build:
+      context: .
+      args:
+        KARAKEEP_VERSION: "0.32.0"
+        MEILISEARCH_VERSION: "v1.41.0"
+    image: bcm-karakeep-all-in-one:0.32.0
+    restart: no
+    ports:
+      - "3333:3000"
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ../../../../storage/links/app:/data
+      - ../../../../storage/links/search:/meili_data
