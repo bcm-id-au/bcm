@@ -46,6 +46,7 @@ RUN deno task build
 # Create a new Docker Image layer to run the site using only the static files.
 # Minimises the resulting Docker Image size, speeding up build and push times.
 FROM denoland/deno:latest AS serve
+WORKDIR /app
 
 COPY --from=build /app/public /app/public
 COPY --from=build /app/deno.lock /app/deno.lock
