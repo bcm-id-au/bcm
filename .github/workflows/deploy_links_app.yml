@@ -28,7 +28,7 @@ env:
   ARTIFACT_REPOSITORY: '${{ secrets.LINKS_GCP_ARTIFACT_REPOSITORY }}'
   SERVICE: '${{ secrets.LINKS_GCP_CLOUD_RUN_SERVICE_PREFIX }}'
   WORKLOAD_IDENTITY_PROVIDER: '${{ secrets.LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER }}'
-  SERVICE_ACCOUNT: '${{ secrets.LINKS_GCP_APP_CREDENTIALS_EMAIL }}'
+  SERVICE_ACCOUNT: '${{ secrets.LINKS_GCP_APP_CREDENTIALS_JSON }}'
 
 jobs:
   deploy_links_app:
@@ -48,8 +48,7 @@ jobs:
         uses: 'google-github-actions/auth@v3'
         with:
           project_id: '${{ env.PROJECT_ID }}'
-          workload_identity_provider: '${{ env.WORKLOAD_IDENTITY_PROVIDER }}'
-          service_account: '${{ env.LINKS_GCP_APP_CREDENTIALS_EMAIL }}'
+          credentials_json: '${{ env.SERVICE_ACCOUNT }}'
       - name: 'Set up GCP'
         uses: 'google-github-actions/setup-gcloud@v3'
       - name: 'Docker Auth'
@@ -59,17 +58,16 @@ jobs:
           password: '${{ steps.auth.outputs.access_token }}'
           registry: '${{ env.REGION }}-docker.pkg.dev'
       - name: 'Create GCP Artifact Registry Repository'
-        run: |-
-          set -euo pipefail
+        run: |
           gcloud artifacts repositories describe "${ARTIFACT_REPOSITORY}" \
             --project "${PROJECT_ID}" \
             --location "${REGION}" \
             >/dev/null 2>&1 || \
-          gcloud artifacts repositories create "${ARTIFACT_REPOSITORY}" \
-            --project "${PROJECT_ID}" \
-            --location "${REGION}" \
-            --repository-format docker \
-            --description "bcm links Cloud Run images"
+          gcloud artifacts repositories create "${{ env.ARTIFACT_REPOSITORY }}" \
+            --project "${{ env.PROJECT_ID }}" \
+            --location "${{ env.REGION }}" \
+            --description "${{ env.SERVICE }}" \
+            --repository-format docker
       - name: 'Push Docker images'
         run: |
           repo="${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPOSITORY}"
@@ -89,7 +87,7 @@ jobs:
           docker push "${repo}/${SERVICE}-search:latest"
       - name: 'Deploy to GCP Cloud Run'
         run: |
-          gcloud beta run compose up docker-compose.prod.yml \
+          gcloud run compose up docker-compose.prod.yml \
             --project "${PROJECT_ID}" \
             --region "${REGION}" \
             --quiet
