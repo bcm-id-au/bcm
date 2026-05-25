@@ -2,7 +2,7 @@
 #
 #
 # Build a Docker image
-#  - Run via: just xxxxxxxxxxxxxxxxxxxxx
+#  - Run via: just site-docker-build
 #
 #
 
