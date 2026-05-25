@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
 #
 #
-# Run a Docker image
-#  - Run via: just site-docker-run
+# Start the Docker container
+#  - Run via: just site-docker-start
 #
 #
 
 SITE_DIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
 cd "$SITE_DIR"
 
+just site-docker-stop
+
 docker run \
   -d \
   --name "bcm-site" \
   --publish 8000:8000 \
-  --rm \
   --env-file "./.env" \
   "bcm-site:latest"

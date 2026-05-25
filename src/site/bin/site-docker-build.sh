@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 #
-# Build a Docker image
+# Build the Docker image
 #  - Run via: just site-docker-build
 #
 #

@@ -62,15 +62,20 @@ gh-actions-lint:
 site-build:
   bash ./src/site/bin/site-build.sh
 
-# Run the Docker build process for Site
+# Run the Docker image build process for Site
 [group('site')]
 site-docker-build:
   bash ./src/site/bin/site-docker-build.sh
 
-# Run the Docker run process for Site
+# Start the Docker container for Site
 [group('site')]
-site-docker-run:
-  bash ./src/site/bin/site-docker-run.sh
+site-docker-start:
+  bash ./src/site/bin/site-docker-start.sh
+
+# Stop the Docker container for Site
+[group('site')]
+site-docker-stop:
+  bash ./src/site/bin/site-docker-stop.sh
 
 # Create a new post for Site
 [group('site')]
