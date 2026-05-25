@@ -21,6 +21,6 @@ PORT="$KARAKEEP_PORT" \
   OPENAI_API_KEY="$OPENAI_API_KEY" \
   docker compose \
   --file "$LINKS_DIR/docker-compose.local.yml" \
-  up -d
+  up --pull always -d
 
 echo "Karakeep started at http://localhost:3333/"
