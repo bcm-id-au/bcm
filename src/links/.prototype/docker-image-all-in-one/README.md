@@ -42,7 +42,7 @@ Persistent data is mounted from the repository storage paths:
 ```bash
 docker build -t bcm-links:0.32.0 .
 docker run \
-  --env-file .env \
+  --env-file .links.env \
   -p 3333:3000 \
   -v "$(pwd)/../../../../storage/links/app:/data" \
   -v "$(pwd)/../../../../storage/links/search:/meili_data" \
