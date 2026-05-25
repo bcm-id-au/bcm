@@ -24,6 +24,8 @@ The systems in this respository assume that your local machine:
 - Has an up-to-date version of [Just](https://github.com/casey/just) installed and ready
 - Has an up-to-date version of [GitHub CLI](https://cli.github.com/) installed and ready
 
+Note that my [dotfiles repository](https://github.com/brendanmurty/dotfiles) contains install scripts for most of the above items.
+
 ## Local Tools
 
 This repository uses [Just](https://github.com/casey/just) to run commands defined in [justfile](justfile).
