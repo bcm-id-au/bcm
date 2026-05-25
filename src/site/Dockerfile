@@ -11,7 +11,9 @@ RUN deno task deps-install
 COPY . .
 
 # Set default build arguments based on values from '.env.sample'.
-# These can be overridden via the Docker --build-arg or --env-file params.
+# These can be overridden via Docker params like:
+# --build-arg BLOG_POSTS_URL= https://something.com/posts/
+# --env-file ./.env.something
 ARG BLOG_POSTS_DIR=public/posts
 ARG BLOG_POSTS_URL=https://murty.au/posts/
 ARG JSON_FEED_VERSION_URL=https://jsonfeed.org/version/1.1
