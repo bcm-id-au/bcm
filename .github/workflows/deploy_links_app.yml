@@ -47,15 +47,15 @@ jobs:
         with:
           project_id: '${{ env.PROJECT_ID }}'
           credentials_json: '${{ env.SERVICE_ACCOUNT }}'
-      - name: 'Set up GCP'
+      - name: 'Setup GCP'
         uses: 'google-github-actions/setup-gcloud@v3'
-      - name: 'Docker Auth'
+      - name: 'Docker Login'
         uses: 'docker/login-action@v4'
         with:
           username: 'oauth2accesstoken'
           password: '${{ env.GOOGLE_APPLICATION_CREDENTIALS }}'
           registry: '${{ env.REGION }}-docker.pkg.dev'
-      - name: 'Create GCP Artifact Registry Repository'
+      - name: 'Setup GCP Artifact Registry Repository'
         run: |
           gcloud artifacts repositories describe "${ARTIFACT_REPOSITORY}" \
             --project "${PROJECT_ID}" \
