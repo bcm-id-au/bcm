@@ -47,11 +47,11 @@ Deno.test("build", async (test) => {
   });
 
   await test.step({
-    name: "non-empty file 'public/images/brendan/brendan-2026_750.png' was found",
+    name: "non-empty file 'public/images/brendan/profile/brendan_750.png' was found",
     fn: async () => {
       try {
         const publicIndexFileContents: string = await Deno.readTextFile(
-          "public/images/brendan/brendan-2026_750.png",
+          "public/images/brendan/profile/brendan_750.png",
         );
 
         assertNotEquals(publicIndexFileContents, "");
@@ -62,11 +62,11 @@ Deno.test("build", async (test) => {
   });
 
   await test.step({
-    name: "non-empty file 'public/images/brendan/brendan-2026_150.webp' was found",
+    name: "non-empty file 'public/images/brendan/profile/brendan_150.webp' was found",
     fn: async () => {
       try {
         const publicIndexFileContents: string = await Deno.readTextFile(
-          "public/images/brendan/brendan-2026_150.webp",
+          "public/images/brendan/profile/brendan_150.webp",
         );
 
         assertNotEquals(publicIndexFileContents, "");
