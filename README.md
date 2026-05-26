@@ -7,7 +7,7 @@ This repository contains a set of self-hosted systems.
 - [.github/workflows](.github/workflows/) - GitHub Actions workflows to deploy apps and infrastructure.
 - [.vscode](.vscode/) - Customised [VS Code](https://code.visualstudio.com/) project configuration.
 - [.zed](.zed/) - Customised [Zed Editor](https://zed.dev/) project configuration.
-- [bin](bin/) - Bash helper scripts
+- [bin](bin/) - Supporting tools and scripts
 - [docs](docs/) - Documentation and contextual information
 - [design](design/) - Page layout and icon design files
 - [src/links](src/links/) - A self-hosted version of the [Karakeep](https://karakeep.app/) bookmarking service.
