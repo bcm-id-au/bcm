@@ -18,6 +18,10 @@ set quiet := true
 alias help := list
 alias ls := list
 alias menu := choose
+alias select := choose
+alias install := setup-local
+alias setup := setup-local
+alias ai := ai-install
 alias br := git-branch
 alias pr := gh-pr
 
@@ -33,10 +37,15 @@ list:
   @echo '{{ style("warning") }}Listing "just" command options from {{ justfile() }}{{ NORMAL }}'
   just --justfile "{{ justfile() }}" --list --alias-style 'right' --list-heading '' --list-prefix ''
 
-# Initial setup for local environments
+# Setup a local environment
 [group('tools')]
-setup:
-  bash ./bin/setup.sh
+setup-local:
+  bash ./bin/setup-local.sh
+
+# Install AI Code Generation tools
+[group('tools')]
+ai-install:
+  bash ./bin/ai-install.sh
 
 # Generate release notes and save them to a file
 [group('tools')]
