@@ -7,9 +7,9 @@ This repository contains a set of self-hosted systems.
 - [.github/workflows](.github/workflows/) - GitHub Actions workflows to deploy apps and infrastructure.
 - [.vscode](.vscode/) - Customised [VS Code](https://code.visualstudio.com/) project configuration.
 - [.zed](.zed/) - Customised [Zed Editor](https://zed.dev/) project configuration.
-- [bin](bin/) - Supporting tools and scripts
-- [docs](docs/) - Documentation and contextual information
-- [design](design/) - Page layout and icon design files
+- [bin](bin/) - Supporting tools and scripts.
+- [docs](docs/) - Documentation and contextual information.
+- [design](design/) - Page layout and icon design files.
 - [src/links](src/links/) - A self-hosted version of the [Karakeep](https://karakeep.app/) bookmarking service.
 - [src/schnitmydadsays](https://github.com/brendanmurty/schnitmydadsays) - Schnitzel review website.
 - [src/site](src/site/) - My main public website at [murty.au](https://murty.au).
