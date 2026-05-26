@@ -48,8 +48,8 @@
         "deno": {
           "enable": true,
           "lint": true,
-          "config": "./deno.json",
-          "importMap": "./deno.json",
+          "config": "./src/site/deno.json",
+          "importMap": "./src/site/deno.json",
         },
       },
     },
