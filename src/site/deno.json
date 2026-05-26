@@ -93,7 +93,7 @@
     },
     "init-env": {
       "description": "Setup an initial ENV file if it doesn't already exist.",
-      "command": "cp -n ./env.sample ./env"
+      "command": "[ ! -f ./.env ] && cp -n ./.env.sample ./.env"
     }
   },
   "permissions": {
