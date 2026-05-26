@@ -30,13 +30,13 @@ Note that my [dotfiles repository](https://github.com/brendanmurty/dotfiles) con
 
 ## Local Tools
 
-This repository uses [Just](https://github.com/casey/just) to run commands defined in [justfile](justfile).
-
 Initial setup:
 
 ```bash
 bash ./bin/setup.sh
 ```
+
+This repository uses [Just](https://github.com/casey/just) to run commands defined in [justfile](justfile).
 
 To list all of the available options for the `just` CLI, run:
 
