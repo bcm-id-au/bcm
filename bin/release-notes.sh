@@ -6,7 +6,7 @@
 #
 #
 
-REPO_DIR="$(cd "$(dirname "$0")" && cd ../.. && pwd)"
+REPO_DIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
 cd "$REPO_DIR"
 
 # If an argument is provided when calling this script,

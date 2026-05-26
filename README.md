@@ -18,10 +18,10 @@ This repository contains a set of self-hosted systems.
 
 ## Local Setup
 
-The systems in this respository assume that your local machine:
+The systems in this repository assume that your local machine:
 
 - Is running a Linux OS like Fedora or Ubuntu
-- Has an up-to-date version of [Docker Desktop](https://docs.docker.com/desktop/) installed and ready
+- Has an up-to-date version of [Docker CLI](https://docs.docker.com/desktop/) installed and ready
 - Has an up-to-date version of [Deno](https://deno.com/) installed and ready
 - Has an up-to-date version of [Just](https://github.com/casey/just) installed and ready
 - Has an up-to-date version of [GitHub CLI](https://cli.github.com/) installed and ready
@@ -32,7 +32,13 @@ Note that my [dotfiles repository](https://github.com/brendanmurty/dotfiles) con
 
 This repository uses [Just](https://github.com/casey/just) to run commands defined in [justfile](justfile).
 
-To see the available options for the `just` CLI, run:
+Initial setup:
+
+```bash
+bash ./bin/setup.sh
+```
+
+To list all of the available options for the `just` CLI, run:
 
 ```bash
 just list
