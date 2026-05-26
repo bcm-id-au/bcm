@@ -11,21 +11,18 @@ cd "$SITE_DIR"
 
 # Recreate build directories
 
-build_dirs=("./build" "./public")
+rm -rf "./build"
+mkdir -p "./build"
 
-for build_dir in "${build_dirs[@]}"; do
-  rm -rf "$build_dir"
-  mkdir -p "$build_dir"
-done
+rm -rf "./public"
+mkdir -p "./public"
 
 # Setup an initial ENV file if it doesn't already exist
 
-deno task init-env
+if [ ! -f ./.env ]; then
+  cp ./.env.sample ./.env
+fi
 
-# Install project dependencies
+# Install dependencies
 
 deno task deps-install
-
-# Done
-
-exit 0

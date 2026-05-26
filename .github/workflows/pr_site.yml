@@ -39,10 +39,8 @@ jobs:
         uses: denoland/setup-deno@v2
         with:
           deno-version: latest
-      - name: Setup environment
-        run: deno task init-env
-      - name: Install dependencies
-        run: deno ci
+      - name: Setup and install dependencies
+        run: deno task setup
       - name: Build site
         run: deno task build
       - name: Upload build files

@@ -90,10 +90,6 @@
     "test": {
       "description": "Run all Deno Test scripts in the 'src' directory.",
       "command": "deno test --allow-run=deno --allow-env --allow-read --allow-net src"
-    },
-    "init-env": {
-      "description": "Setup an initial ENV file if it doesn't already exist.",
-      "command": "[ ! -f ./.env ] && cp -n ./.env.sample ./.env"
     }
   },
   "permissions": {
