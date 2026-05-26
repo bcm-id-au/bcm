@@ -20,7 +20,7 @@ done
 
 # Setup an initial ENV file if it doesn't already exist
 
-cp -n "./.env.sample" "./.env"
+deno task init-env
 
 # Install project dependencies
 

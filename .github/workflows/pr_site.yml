@@ -40,7 +40,9 @@ jobs:
         with:
           deno-version: latest
       - name: Setup environment
-        run: deno task setup
+        run: deno task init-env
+      - name: Install dependencies
+        run: deno ci
       - name: Build site
         run: deno task build
       - name: Upload build files
