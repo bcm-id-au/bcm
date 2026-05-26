@@ -11,9 +11,9 @@ This repository contains a set of self-hosted systems.
 - [docs](docs/) - Documentation and contextual information
 - [design](design/) - Page layout and icon design files
 - [src/links](src/links/) - A self-hosted version of the [Karakeep](https://karakeep.app/) bookmarking service.
-- [src/schnitmydadsays](src/schnitmydadsays/) - Schnitzel review website.
+- [src/schnitmydadsays](https://github.com/brendanmurty/schnitmydadsays) - Schnitzel review website.
 - [src/site](src/site/) - My main public website at [murty.au](https://murty.au).
-- [src/upcomingtasks](src/upcomingtasks/) - A web-based Basecamp 2 client.
+- [src/upcomingtasks](https://github.com/brendanmurty/upcomingtasks) - A web-based Basecamp 2 client.
 - [storage](storage/) - Used for persistent storage by local Docker containers.
 
 ## Local Setup
