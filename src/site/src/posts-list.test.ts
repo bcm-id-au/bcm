@@ -8,7 +8,7 @@ Deno.test("src/posts-list.ts", async (test) => {
 
   const postsDirectory: string = Deno.env.get("BLOG_POSTS_DIR") || "";
   const urlPosts: string = Deno.env.get("BLOG_POSTS_URL") || "";
-  const jsonFeedDefaultPostTitle: string = Deno.env.get("JSON_FEED_DEFAULT_POST_TITLE") || "";
+  const jsonFeedDefaultPostTitle: string = Deno.env.get("JSON_FEED_DEFAULT_TITLE") || "";
 
   await test.step({
     name: "required var in env file is set (BLOG_POSTS_DIR)",
@@ -25,7 +25,7 @@ Deno.test("src/posts-list.ts", async (test) => {
   });
 
   await test.step({
-    name: "required var in env file is set (JSON_FEED_DEFAULT_POST_TITLE)",
+    name: "required var in env file is set (JSON_FEED_DEFAULT_TITLE)",
     fn: () => {
       assertNotEquals(jsonFeedDefaultPostTitle, "");
     },

@@ -9,6 +9,12 @@
 SITE_DIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
 cd "$SITE_DIR"
 
+# Load the ENV file if it exists
+
+if [ -f "$SITE_DIR/.env" ]; then
+  source "$SITE_DIR/.env"
+fi
+
 # Setup the message colour characters
 
 GREEN="\033[0;32m"
@@ -16,10 +22,11 @@ YELLOW="\033[0;33m"
 RED="\033[0;31m"
 NC="\033[0m"
 
-# Define the temporary build directory (BUILD_DIR) and public output directory (PUBLIC_DIR)
+# Define the temporary build directory (BUILD_DIR) and public output directory (PUBLIC_DIR),
+# defaulting to using the ENV var if it exists already
 
-BUILD_DIR="build"
-PUBLIC_DIR="public"
+BUILD_DIR=${BUILD_DIR:-"build"}
+PUBLIC_DIR=${PUBLIC_DIR:-"public"}
 
 # Set the production domain and link
 

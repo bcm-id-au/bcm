@@ -6,11 +6,11 @@ import { join } from "@std/path";
 Deno.test("src/json-feed.ts", async (test) => {
   // Attempt to get the values of some variables from the ".env" file
   await load({ export: true });
-  const postsJsonFile: string = Deno.env.get("JSON_FEED_FILE_OUTPUT") || "";
+  const postsJsonFile: string = Deno.env.get("JSON_FEED_FILE") || "";
   const postsDirectory: string = Deno.env.get("BLOG_POSTS_DIR") || "";
 
   await test.step({
-    name: "required var in env file is set (JSON_FEED_FILE_OUTPUT)",
+    name: "required var in env file is set (JSON_FEED_FILE)",
     fn: () => {
       assertNotEquals(postsJsonFile, "");
     },

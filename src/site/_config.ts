@@ -9,18 +9,36 @@ import sitemap from "lume/plugins/sitemap.ts";
 
 // Build the site using Lume
 
+const buildDir = Deno.env.get("BUILD_DIR");
+const publicDir = Deno.env.get("PUBLIC_DIR");
+
 const site = lume({
-  src: "./build",
-  dest: "./public",
+  src: buildDir ?? "build",
+  dest: publicDir ?? "public",
   prettyUrls: true,
   emptyDest: true,
 });
+
+// Load site config values from ".env"
+
+site.data("BLOG_POSTS_DIR", Deno.env.get("BLOG_POSTS_DIR"));
+site.data("BLOG_POSTS_URL", Deno.env.get("BLOG_POSTS_URL"));
+site.data("JSON_FEED_TITLE", Deno.env.get("JSON_FEED_TITLE"));
+site.data("JSON_FEED_DESCRIPTION", Deno.env.get("JSON_FEED_DESCRIPTION"));
+site.data("JSON_FEED_DEFAULT_TITLE", Deno.env.get("JSON_FEED_DEFAULT_TITLE"));
+site.data("SITE_LANG", Deno.env.get("SITE_LANG"));
+site.data("SITE_AUTHOR", Deno.env.get("SITE_AUTHOR"));
+site.data("SITE_URL", Deno.env.get("SITE_URL"));
+site.data("JSON_FEED_FILE", Deno.env.get("JSON_FEED_FILE"));
+site.data("JSON_FEED_URL", Deno.env.get("JSON_FEED_URL"));
 
 // Enable plugins
 
 site.use(nunjucks());
 site.use(date());
 site.use(redirects());
+
+// Generate a custom robots.txt
 
 site.use(robots(
   {
@@ -51,23 +69,7 @@ site.use(robots(
   },
 ));
 
+// Generate a sitemap
 site.use(sitemap());
-
-// Load site config values from ".env"
-
-site.data("BLOG_POSTS_DIR", Deno.env.get("BLOG_POSTS_DIR"));
-site.data("BLOG_POSTS_URL", Deno.env.get("BLOG_POSTS_URL"));
-site.data("JSON_FEED_VERSION_URL", Deno.env.get("JSON_FEED_VERSION_URL"));
-site.data("JSON_FEED_TITLE", Deno.env.get("JSON_FEED_TITLE"));
-site.data("JSON_FEED_DESCRIPTION", Deno.env.get("JSON_FEED_DESCRIPTION"));
-site.data(
-  "JSON_FEED_DEFAULT_POST_TITLE",
-  Deno.env.get("JSON_FEED_DEFAULT_POST_TITLE"),
-);
-site.data("JSON_FEED_LANGUAGE", Deno.env.get("JSON_FEED_LANGUAGE"));
-site.data("JSON_FEED_AUTHOR_NAME", Deno.env.get("JSON_FEED_AUTHOR_NAME"));
-site.data("JSON_FEED_AUTHOR_URL", Deno.env.get("JSON_FEED_AUTHOR_URL"));
-site.data("JSON_FEED_FILE_OUTPUT", Deno.env.get("JSON_FEED_FILE_OUTPUT"));
-site.data("JSON_FEED_URL_FEED", Deno.env.get("JSON_FEED_URL_FEED"));
 
 export default site;
