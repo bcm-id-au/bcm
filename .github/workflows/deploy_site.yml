@@ -172,13 +172,13 @@ jobs:
         shell: bash
         run: |
           DATE_RELEASE=$(TZ='Australia/Sydney' date +%Y%m%d.%H%M)
-          echo "release_name=$DATE_RELEASE" >> $GITHUB_OUTPUT
-          echo "release_tag=release-$DATE_RELEASE" >> $GITHUB_OUTPUT
+          echo "name=$DATE_RELEASE" >> $GITHUB_OUTPUT
+          echo "tag=release-$DATE_RELEASE" >> $GITHUB_OUTPUT
       - name: Create release tag
         run: |
           git config user.name "bot-release"
           git config user.email "brendan+bot-release@murty.au"
-          git tag ${{ env.release_tag }}
+          git tag ${{ steps.release.outputs.tag }}
           git push --tags --quiet
       - name: Generate release notes
         working-directory: ${{ github.workspace }}
@@ -188,7 +188,7 @@ jobs:
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          name: ${{ env.release_name }}
-          tag: ${{ env.release_tag }}
+          name: ${{ steps.release.outputs.name }}
+          tag: ${{ steps.release.outputs.tag }}
           bodyFile: ${{ github.workspace }}/release-notes.log
           makeLatest: true
