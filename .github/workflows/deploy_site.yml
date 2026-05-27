@@ -103,11 +103,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v6
-        with:
-          images: ghcr.io/${{ github.repository }}
       - name: Get commit details
         id: commit
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
@@ -119,9 +114,9 @@ jobs:
           file: ${{ github.workspace }}/src/site/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.ref_name }}
-            ghcr.io/${{ github.repository }}:${{ steps.commit.outputs.sha_short }}
+            ghcr.io/${{ github.repository }}-site:latest
+            ghcr.io/${{ github.repository }}-site:${{ github.ref_name }}
+            ghcr.io/${{ github.repository }}-site:${{ steps.commit.outputs.sha_short }}
 
   deploy-github-pages:
     name: Deploy to GitHub Pages
