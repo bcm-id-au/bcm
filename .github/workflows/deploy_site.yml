@@ -8,7 +8,7 @@
 #
 
 name: Site - Deploy
-run-name: Deploy Site by ${{ github.actor }} at commit ${{ github.sha }}
+run-name: Deploy Site by ${{ github.actor }} on ${{ github.ref_name }}
 
 on:
   # Allow manual triggers via GitHub Repo > Actions

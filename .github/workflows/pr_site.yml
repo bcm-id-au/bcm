@@ -5,7 +5,7 @@
 #
 
 name: Site - PR Check
-run-name: PR Site Check by ${{ github.actor }} for PR#${{ github.event.pull_request.number }} at commit ${{ github.sha }}
+run-name: PR Site Check by ${{ github.actor }} for PR#${{ github.event.pull_request.number }}
 
 on:
   # Automatically run on PRs that are aiming to merge to certain branches
