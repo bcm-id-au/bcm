@@ -87,6 +87,9 @@ jobs:
     name: Publish to GitHub Packages
     needs: [build, test]
     runs-on: ubuntu-latest
+    environment:
+      name: github-packages
+      deployment: true
     permissions:
       contents: read
       packages: write
@@ -123,6 +126,9 @@ jobs:
     name: Deploy to GitHub Pages
     needs: [build, test]
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      deployment: true
     permissions:
       contents: read
       pages: write
@@ -170,7 +176,7 @@ jobs:
       - name: Create release tag
         run: |
           git config user.name "bot-release"
-          git config user.email "bcm+bot-release@murty.au"
+          git config user.email "brendan+bot-release@murty.au"
           git tag ${{ env.release_tag }}
           git push --tags --quiet
       - name: Generate release notes
