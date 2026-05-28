@@ -145,7 +145,7 @@ jobs:
         with:
           service: ${{ secrets.SITE_GCP_CLOUD_RUN_SERVICE_NAME }}
           region: ${{ secrets.SITE_GCP_REGION }}
-          image: ${{ secrets.SITE_DOCKER_IMAGE_URL }}:latest
+          image: ${{ secrets.SITE_GCP_DOCKER_IMAGE_URL }}:latest
 
   deploy-github-pages:
     name: Deploy to GitHub Pages
