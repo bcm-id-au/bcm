@@ -54,7 +54,9 @@ Releases can be manually triggered from GitHub Actions via [deploy_site.yml](../
 
 Follow the instructions in [.site.github.env](.site.github.env).
 
-**Optionally**, you can configure deployment to [GCP Cloud Run](https://cloud.google.com/run) by following these manual steps:
+**Optionally**, you can configure deployment to [GCP Cloud Run](https://cloud.google.com/run) by following the manual steps below.
+
+Each GitHub Secret must be added to `GitHub Repo > Settings > Code and automation > Environments > gcp-cloud-run > Add environment secret`
 
 1. Enable these Google Cloud APIs:
   - `Artifact Registry`
@@ -100,6 +102,8 @@ Follow the instructions in [.site.github.env](.site.github.env).
       - Secret Manager Admin
       - Access Context Manager Editor
   - Description: `Used by GitHub Actions to deploy to Cloud Run`
-  - Then save this, go to the Keys tab and click: `Add key > Create new key > JSON > Create`
-  - `WARNING`: Treat this JSON file as a password!
-    After you've saved it to GitHub Secrets, permanently delete the file.
+  - Click: `Save`
+  - Go to the `Keys` tab and click: `Add key > Create new key > JSON > Create`
+    - `WARNING`: Treat this JSON file as a password!
+      After you've saved it to GitHub Secrets, permanently delete the file.
+  - Save the full content of the file to the `SITE_GCP_SERVICE_ACCOUNT_JSON` secret
