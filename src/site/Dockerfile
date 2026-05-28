@@ -12,8 +12,9 @@ COPY . .
 
 # Set default build arguments based on values from '.site.sample.env'.
 # These can be overridden via Docker params like:
-# --build-arg BLOG_POSTS_URL= https://something.com/posts/
-# --env-file ./.env.something
+# --build-arg BLOG_POSTS_URL="https://something.com/posts/"
+# --build-arg SITE_AUTHOR="Jane Doe"
+# --env-file ./.staging.sample.env
 ARG BLOG_POSTS_DIR="public/posts"
 ARG BLOG_POSTS_URL="https://murty.au/posts/"
 ARG JSON_FEED_TITLE="Posts by Brendan Murty"
@@ -46,6 +47,7 @@ RUN deno task build
 FROM denoland/deno:latest AS serve
 WORKDIR /app
 
+# Copy over the bare minimum to serve the static files
 COPY --from=build /app/public /app/public
 COPY --from=build /app/deno.lock /app/deno.lock
 COPY --from=build /app/deno.json /app/deno.json
