@@ -114,3 +114,10 @@ Each GitHub Secret must be added to `GitHub Repo > Settings > Code and automatio
     - `WARNING`: Treat this JSON file as a password!
       After you've saved it to GitHub Secrets, permanently delete the file.
   - Save the full content of the file to the `SITE_GCP_SERVICE_ACCOUNT_JSON` secret
+
+### Point domain to GCP Cloud Run service
+
+To set this live on your domain (`SITE_URL` from your `.site.env` file) you need to complete the following extra initial manual setup:
+
+1. [GCP Cloud DNS - Create a public zone](https://docs.cloud.google.com/dns/docs/zones#create-pub-zone)
+2. [GCP Cloud Run - Mapping custom domains](https://docs.cloud.google.com/run/docs/mapping-custom-domains)
