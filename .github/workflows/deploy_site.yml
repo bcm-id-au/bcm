@@ -41,14 +41,15 @@ jobs:
         uses: actions/checkout@v6
       - name: Set build artifact name
         id: artifact
-        shell: bash
         run: echo "artifact_name=build-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
       - name: Setup Deno
         uses: denoland/setup-deno@v2
         with:
           deno-version: latest
-      - name: Setup and install dependencies
+      - name: Site setup
         run: deno task setup
+      - name: Load secrets in to environment
+        run: echo '?' # TODO: load all github secrets in to the env so the next step has what it needs
       - name: Build site
         run: deno task build
       - name: Upload build files
@@ -82,7 +83,6 @@ jobs:
           deno-version: latest
       - name: Run tests
         working-directory: ./src/site
-        shell: bash
         run: deno task test
 
   publish-github-packages:
@@ -165,7 +165,6 @@ jobs:
           fetch-depth: 0
       - name: Generate release details
         id: release
-        shell: bash
         run: |
           DATE_RELEASE=$(TZ='Australia/Sydney' date +%Y%m%d.%H%M)
           echo "name=$DATE_RELEASE" >> $GITHUB_OUTPUT

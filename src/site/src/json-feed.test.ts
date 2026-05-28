@@ -10,18 +10,18 @@ Deno.test("src/json-feed.ts", async (test) => {
     export: true,
   });
 
-  const postsJsonFile: string = Deno.env.get("JSON_FEED_FILE") || "";
-  const postsDirectory: string = Deno.env.get("BLOG_POSTS_DIR") || "";
+  const postsJsonFile: string = Deno.env.get("SITE_FEED_FILE") || "";
+  const postsDirectory: string = Deno.env.get("SITE_POSTS_DIR") || "";
 
   await test.step({
-    name: "required var in env file is set (JSON_FEED_FILE)",
+    name: "required var in env file is set (SITE_FEED_FILE)",
     fn: () => {
       assertNotEquals(postsJsonFile, "");
     },
   });
 
   await test.step({
-    name: "required var in env file is set (BLOG_POSTS_DIR)",
+    name: "required var in env file is set (SITE_POSTS_DIR)",
     fn: () => {
       assertNotEquals(postsDirectory, "");
     },

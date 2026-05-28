@@ -15,8 +15,8 @@ await load({
   export: true,
 });
 
-const buildDir = Deno.env.get("BUILD_DIR");
-const publicDir = Deno.env.get("PUBLIC_DIR");
+const buildDir = Deno.env.get("SITE_BUILD_DIR");
+const publicDir = Deno.env.get("SITE_PUBLIC_DIR");
 
 // Build the site using Lume
 
@@ -29,16 +29,16 @@ const site = lume({
 
 // Load site config values from ".env"
 
-site.data("BLOG_POSTS_DIR", Deno.env.get("BLOG_POSTS_DIR"));
-site.data("BLOG_POSTS_URL", Deno.env.get("BLOG_POSTS_URL"));
-site.data("JSON_FEED_TITLE", Deno.env.get("JSON_FEED_TITLE"));
-site.data("JSON_FEED_DESCRIPTION", Deno.env.get("JSON_FEED_DESCRIPTION"));
-site.data("JSON_FEED_DEFAULT_TITLE", Deno.env.get("JSON_FEED_DEFAULT_TITLE"));
+site.data("SITE_POSTS_DIR", Deno.env.get("SITE_POSTS_DIR"));
+site.data("SITE_POSTS_URL", Deno.env.get("SITE_POSTS_URL"));
+site.data("SITE_FEED_TITLE", Deno.env.get("SITE_FEED_TITLE"));
+site.data("SITE_FEED_DESC", Deno.env.get("SITE_FEED_DESC"));
+site.data("SITE_FEED_DEFAULT_TITLE", Deno.env.get("SITE_FEED_DEFAULT_TITLE"));
 site.data("SITE_LANG", Deno.env.get("SITE_LANG"));
 site.data("SITE_AUTHOR", Deno.env.get("SITE_AUTHOR"));
 site.data("SITE_URL", Deno.env.get("SITE_URL"));
-site.data("JSON_FEED_FILE", Deno.env.get("JSON_FEED_FILE"));
-site.data("JSON_FEED_URL", Deno.env.get("JSON_FEED_URL"));
+site.data("SITE_FEED_FILE", Deno.env.get("SITE_FEED_FILE"));
+site.data("SITE_FEED_URL", Deno.env.get("SITE_FEED_URL"));
 
 // Enable plugins
 

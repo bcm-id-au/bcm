@@ -10,26 +10,26 @@ Deno.test("src/posts-list.ts", async (test) => {
     export: true,
   });
 
-  const postsDirectory: string = Deno.env.get("BLOG_POSTS_DIR") || "";
-  const urlPosts: string = Deno.env.get("BLOG_POSTS_URL") || "";
-  const jsonFeedDefaultPostTitle: string = Deno.env.get("JSON_FEED_DEFAULT_TITLE") || "";
+  const postsDirectory: string = Deno.env.get("SITE_POSTS_DIR") || "";
+  const urlPosts: string = Deno.env.get("SITE_POSTS_URL") || "";
+  const jsonFeedDefaultPostTitle: string = Deno.env.get("SITE_FEED_DEFAULT_TITLE") || "";
 
   await test.step({
-    name: "required var in env file is set (BLOG_POSTS_DIR)",
+    name: "required var in env file is set (SITE_POSTS_DIR)",
     fn: () => {
       assertNotEquals(postsDirectory, "");
     },
   });
 
   await test.step({
-    name: "required var in env file is set (BLOG_POSTS_URL)",
+    name: "required var in env file is set (SITE_POSTS_URL)",
     fn: () => {
       assertNotEquals(urlPosts, "");
     },
   });
 
   await test.step({
-    name: "required var in env file is set (JSON_FEED_DEFAULT_TITLE)",
+    name: "required var in env file is set (SITE_FEED_DEFAULT_TITLE)",
     fn: () => {
       assertNotEquals(jsonFeedDefaultPostTitle, "");
     },

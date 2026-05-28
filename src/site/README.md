@@ -43,6 +43,8 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 - Actions > General > Workflow permissions: _Read and write permissions_
 
 8. Update `CNAME` to use the same domain as you configured above
+9. For GitHub Actions, setup new secrets for each item in [.site.github.env](.site.github.env)
+10. For local development, copy [.site.local.env](.site.local.env) to `.site.env` and update the Git Ignored file `.site.env` to match your site
 
 ## Deployment
 

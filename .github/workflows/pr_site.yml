@@ -39,8 +39,10 @@ jobs:
         uses: denoland/setup-deno@v2
         with:
           deno-version: latest
-      - name: Setup and install dependencies
+      - name: Site setup
         run: deno task setup
+      - name: Load secrets in to environment
+        run: echo '?' # TODO: load all github secrets in to the env so the next step has what it needs
       - name: Build site
         run: deno task build
       - name: Upload build files
