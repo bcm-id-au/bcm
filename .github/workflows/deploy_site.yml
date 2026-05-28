@@ -20,12 +20,6 @@ on:
         required: true
         default: false
 
-env:
-  GCP_PROJECT_ID: '${{ secrets.SITE_GCP_PROJECT_ID }}'
-  GCP_ID_PROVIDER: '${{ secrets.SITE_GCP_WORKLOAD_IDENTITY_PROVIDER }}'
-  GCP_REGION: '${{ secrets.SITE_GCP_REGION }}'
-  GCP_SERVICE: '${{ secrets.SITE_GCP_CLOUD_RUN_SERVICE_NAME }}'
-
 defaults:
   run:
     working-directory: ./src/site
@@ -40,6 +34,8 @@ jobs:
     name: Build
     if: ${{ inputs.continue_deployment == true }}
     runs-on: ubuntu-latest
+    environment:
+      name: ci-build
     env: ${{ secrets }}
     outputs:
       artifact_name: ${{ steps.artifact.outputs.artifact_name }}
@@ -72,9 +68,9 @@ jobs:
     name: Test
     needs: build
     runs-on: ubuntu-latest
-    env: ${{ secrets }}
     environment:
-      name: ci-test
+      name: ci-build
+    env: ${{ secrets }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -132,6 +128,12 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: gcp-cloud-run
+    env:
+      GCP_PROJECT_ID: '${{ secrets.SITE_GCP_PROJECT_ID }}'
+      GCP_ID_PROVIDER: '${{ secrets.SITE_GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+      GCP_REGION: '${{ secrets.SITE_GCP_REGION }}'
+      GCP_SERVICE: '${{ secrets.SITE_GCP_CLOUD_RUN_SERVICE_NAME }}'
+      GCP_CREDS_JSON: '${{ secrets.SITE_GCP_SERVICE_ACCOUNT_JSON }}'
     permissions:
       contents: read
       id-token: write
@@ -143,7 +145,7 @@ jobs:
         uses: google-github-actions/auth@v3
         with:
           project_id: '${{ env.GCP_PROJECT_ID }}'
-          workload_identity_provider: '${{ env.GCP_ID_PROVIDER }}'
+          credentials_json: '${{ env.GCP_CREDS_JSON }}'
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v3
         with:
