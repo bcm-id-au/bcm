@@ -34,8 +34,6 @@ jobs:
     name: Build
     if: ${{ inputs.continue_deployment == true }}
     runs-on: ubuntu-latest
-    environment:
-      name: ci-build
     outputs:
       artifact_name: ${{ steps.artifact.outputs.artifact_name }}
     steps:
