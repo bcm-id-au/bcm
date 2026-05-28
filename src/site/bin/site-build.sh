@@ -11,8 +11,8 @@ cd "$SITE_DIR"
 
 # Load the ENV file if it exists
 
-if [ -f "$SITE_DIR/.env" ]; then
-  source "$SITE_DIR/.env"
+if [ -f "$SITE_DIR/.site.env" ]; then
+  source "$SITE_DIR/.site.env"
 fi
 
 # Setup the message colour characters

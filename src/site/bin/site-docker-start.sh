@@ -17,5 +17,5 @@ docker run \
   -d \
   --name "bcm-site" \
   --publish "${SITE_PORT:-8000}:8000" \
-  --env-file "${SITE_ENV:-./.env}" \
+  --env-file "${SITE_ENV:-./.site.env}" \
   "bcm-site:latest"

@@ -90,6 +90,18 @@
     "test": {
       "description": "Run all Deno Test scripts in the 'src' directory.",
       "command": "deno test --allow-run=deno --allow-env --allow-read --allow-net src"
+    },
+    "docker-build": {
+      "description": "Run the Docker image build process.",
+      "command": "bash ./bin/site-docker-build.sh"
+    },
+    "docker-start": {
+      "description": "Start the Docker container.",
+      "command": "bash ./bin/site-docker-start.sh"
+    },
+    "docker-stop": {
+      "description": "Stop the Docker container.",
+      "command": "bash ./bin/site-docker-stop.sh"
     }
   },
   "permissions": {

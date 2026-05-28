@@ -106,32 +106,32 @@ links-stop:
 # Run the build process for Site
 [group('site')]
 site-build:
-  bash ./src/site/bin/site-build.sh
+  cd ./src/site && deno task build
 
 # Run the Docker image build process for Site
 [group('site')]
 site-docker-build:
-  bash ./src/site/bin/site-docker-build.sh
+  cd ./src/site && deno task docker-build
 
 # Start the Docker container for Site
 [group('site')]
 site-docker-start:
-  bash ./src/site/bin/site-docker-start.sh
+  cd ./src/site && deno task docker-start
 
 # Stop the Docker container for Site
 [group('site')]
 site-docker-stop:
-  bash ./src/site/bin/site-docker-stop.sh
+  cd ./src/site && deno task docker-stop
 
 # Create a new post for Site
 [group('site')]
 site-new-post:
-  bash ./src/site/bin/site-new-post.sh
+  cd ./src/site && deno task new-post
 
 # Run the setup process for Site
 [group('site')]
 site-setup:
-  bash ./src/site/bin/site-setup.sh
+  cd ./src/site && deno task setup
 
 # Run a local version of Site
 [group('site')]
