@@ -1,4 +1,5 @@
 {
+  "git.addAICoAuthor": "off",
   "deno.enable": true,
   "deno.lint": true,
   "deno.config": "./src/site/deno.json",

@@ -4,6 +4,10 @@
   "outputStyle": "Proactive",
   "respectGitignore": "true",
   "spinnerTipsEnabled": "false",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "permissions": {
     "defaultMode": "plan",
     "disableBypassPermissionsMode": "false",

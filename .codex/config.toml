@@ -6,6 +6,7 @@
 
 analytics.enabled = false
 feedback.enabled = false
+commit_attribution = ""
 
 approval_policy = "on-request"
 approvals_reviewer = "user"
