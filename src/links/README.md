@@ -20,83 +20,85 @@ just links-stop
 
 ### Deployment
 
-App builds can be deployed to GCP manually in GitHub Actions via [deploy_links.yml](../../.github/workflows/deploy_links.yml)
+App builds can be deployed to GCP manually in GitHub Actions via [links-deploy.yml](../../.github/workflows/links-deploy.yml)
 
 ### Infrastructure Setup
 
-Manual setup steps for GCP detailed below.
+## Infrastructure
 
-Use the `asia-southeast1` region as some required GCP features aren't supported in the Sydney region.
+First add new GitHub Environments (`GitHub Repo > Settings > Code and automation > Environments`):
 
-1. Login to GCP and select the target project.
-2. Enable the required APIs:
-   - Artifact Registry API
-   - Cloud Run API
-   - Cloud Storage API
-   - IAM Credentials API
-   - Cloud DNS API
-   - Secret Manager API
-3. Create an Artifact Registry Docker repository for Links in `asia-southeast1`.
-4. Create the Links deployer service account. By default this is `<cloud-run-service>-deployer`, unless a service account name or email is supplied.
-5. Grant the deployer service account these project roles:
-   - `roles/artifactregistry.admin`
-   - `roles/run.developer`
-   - `roles/storage.admin`
-   - `roles/iam.serviceAccountUser`
-6. Create a Workload Identity pool for GitHub Actions. The workflow default is `bcm-links-github`.
-7. Create a GitHub OIDC provider in that pool. The workflow default provider name is `github`.
-   - Issuer: `https://token.actions.githubusercontent.com`
-   - Attribute mapping: `google.subject=assertion.sub,attribute.actor=assertion.actor,attribute.repository=assertion.repository,attribute.repository_owner=assertion.repository_owner`
-   - Attribute condition: `assertion.repository == '<github-owner>/<github-repo>'`
-8. Grant the GitHub repository principal access to impersonate the deployer service account:
-   - `roles/iam.workloadIdentityUser`
-   - `roles/iam.serviceAccountTokenCreator`
-9. If `LINKS_DOMAIN` is configured, create a public Cloud DNS managed zone for `LINKS_GCP_DNS_NAME`.
-10. Deploy the Cloud Run service with the app deployment workflow.
-11. If `LINKS_DOMAIN` is configured, create the Cloud Run domain mapping for the deployed service.
-12. Delegate the DNS name to the Cloud DNS name servers at the domain registrar, verify domain ownership if required, then add the Cloud Run DNS records shown by the domain mapping.
+- `ci-build`
+- `gcp-cloud-run`
+- `github-packages`
 
-The resulting values required by the app deployment workflow are:
+Now follow the steps in the comments in the sample file at [.links.github.env](.links.github.env).
 
-- `LINKS_GCP_ARTIFACT_REPOSITORY`
-- `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER`
-- `LINKS_GCP_SERVICE_ACCOUNT`
+### Deploy to [GCP Cloud Run](https://cloud.google.com/run)
 
-Manual production app secrets should be created in Secret Manager from the values defined in `.links.sample.env`.
+Each GitHub Secret must be added to `GitHub Repo > Settings > Code and automation > Environments > gcp-cloud-run > Add environment secret`
 
-#### GitHub Secrets
+1. Enable these Google Cloud APIs:
+  - `Artifact Registry`
+  - `Cloud Run`
+  - `IAM Credentials`
+  - `Cloud Storage`
+2. Setup a new Workload Identity Provider with these Roles:
+  - `Artifact Registry Admin`
+  - `Cloud Run Developer`
+3. Setup a Cloud Run service:
+  - Enable the `Cloud Run API` if prompted
+  - Set the name to something descriptive, eg: `jane-links-production`
+    - Use this same name for the value of `LINKS_GCP_CLOUD_RUN_SERVICE_NAME`
+  - Click the `Variables & Secrets` tab
+    - Copy the full contents of your `.links.env` to the first `Name` field
+    - Update the values to match production use
+4. Setup a new [GitHub Token](https://github.com/settings/tokens/new):
+  - Note: `GitHub Actions Deploy - GCP access to GitHub Packages`
+  - Expiration: `(set a short expiration and a reminder for yourself to renew it)`
+  - Scopes:
+    - `write:packages`
+    - `repo`
+  - Click `Generate token`
+  - Click the `copy` button and `save that to a file` for use in **Step 5** below
+5. Setup a Remote Artifact Registry repository:
+  - Refer to the official [Google Cloud documentation](https://docs.cloud.google.com/artifact-registry/docs/repositories/remote-repo#create)
+  - Name: `github-packages`
+  - Format: `Docker`
+  - Mode: `Remote`
+  - Remote repository source: `Custom` > `https://ghcr.io`
+  - Remote repository authentication mode:
+    - Authenticated
+    - Username: `(your GitHub username)`
+    - Secret: `(click Create new Secret, name it GITHUB_TOKEN_PACKAGES, and use the value of the token from Step 4 above)`
+    - Use latest version: `(enabled)`
+  - Region: `set to the same as what you set in LINKS_GCP_REGION`
+  - Other options: `(leave with their default values)`
+  - Click: Create
+  - Click: Copy path
+  - Save the value to the `LINKS_GCP_DOCKER_IMAGE_URL` secret
+6. Setup a new Service Account:
+  - Name: `site-deployer`
+  - Assign Roles:
+      - Artifact Registry Admin
+      - Cloud Run Developer
+      - Service Account User
+      - Secret Manager Admin
+      - Access Context Manager Editor
+  - Description: `Used by GitHub Actions to deploy to Cloud Run`
+  - Click: `Save`
+  - Go to the `Keys` tab and click: `Add key > Create new key > JSON > Create`
+    - `WARNING`: Treat this JSON file as a password!
+      After you've saved it to GitHub Secrets, permanently delete the file.
+  - Save the full content of the file to the `LINKS_GCP_SERVICE_ACCOUNT_JSON` secret
 
-Add the below items to the list at `GitHub Repo > Settings > Secrets and variables > Actions > Repository secrets`.
+### Point domain to GCP Cloud Run service
 
-- `LINKS_GCP_PROJECT_ID` - Required, eg: `example-project-111222`
-- `LINKS_GCP_ARTIFACT_REPOSITORY`
-- `LINKS_GCP_WORKLOAD_IDENTITY_PROVIDER` - eg: `projects/1234/locations/global/workloadIdentityPools/links-example-domain`
-- `LINKS_GCP_WORKLOAD_POOL` - Optional, defaults to `bcm-links-github`
-- `LINKS_GCP_WORKLOAD_PROVIDER_NAME` - Optional, defaults to `github`
-- `LINKS_GCP_CLOUD_RUN_SERVICE_PREFIX`
-- `LINKS_GCP_APP_CREDENTIALS_EMAIL` - email for a GCP Service Account with roles below
-- `LINKS_GCP_APP_CREDENTIALS_JSON` - JSON key for a GCP Service Account with roles below
-- `LINKS_GCP_INFRA_CREDENTIALS_JSON` - JSON key for a GCP Service Account with roles below
-- `LINKS_DOMAIN` - Optional, eg: `links.example-domain.com`
-- `LINKS_GCP_DNS_ZONE` - Required if `LINKS_DOMAIN` is set, eg: `example-domain-com`
-- `LINKS_GCP_DNS_NAME` - Required if `LINKS_DOMAIN` is set, eg: `example-domain.com.`
+To set this live on your domain (`LINKS_URL` from your `.links.env` file) you need to complete the following extra initial manual setup:
 
-Required GCP Roles for the **Apps Service Account**:
-
-- `roles/artifactregistry.admin`
-- `roles/run.developer`
-- `roles/iam.serviceAccountUser`
-- `roles/storage.admin`
-
-Required GCP Roles for the **Infra Service Account**:
-
-- `roles/artifactregistry.admin`
-- `roles/run.developer`
-- `roles/storage.admin`
-- `roles/iam.serviceAccountUser`
-- `roles/iam.workloadIdentityUser`
-- `roles/iam.serviceAccountTokenCreator`
+1. [GCP Cloud DNS - Create a public zone](https://docs.cloud.google.com/dns/docs/zones#create-pub-zone)
+2. [GCP Cloud Run - Mapping custom domains](https://docs.cloud.google.com/run/docs/mapping-custom-domains)
 
 ### Storage
 
-The top-level named volumes in `src/links/.infra/docker-compose.yml` are handled by [Cloud Run Compose](https://docs.cloud.google.com/run/docs/deploy-run-compose) as [Cloud Storage Volumes](https://docs.cloud.google.com/run/docs/configuring/services/cloud-storage-volume-mounts).
+The storage volumes defined in [docker-compose.prod.yml](docker-compose.prod.yml) are automatically handled by [Cloud Run Compose](https://docs.cloud.google.com/run/docs/deploy-run-compose) as [Cloud Storage Volumes](https://docs.cloud.google.com/run/docs/configuring/services/cloud-storage-volume-mounts).

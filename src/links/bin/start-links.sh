@@ -8,11 +8,14 @@
 
 REPO_DIR="$(cd "$(dirname "$0")" && cd ../../.. && pwd)"
 LINKS_DIR="$REPO_DIR/src/links"
+cd "$LINKS_DIR"
 
 mkdir -p "$REPO_DIR/storage/links/"{app,search}
 
-cd "$LINKS_DIR"
-cp -n .links.sample.env .links.env
+if [ ! -f .links.github.env ]; then
+  cp .links.local.env .links.env
+fi
+
 source .links.env
 
 PORT="$PORT" \
@@ -21,7 +24,8 @@ PORT="$PORT" \
   STORAGE_DIR_SEARCH="$STORAGE_DIR_SEARCH" \
   MEILI_MASTER_KEY="$MEILI_MASTER_KEY" \
   docker compose \
-  --file "$LINKS_DIR/docker-compose.yml" \
+  --file "$LINKS_DIR/docker-compose.local.yml" \
+  --env-file "$LINKS_DIR/.links.env" \
   up --pull always --build -d
 
 echo "Karakeep started at http://localhost:3000/"

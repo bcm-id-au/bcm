@@ -11,5 +11,5 @@ LINKS_DIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
 cd "$LINKS_DIR"
 
 docker compose \
-  --file "$LINKS_DIR/docker-compose.yml" \
+  --file "$LINKS_DIR/docker-compose.local.yml" \
   down

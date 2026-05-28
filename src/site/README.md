@@ -46,12 +46,11 @@ Releases can be manually triggered from GitHub Actions via [site-deploy.yml](../
 
 ## Infrastructure
 
-First add new GitHub Environments (GitHub Repo > Settings > Code and automation > Environments):
+First add new GitHub Environments (`GitHub Repo > Settings > Code and automation > Environments`):
 
 - `ci-build`
 - `gcp-cloud-run`
 - `github-packages`
-- `github-pages`
 
 Now follow the steps in the comments in the sample file at [.site.github.env](.site.github.env).
 
@@ -63,13 +62,17 @@ Each GitHub Secret must be added to `GitHub Repo > Settings > Code and automatio
   - `Artifact Registry`
   - `Cloud Run`
   - `IAM Credentials`
+  - `Cloud Storage`
 2. Setup a new Workload Identity Provider with these Roles:
   - `Artifact Registry Admin`
   - `Cloud Run Developer`
-3. Setup a Cloud Run service:
+3. Setup a new Cloud Run service:
   - Enable the `Cloud Run API` if prompted
   - Set the name to something descriptive, eg: `jane-site-production`
-  - Use this same name for the value of `SITE_GCP_CLOUD_RUN_SERVICE_NAME`
+    - Use this same name for the value of `SITE_GCP_CLOUD_RUN_SERVICE_NAME`
+  - Click the `Variables & Secrets` tab
+    - Copy the full contents of your `.site.env` to the first `Name` field
+    - Update the values to match production use
 4. Setup a new [GitHub Token](https://github.com/settings/tokens/new):
   - Note: `GitHub Actions Deploy - GCP access to GitHub Packages`
   - Expiration: `(set a short expiration and a reminder for yourself to renew it)`
