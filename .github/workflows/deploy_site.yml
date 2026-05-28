@@ -136,12 +136,12 @@ jobs:
       contents: read
       id-token: write
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
       - name: Check if GCP deployment is enabled
         id: gcp-deploy
         run: |
           echo "enabled='${{ env.GCP_DEPLOY_ENABLED }}'" >> $GITHUB_OUTPUT
-      - name: Checkout repository
-        uses: actions/checkout@v6
       - name: Authenticate to Google Cloud
         if: steps.gcp-deploy.outputs.enabled == 'true'
         id: auth
