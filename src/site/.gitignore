@@ -6,7 +6,8 @@ $RECYCLE.BIN/
 
 .env
 .env.*
-!.env.sample
+*.env
+!.site.sample.env
 
 !.envrc
 

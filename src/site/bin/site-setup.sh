@@ -19,8 +19,8 @@ mkdir -p "./public"
 
 # Setup an initial ENV file if it doesn't already exist
 
-if [ ! -f ./.env ]; then
-  cp ./.env.sample ./.env
+if [ ! -f ./.site.env ]; then
+  cp ./.site.sample.env ./.site.env
 fi
 
 # Install dependencies

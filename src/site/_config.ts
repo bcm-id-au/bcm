@@ -1,5 +1,6 @@
 // Lume Configuration - https://lume.land/docs/configuration/config-file/
 
+import { load } from "@std/dotenv";
 import lume from "lume/mod.ts";
 import date from "lume/plugins/date.ts";
 import nunjucks from "lume/plugins/nunjucks.ts";
@@ -7,10 +8,17 @@ import robots from "lume/plugins/robots.ts";
 import redirects from "lume/plugins/redirects.ts";
 import sitemap from "lume/plugins/sitemap.ts";
 
-// Build the site using Lume
+// Load variables from the ENV file
+
+await load({
+  envPath: ".site.env",
+  export: true,
+});
 
 const buildDir = Deno.env.get("BUILD_DIR");
 const publicDir = Deno.env.get("PUBLIC_DIR");
+
+// Build the site using Lume
 
 const site = lume({
   src: buildDir ?? "build",

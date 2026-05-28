@@ -15,7 +15,12 @@ import { load } from "@std/dotenv";
 import { PostsList } from "./posts-list.ts";
 
 // Set feed properties using variables from the ".env" file
-await load({ export: true });
+
+await load({
+  envPath: ".site.env",
+  export: true,
+});
+
 const jsonFeedVersion: string = "https://jsonfeed.org/version/1.1";
 const jsonFeedTitle: string = Deno.env.get("JSON_FEED_TITLE") || "";
 const jsonFeedDescription: string = Deno.env.get("JSON_FEED_DESCRIPTION") || "";

@@ -10,7 +10,7 @@ RUN deno task deps-install
 # besides items filtered out by '.dockerignore'.
 COPY . .
 
-# Set default build arguments based on values from '.env.sample'.
+# Set default build arguments based on values from '.site.sample.env'.
 # These can be overridden via Docker params like:
 # --build-arg BLOG_POSTS_URL= https://something.com/posts/
 # --env-file ./.env.something
