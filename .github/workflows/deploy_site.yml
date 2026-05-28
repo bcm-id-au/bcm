@@ -20,6 +20,12 @@ on:
         required: true
         default: false
 
+env:
+  GCP_PROJECT_ID: '${{ secrets.SITE_GCP_PROJECT_ID }}'
+  GCP_ID_PROVIDER: '${{ secrets.SITE_GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+  GCP_REGION: '${{ secrets.SITE_GCP_REGION }}'
+  GCP_SERVICE: '${{ secrets.SITE_GCP_CLOUD_RUN_SERVICE_NAME }}'
+
 defaults:
   run:
     working-directory: ./src/site
@@ -119,6 +125,31 @@ jobs:
             ghcr.io/${{ github.repository }}-site:latest
             ghcr.io/${{ github.repository }}-site:${{ github.ref_name }}
             ghcr.io/${{ github.repository }}-site:${{ steps.commit.outputs.sha_short }}
+
+  deploy-gcp-cloud-run:
+    name: Deploy to GCP Cloud Run
+    needs: [build, test, publish-github-packages]
+    runs-on: ubuntu-latest
+    environment:
+      name: gcp-cloud-run
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v3
+        with:
+          project_id: '${{ env.GCP_PROJECT_ID }}'
+          workload_identity_provider: '${{ env.GCP_ID_PROVIDER }}'
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v3
+        with:
+          service: '${{ env.GCP_SERVICE }}'
+          region: '${{ env.GCP_REGION }}'
+          image: 'ghcr.io/${{ github.repository }}-site:latest'
 
   deploy-github-pages:
     name: Deploy to GitHub Pages
