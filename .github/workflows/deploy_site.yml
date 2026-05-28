@@ -127,7 +127,6 @@ jobs:
   deploy-gcp-cloud-run:
     name: Deploy to GCP Cloud Run
     needs: [build, test, publish-github-packages]
-    if: github.env.GCP_DEPLOY_ENABLED == 'true'
     runs-on: ubuntu-latest
     environment:
       name: gcp-cloud-run
@@ -141,7 +140,7 @@ jobs:
       - name: Check if GCP deployment is enabled
         id: gcp-deploy
         run: |
-          echo "enabled='${{ env.$GCP_DEPLOY_ENABLED }}'" >> $GITHUB_OUTPUT
+          echo "enabled='${{ env.GCP_DEPLOY_ENABLED }}'" >> $GITHUB_OUTPUT
       - name: Checkout repository
         uses: actions/checkout@v6
       - name: Authenticate to Google Cloud
