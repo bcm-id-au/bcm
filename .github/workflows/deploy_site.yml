@@ -118,9 +118,9 @@ jobs:
           file: ${{ github.workspace }}/src/site/Dockerfile
           push: true
           tags: |
-            ${{ secrets.SITE_DOCKER_IMAGE_URL }}:latest
-            ${{ secrets.SITE_DOCKER_IMAGE_URL }}:${{ github.ref_name }}
-            ${{ secrets.SITE_DOCKER_IMAGE_URL }}:${{ steps.commit.outputs.sha_short }}
+            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:latest
+            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:${{ github.ref_name }}
+            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:${{ steps.commit.outputs.sha_short }}
 
   deploy-gcp-cloud-run:
     name: Deploy to GCP Cloud Run
@@ -145,7 +145,7 @@ jobs:
         with:
           service: ${{ secrets.SITE_GCP_CLOUD_RUN_SERVICE_NAME }}
           region: ${{ secrets.SITE_GCP_REGION }}
-          image: ${{ secrets.SITE_GCP_DOCKER_IMAGE_URL }}:latest
+          image: ${{ secrets.SITE_GCP_DOCKER_IMAGE_URL }}/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:latest
 
   deploy-github-pages:
     name: Deploy to GitHub Pages
