@@ -4,8 +4,12 @@ import { isJSON } from "is_json/mod.ts";
 import { join } from "@std/path";
 
 Deno.test("src/json-feed.ts", async (test) => {
-  // Attempt to get the values of some variables from the ".env" file
-  await load({ export: true });
+  // Load variables from the ENV file
+  await load({
+    envPath: ".site.env",
+    export: true,
+  });
+
   const postsJsonFile: string = Deno.env.get("JSON_FEED_FILE") || "";
   const postsDirectory: string = Deno.env.get("BLOG_POSTS_DIR") || "";
 

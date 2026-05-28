@@ -4,7 +4,11 @@ import { load } from "@std/dotenv";
 import { PostsList } from "./posts-list.ts";
 
 Deno.test("src/posts-list.ts", async (test) => {
-  await load({ export: true });
+  // Load variables from the ENV file
+  await load({
+    envPath: ".site.env",
+    export: true,
+  });
 
   const postsDirectory: string = Deno.env.get("BLOG_POSTS_DIR") || "";
   const urlPosts: string = Deno.env.get("BLOG_POSTS_URL") || "";
