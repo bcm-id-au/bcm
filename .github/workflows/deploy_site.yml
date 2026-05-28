@@ -22,7 +22,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./src/site
+    working-directory: src/site
     shell: bash
 
 permissions:
@@ -78,13 +78,12 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: ${{ needs.build.outputs.artifact_name }}
-          path: ./src/site
+          path: ${{ github.workspace }}/src/site
       - name: Setup Deno
         uses: denoland/setup-deno@v2
         with:
           deno-version: latest
       - name: Run tests
-        working-directory: ./src/site
         run: deno task test
 
   publish-github-packages:
