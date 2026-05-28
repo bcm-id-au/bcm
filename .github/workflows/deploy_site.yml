@@ -34,6 +34,7 @@ jobs:
     name: Build
     if: ${{ inputs.continue_deployment == true }}
     runs-on: ubuntu-latest
+    env: ${{ secrets }}
     outputs:
       artifact_name: ${{ steps.artifact.outputs.artifact_name }}
     steps:
@@ -48,8 +49,6 @@ jobs:
           deno-version: latest
       - name: Site setup
         run: deno task setup
-      - name: Load secrets in to environment
-        run: echo '?' # TODO: load all github secrets in to the env so the next step has what it needs
       - name: Build site
         run: deno task build
       - name: Upload build files
@@ -67,6 +66,7 @@ jobs:
     name: Test
     needs: build
     runs-on: ubuntu-latest
+    env: ${{ secrets }}
     environment:
       name: ci-test
     steps:
