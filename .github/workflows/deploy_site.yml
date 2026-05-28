@@ -28,6 +28,10 @@ defaults:
 permissions:
   contents: read
 
+env:
+  DOCKER_IMAGE_PATH: ${{ secrets.SITE_DOCKER_IMAGE_PATH }}
+  GCP_DEPLOY_ENABLED: ${{ secrets.SITE_GCP_DEPLOY_ENABLED }}
+
 jobs:
 
   build:
@@ -118,19 +122,17 @@ jobs:
           file: ${{ github.workspace }}/src/site/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:latest
-            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:${{ github.ref_name }}
-            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:${{ steps.commit.outputs.sha_short }}
+            ghcr.io/${{ env.DOCKER_IMAGE_PATH }}:latest
+            ghcr.io/${{ env.DOCKER_IMAGE_PATH }}:${{ github.ref_name }}
+            ghcr.io/${{ env.DOCKER_IMAGE_PATH }}:${{ steps.commit.outputs.sha_short }}
 
   deploy-gcp-cloud-run:
     name: Deploy to GCP Cloud Run
     needs: [build, test, publish-github-packages]
-    if: env.GCP_PROJECT_ID != ''
+    if: contains(env.GCP_DEPLOY_ENABLED, 'true')
     runs-on: ubuntu-latest
     environment:
       name: gcp-cloud-run
-    env:
-      GCP_PROJECT_ID: ${{ secrets.SITE_GCP_PROJECT_ID }}
     permissions:
       contents: read
       id-token: write
@@ -148,7 +150,7 @@ jobs:
         with:
           service: ${{ secrets.SITE_GCP_CLOUD_RUN_SERVICE_NAME }}
           region: ${{ secrets.SITE_GCP_REGION }}
-          image: ${{ secrets.SITE_GCP_DOCKER_IMAGE_URL }}/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:latest
+          image: ${{ secrets.SITE_GCP_DOCKER_IMAGE_URL }}/${{ env.DOCKER_IMAGE_PATH }}:latest
 
   deploy-github-pages:
     name: Deploy to GitHub Pages
