@@ -8,7 +8,9 @@ name: Site - PR Check
 run-name: PR Site Check by ${{ github.actor }} for PR#${{ github.event.pull_request.number }}
 
 on:
-  # Automatically run on PRs that are aiming to merge to certain branches
+  # Allow manual triggers via GitHub Repo > Actions
+  workflow_dispatch:
+  # Automatically run on PRs that are targetting certain branches
   pull_request:
     branches:
       - develop
