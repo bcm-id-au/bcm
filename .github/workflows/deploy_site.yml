@@ -118,9 +118,9 @@ jobs:
           file: ${{ github.workspace }}/src/site/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}-site:latest
-            ghcr.io/${{ github.repository }}-site:${{ github.ref_name }}
-            ghcr.io/${{ github.repository }}-site:${{ steps.commit.outputs.sha_short }}
+            ${{ secrets.SITE_DOCKER_IMAGE_URL }}:latest
+            ${{ secrets.SITE_DOCKER_IMAGE_URL }}:${{ github.ref_name }}
+            ${{ secrets.SITE_DOCKER_IMAGE_URL }}:${{ steps.commit.outputs.sha_short }}
 
   deploy-gcp-cloud-run:
     name: Deploy to GCP Cloud Run
@@ -128,12 +128,6 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: gcp-cloud-run
-    env:
-      GCP_PROJECT_ID: '${{ secrets.SITE_GCP_PROJECT_ID }}'
-      GCP_ID_PROVIDER: '${{ secrets.SITE_GCP_WORKLOAD_IDENTITY_PROVIDER }}'
-      GCP_REGION: '${{ secrets.SITE_GCP_REGION }}'
-      GCP_SERVICE: '${{ secrets.SITE_GCP_CLOUD_RUN_SERVICE_NAME }}'
-      GCP_CREDS_JSON: '${{ secrets.SITE_GCP_SERVICE_ACCOUNT_JSON }}'
     permissions:
       contents: read
       id-token: write
@@ -144,14 +138,14 @@ jobs:
         id: auth
         uses: google-github-actions/auth@v3
         with:
-          project_id: '${{ env.GCP_PROJECT_ID }}'
-          credentials_json: '${{ env.GCP_CREDS_JSON }}'
+          project_id: ${{ secrets.SITE_GCP_PROJECT_ID }}
+          credentials_json: ${{ secrets.SITE_GCP_SERVICE_ACCOUNT_JSON }}
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v3
         with:
-          service: '${{ env.GCP_SERVICE }}'
-          region: '${{ env.GCP_REGION }}'
-          image: 'ghcr.io/${{ github.repository }}-site:latest'
+          service: ${{ secrets.SITE_GCP_CLOUD_RUN_SERVICE_NAME }}
+          region: ${{ secrets.SITE_GCP_REGION }}
+          image: ${{ secrets.SITE_DOCKER_IMAGE_URL }}:latest
 
   deploy-github-pages:
     name: Deploy to GitHub Pages
