@@ -12,19 +12,19 @@ COPY . .
 
 # Set default build arguments based on values from '.site.local.env'.
 # These can be overridden via Docker params like:
-# --build-arg SITE_POSTS_URL="https://something.com/posts/"
+# --build-arg SITE_POSTS_URL="https://jane-doe.com/posts/"
 # --build-arg SITE_AUTHOR="Jane Doe"
 # --env-file ./.staging.sample.env
 ARG SITE_POSTS_DIR="public/posts"
-ARG SITE_POSTS_URL="https://murty.au/posts/"
-ARG SITE_FEED_TITLE="Posts by Brendan Murty"
-ARG SITE_FEED_DESC="Brendan is a Father, Schnitzel Reviewer, Software Engineering Manager and Technical Lead."
-ARG SITE_FEED_DEFAULT_TITLE="Post by Brendan Murty"
+ARG SITE_POSTS_URL="https://jane-doe.com/posts/"
+ARG SITE_FEED_TITLE="Posts by Jane Doe"
+ARG SITE_FEED_DESC="Jane writes about technology and the climate."
+ARG SITE_FEED_DEFAULT_TITLE="Post by Jane Doe"
 ARG SITE_LANG="en-GB"
-ARG SITE_AUTHOR="Brendan Murty"
-ARG SITE_URL="https://murty.au/"
-ARG SITE_FEED_FILE="public/brendan/posts.json"
-ARG SITE_FEED_URL="https://murty.au/brendan/posts.json"
+ARG SITE_AUTHOR="Jane Doe"
+ARG SITE_URL="https://jane-doe.com/"
+ARG SITE_FEED_FILE="public/jane/posts.json"
+ARG SITE_FEED_URL="https://jane-doe.com/jane/posts.json"
 
 # Persist build arguments as environment variables so
 # resulting Docker Containers can access the values.
