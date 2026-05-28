@@ -52,9 +52,16 @@ Releases can be manually triggered from GitHub Actions via [site-deploy.yml](../
 
 ## Infrastructure
 
-Follow the instructions in [.site.github.env](.site.github.env).
+First add new GitHub Environments (GitHub Repo > Settings > Code and automation > Environments):
 
-**Optionally**, you can configure deployment to [GCP Cloud Run](https://cloud.google.com/run) by following the manual steps below.
+- `ci-build`
+- `gcp-cloud-run`
+- `github-packages`
+- `github-pages`
+
+Now follow the steps in the comments in the sample file at [.site.github.env](.site.github.env).
+
+### Deploy to [GCP Cloud Run](https://cloud.google.com/run)
 
 Each GitHub Secret must be added to `GitHub Repo > Settings > Code and automation > Environments > gcp-cloud-run > Add environment secret`
 
