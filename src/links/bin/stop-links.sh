@@ -12,4 +12,6 @@ cd "$LINKS_DIR"
 
 docker compose \
   --file "$LINKS_DIR/docker-compose.local.yml" \
-  down
+  down > /dev/null 2>&1
+
+exit 0
