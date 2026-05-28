@@ -90,7 +90,7 @@ gh-login:
 # Lint GitHub Actions Workflows
 [group('git')]
 gh-actions-lint:
-  gh extension install cschleiden/gh-actionlint
+  gh extension install cschleiden/gh-actionlint > /dev/null 2>&1
   gh actionlint
 
 # Start the local instance of Links
