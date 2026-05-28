@@ -125,9 +125,12 @@ jobs:
   deploy-gcp-cloud-run:
     name: Deploy to GCP Cloud Run
     needs: [build, test, publish-github-packages]
+    if: env.GCP_PROJECT_ID != ''
     runs-on: ubuntu-latest
     environment:
       name: gcp-cloud-run
+    env:
+      GCP_PROJECT_ID: ${{ secrets.SITE_GCP_PROJECT_ID }}
     permissions:
       contents: read
       id-token: write
