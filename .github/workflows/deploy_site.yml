@@ -28,10 +28,6 @@ defaults:
 permissions:
   contents: read
 
-env:
-  DOCKER_IMAGE_PATH: ${{ secrets.SITE_DOCKER_IMAGE_PATH }}
-  GCP_DEPLOY_ENABLED: ${{ secrets.SITE_GCP_DEPLOY_ENABLED }}
-
 jobs:
 
   build:
@@ -97,6 +93,8 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-packages
+    env:
+      DOCKER_IMAGE_PATH: ${{ secrets.SITE_DOCKER_IMAGE_PATH }}
     permissions:
       contents: read
       packages: write
@@ -129,23 +127,32 @@ jobs:
   deploy-gcp-cloud-run:
     name: Deploy to GCP Cloud Run
     needs: [build, test, publish-github-packages]
-    if: contains(env.GCP_DEPLOY_ENABLED, 'true')
+    if: github.env.GCP_DEPLOY_ENABLED == 'true'
     runs-on: ubuntu-latest
     environment:
       name: gcp-cloud-run
+    env:
+      GCP_DEPLOY_ENABLED: ${{ secrets.SITE_GCP_DEPLOY_ENABLED }}
+      DOCKER_IMAGE_PATH: ${{ secrets.SITE_DOCKER_IMAGE_PATH }}
     permissions:
       contents: read
       id-token: write
     steps:
+      - name: Check if GCP deployment is enabled
+        id: gcp-deploy
+        run: |
+          echo "enabled='${{ env.$GCP_DEPLOY_ENABLED }}'" >> $GITHUB_OUTPUT
       - name: Checkout repository
         uses: actions/checkout@v6
       - name: Authenticate to Google Cloud
+        if: steps.gcp-deploy.outputs.enabled == 'true'
         id: auth
         uses: google-github-actions/auth@v3
         with:
           project_id: ${{ secrets.SITE_GCP_PROJECT_ID }}
           credentials_json: ${{ secrets.SITE_GCP_SERVICE_ACCOUNT_JSON }}
       - name: Deploy to Cloud Run
+        if: steps.gcp-deploy.outputs.enabled == 'true'
         uses: google-github-actions/deploy-cloudrun@v3
         with:
           service: ${{ secrets.SITE_GCP_CLOUD_RUN_SERVICE_NAME }}
