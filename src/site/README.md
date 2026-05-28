@@ -11,7 +11,8 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 
 ## Structure
 
-- [.github/workflows/site-deploy.yml](../../.github/workflows/site-deploy.yml) - Manual deployment workflow.
+- [.github/workflows/site-deploy.yml](../../.github/workflows/site-deploy.yml) - Deployment workflow that can be manually triggered.
+- [.github/workflows/site-test.yml](../../.github/workflows/site-test.yml) - Test workflow that runs automatically on PRs and can be manually triggered.
 - [assets](assets/) - Static files like images and PDFs.
 - [config](config/) - Supporting configuration files.
 - [content](content/) - Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files.
@@ -36,15 +37,8 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 - Purchase your own license to use the [Mass-Driver IO font](https://io.mass-driver.com/) or update the CSS to use other fonts
 
 6. Commit and push all of these changes to your forked repository
-7. Update the Settings for your forked repository via GitHub:
-
-- Pages > Source: _GitHub Actions_
-- Pages > Custom domain: _example-your-domain.com_
-- Actions > General > Workflow permissions: _Read and write permissions_
-
-8. Update `CNAME` to use the same domain as you configured above
-9. For GitHub Actions, setup new Environments and Secrets as noted in [.site.github.env](.site.github.env)
-10. For local development, copy [.site.local.env](.site.local.env) to `.site.env` and update the Git Ignored file `.site.env` to match your site
+7. Setup online infrastructure by following the steps in the `Infrastructure` section below
+8. Setup your local development environmenmt by copying [.site.local.env](.site.local.env) to `.site.env` and then update `.site.env` to match your site
 
 ## Deployment
 

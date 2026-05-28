@@ -81,11 +81,6 @@ echo -e "${YELLOW}Updating '$SITE_PUBLIC_DIR/robots.txt' to use the production U
 
 sed -i -e "s/http:\/\/localhost\//https:\/\/$PROD_DOMAIN\//g" "$SITE_PUBLIC_DIR/robots.txt"
 
-echo -e "${YELLOW}Configuring GitHub Pages in '$SITE_PUBLIC_DIR'${NC}"
-
-# Custom 404 page
-cp "assets/redirect.html" "$SITE_PUBLIC_DIR/404.html"
-
 echo -e "${YELLOW}Copying static files to '$SITE_PUBLIC_DIR'${NC}"
 
 cp -r "assets/fonts" "$SITE_PUBLIC_DIR/fonts"

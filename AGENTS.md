@@ -65,7 +65,7 @@ The `src/links/` directory contains a self-hosted version of the [Karakeep](http
 
 ## Site: `src/site/`
 
-The `src/site/` directory contains a static website built with Deno, Lume (static site generator), and deployed to GitHub Pages.
+The `src/site/` directory contains a static website built with Deno and Lume (static site generator).
 
 ### Build, Test, and Lint Commands
 
