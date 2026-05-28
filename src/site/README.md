@@ -11,7 +11,7 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 
 ## Structure
 
-- [.github/workflows/deploy_site.yml](../../.github/workflows/deploy_site.yml) - Manual deployment workflow.
+- [.github/workflows/site-deploy.yml](../../.github/workflows/site-deploy.yml) - Manual deployment workflow.
 - [assets](assets/) - Static files like images and PDFs.
 - [config](config/) - Supporting configuration files.
 - [content](content/) - Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files.
@@ -48,7 +48,7 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 
 ## Deployment
 
-Releases can be manually triggered from GitHub Actions via [deploy_site.yml](../../.github/workflows/deploy_site.yml).
+Releases can be manually triggered from GitHub Actions via [site-deploy.yml](../../.github/workflows/site-deploy.yml).
 
 ## Infrastructure
 

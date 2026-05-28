@@ -25,7 +25,7 @@
   - src/links — Karakeep bookmark service (Docker Compose), deployed separately.
   - src/schnitmydadsays and src/upcomingtasks — git submodules (treated as separate repos).
 - bin/ — helper scripts (site build, setup, release-notes). Use the provided scripts (avoid reimplementing flow).
-- .github/workflows — deployment and PR checks (deploy_site.yml, deploy_links.yml, pr_site.yml).
+- .github/workflows — deployment and PR checks (site-deploy.yml, site-test.yml).
 - storage/ — persistent volumes for local Docker; do NOT commit contents.
 
 ## Key conventions and behaviours

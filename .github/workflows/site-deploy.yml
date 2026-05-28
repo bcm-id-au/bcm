@@ -1,14 +1,13 @@
 #
 #
-# Manual Workflow: Site - Release and Deploy
-#   - This workflow includes the test, release and deployment process for the site.
-#   - Initial setup steps and documentation in: 'src/site/.infra/README.md'
-#   - Requires GitHub Repository Secrets setup in Repo > Settings > Secrets > Actions.
+# GitHub Actions Workflow: Site Deploy
+#   - This workflow includes the build, test, deploy, and release processes
+#   - Initial setup is required, refer to: src/site/README.md > Infrastructure
 #
 #
 
-name: Site - Deploy
-run-name: Deploy Site by ${{ github.actor }} on ${{ github.ref_name }}
+name: Site Deploy
+run-name: Site Deploy by ${{ github.actor }} on ${{ github.ref_name }}
 
 on:
   # Allow manual triggers via GitHub Repo > Actions

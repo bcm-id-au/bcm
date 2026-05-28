@@ -1,11 +1,12 @@
 #
 #
-# Automatic Workflow: PR - Site
+# GitHub Actions Workflow: Site Test
+#   - This workflow includes the build and test processes
 #
 #
 
-name: Site - PR Check
-run-name: PR Site Check by ${{ github.actor }} for PR#${{ github.event.pull_request.number }}
+name: Site Test
+run-name: Site Test by ${{ github.actor }} on ${{ github.ref_name }}
 
 on:
   # Allow manual triggers via GitHub Repo > Actions
