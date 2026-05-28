@@ -24,6 +24,8 @@ alias setup := setup-local
 alias ai := ai-install
 alias br := git-branch
 alias pr := gh-pr
+alias actions := gh-actions-lint
+alias gh-actions-check := gh-actions-lint
 
 # Default to the 'list' command, when 'just' is run without any parameters
 default: list
