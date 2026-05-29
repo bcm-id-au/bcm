@@ -63,6 +63,18 @@ git-branch new_branch_name:
   git checkout --quiet -b "$new_branch_name"
   git push --quiet --set-upstream origin "$new_branch_name"
 
+# Update local Git branch statuses and Submodules
+[group('git')]
+git-update:
+  git fetch --quiet
+  git pull --quiet --recurse-submodules
+  git submodule update --quiet --remote --merge
+
+# Login to the GitHub CLI
+[group('git')]
+gh-login:
+  gh auth login --web --git-protocol ssh --clipboard
+
 # Create a new Pull Request for the current branch
 [group('git')]
 gh-pr:
@@ -76,18 +88,6 @@ gh-pr:
     --head "$current_branch" \
     --base "$target_branch" \
     --draft
-
-# Update local Git branch statuses and Submodules
-[group('git')]
-git-update:
-  git fetch --quiet
-  git pull --quiet --recurse-submodules
-  git submodule update --quiet --remote --merge
-
-# Login to the GitHub CLI
-[group('git')]
-gh-login:
-  gh auth login --web --git-protocol ssh --clipboard
 
 # Lint GitHub Actions Workflows
 [group('git')]
