@@ -31,7 +31,6 @@ jobs:
 
   deploy-gcp-cloud-run:
     name: Deploy to GCP Cloud Run
-    needs: publish-gcp-images
     runs-on: ubuntu-latest
     environment:
       name: gcp-cloud-run
