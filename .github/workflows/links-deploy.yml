@@ -72,4 +72,6 @@ jobs:
           gcloud run compose up docker-compose.prod.yml \
             --project "${PROJECT_ID}" \
             --region "${REGION}" \
+            --container_name "${SERVICE}" \
+            --build \
             --quiet
