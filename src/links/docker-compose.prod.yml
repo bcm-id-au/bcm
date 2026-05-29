@@ -1,8 +1,9 @@
 name: "${SERVICE}"
 
 services:
+
   bcm-links-web:
-    image: "${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPOSITORY}/${SERVICE}-web:${IMAGE_TAG}"
+    image: ghcr.io/karakeep-app/karakeep:release
     ports:
       - "3000:3000"
     depends_on:
@@ -11,20 +12,14 @@ services:
     volumes:
       - bcm-links-app-data:/data
     environment:
-      DATA_DIR: /data
       MEILI_ADDR: http://bcm-links-search:7700
       BROWSER_WEB_URL: http://bcm-links-browser:9222
-      NEXTAUTH_SECRET: "${NEXTAUTH_SECRET}"
-      NEXTAUTH_URL: "${NEXTAUTH_URL}"
-      MEILI_MASTER_KEY: "${MEILI_MASTER_KEY}"
       OPENAI_API_KEY: "${OPENAI_API_KEY}"
-      INFERENCE_TEXT_MODEL: "${INFERENCE_TEXT_MODEL:-gpt-4.1-mini}"
-      INFERENCE_IMAGE_MODEL: "${INFERENCE_IMAGE_MODEL:-gpt-4o-mini}"
-      DISABLE_SIGNUPS: "${DISABLE_SIGNUPS:-true}"
+      DATA_DIR: /data
     x-google-cloudrun:ingress-container: true
 
   bcm-links-browser:
-    image: "${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPOSITORY}/${SERVICE}-browser:${IMAGE_TAG}"
+    image: gcr.io/zenika-hub/alpine-chrome:124
     expose:
       - "9222"
     command:
@@ -36,7 +31,7 @@ services:
       - --hide-scrollbars
 
   bcm-links-search:
-    image: "${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPOSITORY}/${SERVICE}-search:${IMAGE_TAG}"
+    image: getmeili/meilisearch:v1.41.0
     expose:
       - "7700"
     volumes:

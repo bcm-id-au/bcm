@@ -12,7 +12,7 @@ cd "$LINKS_DIR"
 
 mkdir -p "$REPO_DIR/storage/links/"{app,search}
 
-if [ ! -f .links.github.env ]; then
+if [ ! -f .links.env ]; then
   cp .links.local.env .links.env
 fi
 

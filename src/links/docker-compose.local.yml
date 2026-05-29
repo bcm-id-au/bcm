@@ -4,7 +4,7 @@ services:
 
   bcm-links-web:
     container_name: bcm-links-web
-    image: "ghcr.io/karakeep-app/karakeep:release"
+    image: ghcr.io/karakeep-app/karakeep:release
     restart: no
     volumes:
       - "${STORAGE_DIR_APP}:/data"
