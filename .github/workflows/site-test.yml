@@ -41,7 +41,7 @@ jobs:
       - name: Set build artifact name
         id: artifact
         run: echo "artifact_name=build-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
-      - name: Setup Deno
+      - name: Deno setup
         uses: denoland/setup-deno@v2
         with:
           deno-version: latest
@@ -76,7 +76,7 @@ jobs:
         with:
           name: ${{ needs.build.outputs.artifact_name }}
           path: ${{ github.workspace }}/src/site
-      - name: Setup Deno
+      - name: Deno setup
         uses: denoland/setup-deno@v2
         with:
           deno-version: latest

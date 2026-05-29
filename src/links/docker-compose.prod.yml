@@ -21,7 +21,6 @@ services:
       INFERENCE_TEXT_MODEL: "${INFERENCE_TEXT_MODEL:-gpt-4.1-mini}"
       INFERENCE_IMAGE_MODEL: "${INFERENCE_IMAGE_MODEL:-gpt-4o-mini}"
       DISABLE_SIGNUPS: "${DISABLE_SIGNUPS:-true}"
-      KARAKEEP_DISABLE_SIGNUPS: "${KARAKEEP_DISABLE_SIGNUPS:-true}"
     x-google-cloudrun:ingress-container: true
 
   bcm-links-browser:
