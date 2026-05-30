@@ -32,11 +32,11 @@ Deno.test("build", async (test) => {
   });
 
   await test.step({
-    name: "non-empty file 'public/brendan/posts.json' was found",
+    name: "non-empty file 'public/posts.json' was found",
     fn: async () => {
       try {
         const publicIndexFileContents: string = await Deno.readTextFile(
-          "public/brendan/posts.json",
+          "public/posts.json",
         );
 
         assertNotEquals(publicIndexFileContents, "");
