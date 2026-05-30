@@ -117,7 +117,7 @@ The build is orchestrated by `bin/build.sh` which:
 
 #### Configuration
 
-Environment variables are loaded from `.env` (use `.env.example` as template):
+Environment variables are loaded from `.site.env` (use `.site.local.env` as template):
 
 - `BLOG_POSTS_DIR`, `BLOG_POSTS_URL`: Blog post paths
 - `JSON_FEED_*`: JSON Feed metadata (title, description, author, etc.)

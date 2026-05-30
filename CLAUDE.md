@@ -62,7 +62,7 @@ Implications:
 - `public/` is generated output; do not hand-edit, do not commit.
 - Tests in `src/site/src/*.test.ts` assert files exist and are non-empty in `public/`, so they require a prior `just site-build` to pass.
 
-Environment variables come from `src/site/.env` (template: `.env.example`); `_config.ts` exposes them to Lume via `site.data()`.
+Environment variables come from `src/site/.site.env` (template: `.site.local.env`); `_config.ts` exposes them to Lume via `site.data()`.
 
 ## Links architecture (`src/links/`)
 
