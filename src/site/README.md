@@ -50,7 +50,6 @@ First add new GitHub Environments (`GitHub Repo > Settings > Code and automation
 
 - `ci-build`
 - `gcp-cloud-run`
-- `github-packages`
 
 Now follow the steps in the comments in the sample file at [.site.github.env](.site.github.env).
 
