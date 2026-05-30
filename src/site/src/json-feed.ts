@@ -14,7 +14,7 @@ import { join } from "@std/path";
 import { load } from "@std/dotenv";
 import { PostsList } from "./posts-list.ts";
 
-// Set feed properties using variables from the ".env" file
+// Set feed properties using variables from the ENV file
 
 await load({
   envPath: ".site.env",

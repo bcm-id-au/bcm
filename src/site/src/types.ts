@@ -1,4 +1,4 @@
-// Define the accepted content in the Frontmatter of Post Markdown files
+// Frontmatter of Post Markdown files
 export type YamlData = {
   tags?: string[];
   url?: string;
@@ -10,7 +10,7 @@ export type YamlData = {
   [index: string]: unknown;
 };
 
-// Define the accepted content for JSON Feeds
+// JSON Feed - Feed details
 export type JsonFeedData = {
   version: string;
   title: string;
@@ -22,13 +22,13 @@ export type JsonFeedData = {
   items: JsonFeedItem[];
 };
 
-// Define the accepted content for JSON Feed Authors
+// JSON Feed - Author details
 export type JsonFeedAuthor = {
   name: string;
   url: string;
 };
 
-// Define the accepted content for JSON Feed Items
+// JSON Feed - Feed item details
 export type JsonFeedItem = {
   id: string;
   url: string;

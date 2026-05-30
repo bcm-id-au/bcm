@@ -57,8 +57,8 @@ export async function PostsList(
   return postItems;
 }
 
-// Construct this post's item array and ensure it meets the requirements
-// of the JsonFeedItem type so it can also be used in the JSON feed
+// Construct the item array and ensure it meets the requirements
+// of the JsonFeedItem type so it can be used in the JSON feed
 function createPostItem(postUrl: string, postTitle: string, postDate: string): JsonFeedItem {
   return {
     id: postUrl,
