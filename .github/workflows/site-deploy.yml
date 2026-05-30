@@ -120,6 +120,17 @@ jobs:
           context: ${{ github.workspace }}/src/site
           file: ${{ github.workspace }}/src/site/Dockerfile
           push: true
+          build-args: |
+            SITE_POSTS_DIR=${{ secrets.SITE_POSTS_DIR }}
+            SITE_POSTS_URL=${{ secrets.SITE_POSTS_URL }}
+            SITE_FEED_TITLE=${{ secrets.SITE_FEED_TITLE }}
+            SITE_FEED_DESC=${{ secrets.SITE_FEED_DESC }}
+            SITE_FEED_DEFAULT_TITLE=${{ secrets.SITE_FEED_DEFAULT_TITLE }}
+            SITE_LANG=${{ secrets.SITE_LANG }}
+            SITE_AUTHOR=${{ secrets.SITE_AUTHOR }}
+            SITE_URL=${{ secrets.SITE_URL }}
+            SITE_FEED_FILE=${{ secrets.SITE_FEED_FILE }}
+            SITE_FEED_URL=${{ secrets.SITE_FEED_URL }}
           tags: |
             ghcr.io/${{ env.DOCKER_IMAGE_PATH }}:latest
             ghcr.io/${{ env.DOCKER_IMAGE_PATH }}:${{ github.ref_name }}
