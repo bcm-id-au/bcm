@@ -4,6 +4,7 @@ date: 2012-10-16
 url: /posts/20121016_upcomingtasks-on-basecamp-website/
 oldUrl: /brendan/posts/20121016_upcomingtasks-on-basecamp-website/
 tags:
+  - Post
   - UpcomingTasks
   - Basecamp
 ---

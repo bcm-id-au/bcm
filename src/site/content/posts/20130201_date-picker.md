@@ -4,6 +4,7 @@ date: 2013-02-01
 url: /posts/20130201_date-picker/
 oldUrl: /brendan/posts/20130201_date-picker/
 tags:
+  - Post
   - PHP
 ---
 

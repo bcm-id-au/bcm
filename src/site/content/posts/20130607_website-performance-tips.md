@@ -4,6 +4,7 @@ date: 2013-06-07
 url: /posts/20130607_website-performance-tips/
 oldUrl: /brendan/posts/20130607_website-performance-tips/
 tags:
+  - Post
   - Performance
 ---
 

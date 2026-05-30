@@ -4,6 +4,7 @@ date: 2012-11-05
 url: /posts/20121111_sublime-text-2-configuration/
 oldUrl: /brendan/posts/20121111_sublime-text-2-configuration/
 tags:
+  - Post
   - Customisation
 ---
 

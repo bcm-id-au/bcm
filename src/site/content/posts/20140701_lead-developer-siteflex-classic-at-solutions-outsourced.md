@@ -4,6 +4,7 @@ date: 2014-07-01
 url: /posts/20140701_lead-developer-siteflex-classic-at-solutions-outsourced/
 oldUrl: /brendan/posts/20140701_lead-developer-siteflex-classic-at-solutions-outsourced/
 tags:
+  - Post
   - Career
 ---
 

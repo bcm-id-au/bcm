@@ -4,6 +4,7 @@ date: 2015-07-22
 url: /posts/20150722_configuring-a-chromebook-for-web-development/
 oldUrl: /brendan/posts/20150722_configuring-a-chromebook-for-web-development/
 tags:
+  - Post
   - Development
   - Chrome
 ---

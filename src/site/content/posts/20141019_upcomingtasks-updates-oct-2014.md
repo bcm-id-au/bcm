@@ -4,6 +4,7 @@ date: 2014-10-19
 url: /posts/20141019_upcomingtasks-updates-oct-2014/
 oldUrl: /brendan/posts/20141019_upcomingtasks-updates-oct-2014/
 tags:
+  - Post
   - UpcomingTasks
 ---
 

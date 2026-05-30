@@ -4,6 +4,7 @@ date: 2009-09-01
 url: /posts/20090901_web-developer-at-solutions-outsourced/
 oldUrl: /brendan/posts/20090901_web-developer-at-solutions-outsourced/
 tags:
+  - Post
   - Career
 ---
 

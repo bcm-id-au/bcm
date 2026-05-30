@@ -4,6 +4,7 @@ date: 2016-10-14
 url: /posts/20161014_farewell-upcomingtasks/
 oldUrl: /brendan/posts/20161014_farewell-upcomingtasks/
 tags:
+  - Post
   - UpcomingTasks
 ---
 

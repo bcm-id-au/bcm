@@ -2,7 +2,8 @@
 title: Technical Lead at FOBOH
 date: 2025-11-26
 url: /posts/20251126_tech-lead-at-foboh/
-tags: 
+tags:
+  - Post
   - Career
 ---
 

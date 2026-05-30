@@ -4,6 +4,7 @@ date: 2013-06-25
 url: /posts/20130625_high-resolution-web-app-icons/
 oldUrl: /brendan/posts/20130625_high-resolution-web-app-icons/
 tags:
+  - Post
   - HTML
   - Media
 ---

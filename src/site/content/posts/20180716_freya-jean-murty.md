@@ -4,6 +4,7 @@ date: 2018-07-16
 url: /posts/20180716_freya-jean-murty/
 oldUrl: /brendan/posts/20180716_freya-jean-murty/
 tags:
+  - Post
   - Family
 ---
 

@@ -4,6 +4,7 @@ date: 2010-05-23
 url: /posts/20100523_isla-jade-murty/
 oldUrl: /brendan/posts/20100523_isla-jade-murty/
 tags:
+  - Post
   - Family
 ---
 

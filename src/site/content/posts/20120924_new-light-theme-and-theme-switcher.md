@@ -4,6 +4,7 @@ date: 2012-09-24
 url: /posts/20120924_new-light-theme-and-theme-switcher/
 oldUrl: /brendan/posts/20120924_new-light-theme-and-theme-switcher/
 tags:
+  - Post
   - UpcomingTasks
 ---
 

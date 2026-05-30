@@ -4,6 +4,7 @@ date: 2013-04-04
 url: /posts/20130404_trip-to-new-york/
 oldUrl: /brendan/posts/20130404_trip-to-new-york/
 tags:
+  - Post
   - Travel
 ---
 

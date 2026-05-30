@@ -3,6 +3,7 @@ title: Dedicated Technology Team Member at Officeworks
 date: 2025-07-06
 url: /posts/20250706_technology-team-member-at-officeworks/
 tags:
+  - Post
   - Career
 ---
 

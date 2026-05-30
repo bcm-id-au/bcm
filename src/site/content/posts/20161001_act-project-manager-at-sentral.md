@@ -4,6 +4,7 @@ date: 2016-10-01
 url: /posts/20161001_act-project-manager-at-sentral/
 oldUrl: /brendan/posts/20161001_act-project-manager-at-sentral/
 tags:
+  - Post
   - Career
 ---
 

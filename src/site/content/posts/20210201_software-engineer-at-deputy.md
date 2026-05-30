@@ -4,6 +4,7 @@ date: 2021-02-01
 url: /posts/20210201_software-engineer-at-deputy/
 oldUrl: /brendan/posts/20210201_software-engineer-at-deputy/
 tags:
+  - Post
   - Career
 ---
 

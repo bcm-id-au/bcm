@@ -47,7 +47,7 @@ site.use(redirects());
 
 site.use(feed({
   output: ["/posts.json"],
-  query: "type=post",
+  query: "tag=Post",
   sort: "date=desc",
   limit: 50,
   info: {

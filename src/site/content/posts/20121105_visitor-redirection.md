@@ -4,6 +4,7 @@ date: 2012-11-05
 url: /posts/20121105_visitor-redirection/
 oldUrl: /brendan/posts/20121105_visitor-redirection/
 tags:
+  - Post
   - PHP
 ---
 

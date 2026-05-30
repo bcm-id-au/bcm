@@ -4,6 +4,7 @@ date: 2012-12-31
 url: /posts/20121231_happy-holidays-from-upcomingtasks/
 oldUrl: /brendan/posts/20121231_happy-holidays-from-upcomingtasks/
 tags:
+  - Post
   - UpcomingTasks
 ---
 

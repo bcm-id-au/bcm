@@ -4,6 +4,7 @@ date: 2013-02-25
 url: /posts/20130225_upcomingtasks-interface-updates/
 oldUrl: /brendan/posts/20130225_upcomingtasks-interface-updates/
 tags:
+  - Post
   - UpcomingTasks
 ---
 

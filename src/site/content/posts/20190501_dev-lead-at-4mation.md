@@ -4,6 +4,7 @@ date: 2019-05-01
 url: /posts/20190501_dev-lead-at-4mation/
 oldUrl: /brendan/posts/20190501_dev-lead-at-4mation/
 tags:
+  - Post
   - Career
 ---
 
