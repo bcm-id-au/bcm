@@ -28,10 +28,10 @@ NC="\033[0m"
 SITE_BUILD_DIR=${SITE_BUILD_DIR:-"build"}
 SITE_PUBLIC_DIR=${SITE_PUBLIC_DIR:-"public"}
 
-# Set the production domain and link
+# Set the production URL
 
-PROD_DOMAIN="murty.au"
-PROD_LINK="https://$PROD_DOMAIN"
+PROD_LINK=${SITE_URL:-"https://murty.au"}
+PROD_LINK_REGEX=${PROD_LINK//\//\\/}
 
 # Format and lint code
 
@@ -75,15 +75,15 @@ deno task lume
 
 echo -e "${YELLOW}Updating '$SITE_PUBLIC_DIR/sitemap.xml' to use the production URL${NC}"
 
-sed -i -e "s/http:\/\/localhost\//https:\/\/$PROD_DOMAIN\//g" "$SITE_PUBLIC_DIR/sitemap.xml"
+sed -i -e "s/http:\/\/localhost\//$PROD_LINK_REGEX\//g" "$SITE_PUBLIC_DIR/sitemap.xml"
 
 echo -e "${YELLOW}Updating '$SITE_PUBLIC_DIR/robots.txt' to use the production URL${NC}"
 
-sed -i -e "s/http:\/\/localhost\//https:\/\/$PROD_DOMAIN\//g" "$SITE_PUBLIC_DIR/robots.txt"
+sed -i -e "s/http:\/\/localhost\//$PROD_LINK_REGEX\//g" "$SITE_PUBLIC_DIR/robots.txt"
 
 echo -e "${YELLOW}Updating '$SITE_PUBLIC_DIR/posts.json' to use the production URL${NC}"
 
-sed -i -e "s/http:\/\/localhost\//https:\/\/$PROD_DOMAIN\//g" "$SITE_PUBLIC_DIR/posts.json"
+sed -i -e "s/http:\/\/localhost\//$PROD_LINK_REGEX\//g" "$SITE_PUBLIC_DIR/posts.json"
 
 echo -e "${YELLOW}Copying static files to '$SITE_PUBLIC_DIR'${NC}"
 

@@ -6,13 +6,14 @@
     <meta property="og:title" content="{% if title %}{{ title }}{% else %}Murty{% endif %}" />
     <meta name="description" content="{{ description }}" />
     <meta name="theme-color" content="{{ theme }}" />
-    <meta name="author" content="Brendan Murty" />
+    <meta name="author" content="{{ SITE_AUTHOR }}" />
     <meta name="handheldfriendly" content="true" />
     <meta name="mobileoptimized" content="480" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="og:url" content="https://murty.au{{ url }}" />
+    <meta property="og:url" content="{{ SITE_URL }}{{ url }}" />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="en_GB" />
+    <meta property="og:locale" content="{{ SITE_LANG }}" />
+    <link rel="alternate" title="{{ SITE_FEED_TITLE }}" type="application/json" href="{{ SITE_URL }}/posts.json" />
     <link rel="icon" sizes="192x192" href="/images/logos/android-chrome-192x192.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/images/logos/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/logos/favicon-32x32.png">
