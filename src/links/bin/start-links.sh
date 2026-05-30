@@ -12,11 +12,11 @@ cd "$LINKS_DIR"
 
 mkdir -p "$REPO_DIR/storage/links/"{app,search}
 
-if [ ! -f .links.env ]; then
-  cp .links.local.env .links.env
+if [ ! -f "$LINKS_DIR/.links.env" ]; then
+  cp "$LINKS_DIR/.links.local.env" "$LINKS_DIR/.links.env"
 fi
 
-source .links.env
+source "$LINKS_DIR/.links.env"
 
 PORT="$PORT" \
   OPENAI_API_KEY="$OPENAI_API_KEY" \
