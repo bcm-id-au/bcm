@@ -95,52 +95,52 @@ gh-actions-lint:
   gh extension install cschleiden/gh-actionlint > /dev/null 2>&1
   gh actionlint
 
-# Start the local instance of Links
+# Links - Start the local Docker containers
 [group('links')]
 links-start:
   bash ./src/links/bin/start-links.sh
 
-# Stop the local instance of Links
+# Links - Stop the local Docker containers
 [group('links')]
 links-stop:
   bash ./src/links/bin/stop-links.sh
 
-# Run the build process for Site
+# Site - Run the build process
 [group('site')]
 site-build:
   cd ./src/site && deno task build
 
-# Run the Docker image build process for Site
+# Site - Run the Docker image build process
 [group('site')]
 site-docker-build:
   cd ./src/site && deno task docker-build
 
-# Start the Docker container for Site
+# Site - Start the Docker container
 [group('site')]
 site-docker-start:
   cd ./src/site && deno task docker-start
 
-# Stop the Docker container for Site
+# Site - Stop the Docker container
 [group('site')]
 site-docker-stop:
   cd ./src/site && deno task docker-stop
 
-# Create a new post for Site
+# Site - Create a new post
 [group('site')]
 site-new-post:
   cd ./src/site && deno task new-post
 
-# Run the setup process for Site
+# Site - Run the setup process
 [group('site')]
 site-setup:
   cd ./src/site && deno task setup
 
-# Run a local version of Site
+# Site - Run the local web server
 [group('site')]
 site-start:
   cd ./src/site && deno task serve
 
-# Run tests for Site
+# Site - Run all tests
 [group('site')]
 site-test:
   cd ./src/site && deno task test
