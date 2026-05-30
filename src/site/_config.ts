@@ -47,9 +47,9 @@ site.use(redirects());
 
 site.use(feed({
   output: ["/posts.json"],
-  query: "tag=Post",
+  query: "Post",
   sort: "date=desc",
-  limit: 50,
+  limit: 100,
   info: {
     title: Deno.env.get("SITE_FEED_TITLE"),
     description: Deno.env.get("SITE_FEED_DESC"),
