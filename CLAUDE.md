@@ -41,7 +41,6 @@ The project uses Deno tasks defined in `src/site/deno.json`:
 
 - Single test: `deno test --allow-run=deno --allow-env --allow-read --allow-net src/site/src/<filename>.test.ts`
 - `deno task lume <args>` — Invoke Lume directly (with the scoped permissions in `deno.json`).
-- `deno task json-feed` — Regenerate `/brendan/posts.json` from `public/posts/`.
 
 ## Site build architecture (`src/site/`)
 
@@ -54,7 +53,6 @@ The build is **not** a plain `lume build` — it is orchestrated by `bin/site-bu
    - `content/*` → `build/`
 2. Concatenates CSS files **in a fixed order** (`tools-reset.css`, `site.css`, `media-screen-medium.css`, `media-screen-small.css`, `media-print.css`) and minifies to `build/_assets/css/styles.min.css`. If you add a CSS file, update the concatenation order in `site-build.sh`.
 3. Runs Lume to produce `public/`.
-4. Copies static assets, runs `src/json-feed.ts`, then deletes `build/`.
 
 Implications:
 

@@ -7,6 +7,7 @@ import nunjucks from "lume/plugins/nunjucks.ts";
 import robots from "lume/plugins/robots.ts";
 import redirects from "lume/plugins/redirects.ts";
 import sitemap from "lume/plugins/sitemap.ts";
+import feed from "lume/plugins/feed.ts";
 
 // Load variables from the ENV file
 
@@ -29,22 +30,48 @@ const site = lume({
 
 // Load site config values from ".env"
 
-site.data("SITE_POSTS_DIR", Deno.env.get("SITE_POSTS_DIR"));
-site.data("SITE_POSTS_URL", Deno.env.get("SITE_POSTS_URL"));
 site.data("SITE_FEED_TITLE", Deno.env.get("SITE_FEED_TITLE"));
 site.data("SITE_FEED_DESC", Deno.env.get("SITE_FEED_DESC"));
 site.data("SITE_FEED_DEFAULT_TITLE", Deno.env.get("SITE_FEED_DEFAULT_TITLE"));
 site.data("SITE_LANG", Deno.env.get("SITE_LANG"));
 site.data("SITE_AUTHOR", Deno.env.get("SITE_AUTHOR"));
 site.data("SITE_URL", Deno.env.get("SITE_URL"));
-site.data("SITE_FEED_FILE", Deno.env.get("SITE_FEED_FILE"));
-site.data("SITE_FEED_URL", Deno.env.get("SITE_FEED_URL"));
 
 // Enable plugins
 
 site.use(nunjucks());
 site.use(date());
 site.use(redirects());
+
+// Generate a JSON feed of recent posts
+
+site.use(feed({
+  output: ["/posts.json"],
+  query: "type=post",
+  sort: "date=desc",
+  limit: 50,
+  info: {
+    title: Deno.env.get("SITE_FEED_TITLE"),
+    description: Deno.env.get("SITE_FEED_DESC"),
+    published: new Date(),
+    self: "/posts.json",
+    lang: Deno.env.get("SITE_LANG"),
+    generator: false,
+    authorName: Deno.env.get("SITE_AUTHOR"),
+    authorUrl: Deno.env.get("SITE_URL"),
+  },
+  items: {
+    title: "=title",
+    description: "=excerpt",
+    published: "=date",
+    updated: undefined,
+    content: "=children",
+    lang: Deno.env.get("SITE_LANG"),
+    image: "=cover",
+    authorName: Deno.env.get("SITE_AUTHOR"),
+    authorUrl: Deno.env.get("SITE_URL"),
+  },
+}));
 
 // Generate a custom robots.txt
 

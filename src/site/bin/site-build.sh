@@ -95,11 +95,6 @@ cp "$SITE_BUILD_DIR/_assets/css/styles.min.css" "$SITE_PUBLIC_DIR/css/styles.min
 
 cp -r "src/styles/fontawesome" "$SITE_PUBLIC_DIR/css"
 
-echo -e "${YELLOW}Building a JSON Feed with posts data${NC}"
-
-mkdir -p "$SITE_PUBLIC_DIR/brendan"
-deno task json-feed
-
 echo -e "${YELLOW}Deleting '$SITE_BUILD_DIR'${NC}"
 
 rm -rf "$SITE_BUILD_DIR"

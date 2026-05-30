@@ -98,8 +98,7 @@ The build is orchestrated by `bin/build.sh` which:
 4. Combines and minifies CSS files into `build/_assets/css/styles.min.css`
 5. Runs Lume to generate static HTML from Markdown + Nunjucks templates
 6. Copies static assets (fonts, images, config files) to `public/`
-7. Generates JSON Feed for blog posts via `src/json-feed.ts`
-8. Cleans up `build/` directory
+7. Cleans up `build/` directory
 
 #### Directory Structure
 
@@ -110,7 +109,7 @@ The build is orchestrated by `bin/build.sh` which:
   - `src/layouts/`: Nunjucks layout templates (`.njk`)
   - `src/templates/`: Nunjucks component templates
   - `src/styles/`: CSS files (combined and minified during build)
-  - `*.ts`: Utility modules (json-feed, posts-list)
+  - `*.ts`: Utility modules
   - `*.test.ts`: Deno tests (use `Deno.test()` with steps)
 - **`public/`**: Built output (generated, not committed)
 - **`build/`**: Temporary directory during build (cleaned up after)
@@ -149,7 +148,7 @@ Blog posts are published as a JSON Feed at `/brendan/posts.json`:
 
 - Tests use Deno's built-in test framework with `Deno.test()`
 - Tests use `test.step()` for sub-tests
-- Tests are co-located with source files (e.g., `json-feed.ts` and `json-feed.test.ts`)
+- Tests are co-located with source files
 - Tests check for file existence and non-empty content in `public/` directory
 - Run tests: `deno task test`
 
