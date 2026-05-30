@@ -10,7 +10,7 @@ SITE_DIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
 cd "$SITE_DIR"
 
 if [ -f "$SITE_DIR/.site.env" ]; then
-  echo 'Loading environment vars from file'
+  echo 'Loading environment vars from file.'
 
   source "$SITE_DIR/.site.env"
 fi
