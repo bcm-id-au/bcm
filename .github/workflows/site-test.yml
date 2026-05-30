@@ -16,10 +16,14 @@ on:
     branches:
       - main
     paths:
+      - src/site/bin/site-build.sh
+      - src/site/bin/site-docker-build.sh
       - src/site/src/**
       - src/site/_config.ts
       - src/site/deno.json
       - src/site/deno.lock
+      - src/site/.dockerignore
+      - src/site/Dockerfile
 
 defaults:
   run:
@@ -30,8 +34,8 @@ permissions:
   contents: read
 
 jobs:
-  build:
-    name: Build
+  deno-build:
+    name: Deno build
     runs-on: ubuntu-latest
     environment:
       name: ci-build
@@ -64,9 +68,9 @@ jobs:
           path: |
             src/site/public
             src/site/.env
-  test:
-    name: Test
-    needs: build
+  deno-test:
+    name: Deno tests
+    needs: deno-build
     runs-on: ubuntu-latest
     environment:
       name: ci-build
@@ -86,3 +90,20 @@ jobs:
           deno-version: latest
       - name: Run tests
         run: deno task test
+
+  docker-build:
+    name: Docker build
+    runs-on: ubuntu-latest
+    environment:
+      name: ci-build
+      deployment: false
+    env: ${{ secrets }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Deno setup
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: latest
+      - name: Docker build
+        run: deno task docker-build
