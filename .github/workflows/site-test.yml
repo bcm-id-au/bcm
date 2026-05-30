@@ -11,7 +11,20 @@ run-name: Site Test by ${{ github.actor }} on ${{ github.ref_name }}
 on:
   # Allow manual triggers via GitHub Repo > Actions
   workflow_dispatch:
-  # Automatically run on PRs that are aiming to merge to certain branches
+  # Automatically run on pushes to 'main'
+  push:
+    branches:
+      - main
+    paths:
+      - src/site/bin/site-build.sh
+      - src/site/bin/site-docker-build.sh
+      - src/site/src/**
+      - src/site/_config.ts
+      - src/site/deno.json
+      - src/site/deno.lock
+      - src/site/.dockerignore
+      - src/site/Dockerfile
+  # Automatically run on PRs that are aiming to merge to 'main'
   pull_request:
     branches:
       - main
