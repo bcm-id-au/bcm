@@ -10,21 +10,20 @@ RUN deno task deps-install
 # besides items filtered out by '.dockerignore'.
 COPY . .
 
-# Set default build arguments based on values from '.site.local.env'.
-# These can be overridden via Docker params like:
+# Set available build arguments, which can be set via Docker params:
 # --build-arg SITE_POSTS_URL="https://jane-doe.com/posts/"
 # --build-arg SITE_AUTHOR="Jane Doe"
 # --env-file ./.staging.sample.env
-ARG SITE_POSTS_DIR="public/posts"
-ARG SITE_POSTS_URL="https://jane-doe.com/posts/"
-ARG SITE_FEED_TITLE="Posts by Jane Doe"
-ARG SITE_FEED_DESC="Jane writes about technology and the climate."
-ARG SITE_FEED_DEFAULT_TITLE="Post by Jane Doe"
-ARG SITE_LANG="en-GB"
-ARG SITE_AUTHOR="Jane Doe"
-ARG SITE_URL="https://jane-doe.com/"
-ARG SITE_FEED_FILE="public/jane/posts.json"
-ARG SITE_FEED_URL="https://jane-doe.com/jane/posts.json"
+ARG SITE_POSTS_DIR
+ARG SITE_POSTS_URL
+ARG SITE_FEED_TITLE
+ARG SITE_FEED_DESC
+ARG SITE_FEED_DEFAULT_TITLE
+ARG SITE_LANG
+ARG SITE_AUTHOR
+ARG SITE_URL
+ARG SITE_FEED_FILE
+ARG SITE_FEED_URL
 
 # Persist build arguments as environment variables so
 # resulting Docker Containers can access the values.
