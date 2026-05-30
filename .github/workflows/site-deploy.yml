@@ -92,10 +92,8 @@ jobs:
     needs: [build, test]
     runs-on: ubuntu-latest
     environment:
-      name: github-packages
+      name: ci-build
       deployment: false
-    env:
-      DOCKER_IMAGE_PATH: ${{ secrets.SITE_DOCKER_IMAGE_PATH }}
     permissions:
       contents: read
       packages: write
@@ -132,9 +130,9 @@ jobs:
             SITE_FEED_FILE=${{ secrets.SITE_FEED_FILE }}
             SITE_FEED_URL=${{ secrets.SITE_FEED_URL }}
           tags: |
-            ghcr.io/${{ env.DOCKER_IMAGE_PATH }}:latest
-            ghcr.io/${{ env.DOCKER_IMAGE_PATH }}:${{ github.ref_name }}
-            ghcr.io/${{ env.DOCKER_IMAGE_PATH }}:${{ steps.commit.outputs.sha_short }}
+            ghcr.io/${{ secrets.DOCKER_IMAGE_PATH }}:latest
+            ghcr.io/${{ secrets.DOCKER_IMAGE_PATH }}:${{ github.ref_name }}
+            ghcr.io/${{ secrets.DOCKER_IMAGE_PATH }}:${{ steps.commit.outputs.sha_short }}
 
   deploy-gcp-cloud-run:
     name: Deploy to GCP Cloud Run
@@ -143,8 +141,6 @@ jobs:
     environment:
       name: gcp-cloud-run
       deployment: false
-    env:
-      DOCKER_IMAGE_PATH: ${{ secrets.SITE_DOCKER_IMAGE_PATH }}
     permissions:
       contents: read
       id-token: write
@@ -162,7 +158,7 @@ jobs:
         with:
           service: ${{ secrets.SITE_GCP_CLOUD_RUN_SERVICE_NAME }}
           region: ${{ secrets.SITE_GCP_REGION }}
-          image: ${{ secrets.SITE_GCP_DOCKER_IMAGE_URL }}/${{ env.DOCKER_IMAGE_PATH }}:latest
+          image: ${{ secrets.SITE_GCP_DOCKER_IMAGE_URL }}/${{ secrets.DOCKER_IMAGE_PATH }}:latest
 
   release:
     name: Release
