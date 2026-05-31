@@ -1,13 +1,13 @@
 #
 #
-# GitHub Actions Workflow: Site Deploy
+# GitHub Actions Workflow: Site Publish
 #   - This workflow includes the build, test, deploy, and release processes
 #   - Initial setup is required, refer to: src/site/README.md > Infrastructure
 #
 #
 
-name: Site Deploy
-run-name: Site Deploy by ${{ github.actor }} on ${{ github.ref_name }}
+name: Site Publish
+run-name: Site Publish by ${{ github.actor }} on ${{ github.ref_name }}
 
 on:
   # Allow manual triggers via GitHub Repo > Actions

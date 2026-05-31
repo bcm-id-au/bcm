@@ -1,12 +1,12 @@
 #
 #
-# GitHub Actions Workflow: Site Test
+# GitHub Actions Workflow: Site Check
 #   - This workflow includes the build and test processes
 #
 #
 
-name: Site Test
-run-name: Site Test by ${{ github.actor }} on ${{ github.ref_name }}
+name: Site Check
+run-name: Site Check by ${{ github.actor }} on ${{ github.ref_name }}
 
 on:
   # Allow manual triggers via GitHub Repo > Actions

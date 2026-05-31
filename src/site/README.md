@@ -11,8 +11,8 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 
 ## Structure
 
-- [.github/workflows/site-deploy.yml](../../.github/workflows/site-deploy.yml) - Deployment workflow that can be manually triggered.
-- [.github/workflows/site-test.yml](../../.github/workflows/site-test.yml) - Test workflow that runs automatically on PRs and can be manually triggered.
+- [.github/workflows/site-publish.yml](../../.github/workflows/site-publish.yml) - Deployment workflow that can be manually triggered.
+- [.github/workflows/site-check.yml](../../.github/workflows/site-check.yml) - Test workflow that runs automatically on PRs and can be manually triggered.
 - [assets](assets/) - Static files like images and PDFs.
 - [config](config/) - Supporting configuration files.
 - [content](content/) - Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files.
@@ -42,7 +42,7 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 
 ## Deployment
 
-Releases can be manually triggered from GitHub Actions via [site-deploy.yml](../../.github/workflows/site-deploy.yml).
+Releases can be manually triggered from GitHub Actions via [site-publish.yml](../../.github/workflows/site-publish.yml).
 
 ## Infrastructure
 
