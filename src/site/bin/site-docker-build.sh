@@ -18,8 +18,8 @@ fi
 echo 'Building Docker image using environment vars from the Terminal session.'
 
 docker build \
-  --tag "bcm-site:latest" \
-  --tag "bcm-site:$(git rev-parse --short HEAD)" \
+  --tag "bcm-site:local-latest" \
+  --tag "bcm-site:local-commit-$(git rev-parse --short HEAD)" \
   --progress=plain \
   --build-arg SITE_FEED_TITLE="$SITE_FEED_TITLE" \
   --build-arg SITE_FEED_DESC="$SITE_FEED_DESC" \
