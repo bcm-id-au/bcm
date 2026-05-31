@@ -1,0 +1,17 @@
+{% set posts = search.pages("type=post", "date=desc") %}
+{% for post in posts %}
+  {% if post.url != '/posts/' %}
+    <li>
+      <span class="post-date">
+        {{ post.date | date('d LLL yyyy') }}
+      </span>
+      <a class="post-link" href="{{ post.url }}">
+        {% if post.title %}
+          {{ post.title }}
+        {% else %}
+          {{ post.url }}
+        {% endif %}
+      </a>
+    </li>
+  {% endif %}
+{% endfor %}

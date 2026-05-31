@@ -1,0 +1,37 @@
+/* PRINT */
+
+@media print {
+  html {
+    height: auto;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  body {
+    background: transparent !important;
+    color: #000 !important;
+    padding: 20px;
+  }
+
+  header,
+  article {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+  }
+
+  header h1 a {
+    color: #000 !important;
+  }
+
+  @page {
+    size: auto;
+    margin: 0mm 0mm 0mm 0mm;
+  }
+
+  header {
+    height: auto;
+    border: 0 none;
+  }
+}

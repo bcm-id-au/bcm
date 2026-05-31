@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+  <head>
+    <meta charSet="utf-8" />
+    <title>{% if title %}{{ title }}{% else %}Murty{% endif %}</title>
+    <meta property="og:title" content="{% if title %}{{ title }}{% else %}Murty{% endif %}" />
+    <meta name="description" content="{{ description }}" />
+    <meta name="theme-color" content="{{ theme }}" />
+    <meta name="author" content="{{ SITE_AUTHOR }}" />
+    <meta name="handheldfriendly" content="true" />
+    <meta name="mobileoptimized" content="480" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:url" content="{{ SITE_URL }}{{ url }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="{{ SITE_LANG }}" />
+    <link rel="alternate" title="{{ SITE_FEED_TITLE }}" type="application/json" href="{{ SITE_URL }}/posts.json" />
+    <link rel="icon" sizes="192x192" href="/images/logos/android-chrome-192x192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/logos/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/logos/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/logos/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="preload" href="/fonts/MDIO-Black.woff" as="font" crossOrigin="anonymous" />
+    <link rel="preload" href="/fonts/MDIO-Regular.woff" as="font" crossOrigin="anonymous" />
+    <link rel="preload" href="/css/styles.min.css" as="style" />
+    <link rel="preload" href="/css/fontawesome/css/all.min.css" as="style" />
+    <link rel="preload" href="/css/fontawesome/css/fontawesome.min.css" as="style" />
+    <link rel="stylesheet" href="/css/styles.min.css" />
+    <link rel="stylesheet" href="/css/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="/css/fontawesome/css/fontawesome.min.css" />
+  </head>
+  <body {% if body_class %}class="{{ body_class }}"{% endif %}>
+    <section class="container">
+      <header>
+        <h1>{{ title | safe }}</h1>
+      </header>
+      <article>{{ content | safe }}</article>
+    </section>
+  </body>
+</html>

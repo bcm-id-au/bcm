@@ -1,0 +1,122 @@
+#
+#
+# GitHub Actions Workflow: Site Test
+#   - This workflow includes the build and test processes
+#
+#
+
+name: Site Test
+run-name: Site Test by ${{ github.actor }} on ${{ github.ref_name }}
+
+on:
+  # Allow manual triggers via GitHub Repo > Actions
+  workflow_dispatch:
+  # Automatically run on pushes to 'main'
+  push:
+    branches:
+      - main
+    paths:
+      - src/site/bin/site-build.sh
+      - src/site/bin/site-docker-build.sh
+      - src/site/src/**
+      - src/site/_config.ts
+      - src/site/deno.json
+      - src/site/deno.lock
+      - src/site/.dockerignore
+      - src/site/Dockerfile
+  # Automatically run on PRs that are aiming to merge to 'main'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - src/site/bin/site-build.sh
+      - src/site/bin/site-docker-build.sh
+      - src/site/src/**
+      - src/site/_config.ts
+      - src/site/deno.json
+      - src/site/deno.lock
+      - src/site/.dockerignore
+      - src/site/Dockerfile
+
+defaults:
+  run:
+    working-directory: src/site
+    shell: bash
+
+permissions:
+  contents: read
+
+jobs:
+  deno-build:
+    name: Deno build
+    runs-on: ubuntu-latest
+    environment:
+      name: ci-build
+      deployment: false
+    env: ${{ secrets }}
+    outputs:
+      artifact_name: ${{ steps.artifact.outputs.artifact_name }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Set build artifact name
+        id: artifact
+        run: echo "artifact_name=build-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
+      - name: Deno setup
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: latest
+      - name: Site setup
+        run: deno task setup
+      - name: Build site
+        run: deno task build
+      - name: Upload build files
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ steps.artifact.outputs.artifact_name }}
+          overwrite: true
+          include-hidden-files: true
+          retention-days: 1
+          compression-level: 9
+          path: |
+            src/site/public
+            src/site/.env
+  deno-test:
+    name: Deno tests
+    needs: deno-build
+    runs-on: ubuntu-latest
+    environment:
+      name: ci-build
+      deployment: false
+    env: ${{ secrets }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Download build files
+        uses: actions/download-artifact@v8
+        with:
+          name: ${{ needs.build.outputs.artifact_name }}
+          path: ${{ github.workspace }}/src/site
+      - name: Deno setup
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: latest
+      - name: Run tests
+        run: deno task test
+
+  docker-build:
+    name: Docker build
+    runs-on: ubuntu-latest
+    environment:
+      name: ci-build
+      deployment: false
+    env: ${{ secrets }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Deno setup
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: latest
+      - name: Docker build
+        run: deno task docker-build

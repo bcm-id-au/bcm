@@ -1,0 +1,195 @@
+#
+#
+# GitHub Actions Workflow: Site Deploy
+#   - This workflow includes the build, test, deploy, and release processes
+#   - Initial setup is required, refer to: src/site/README.md > Infrastructure
+#
+#
+
+name: Site Deploy
+run-name: Site Deploy by ${{ github.actor }} on ${{ github.ref_name }}
+
+on:
+  # Allow manual triggers via GitHub Repo > Actions
+  workflow_dispatch:
+    inputs:
+      continue_deployment:
+        description: 'Confirm production deployment for Public Website'
+        type: boolean
+        required: true
+        default: false
+
+defaults:
+  run:
+    working-directory: src/site
+    shell: bash
+
+permissions:
+  contents: read
+
+jobs:
+
+  build:
+    name: Build
+    if: ${{ inputs.continue_deployment == true }}
+    runs-on: ubuntu-latest
+    environment:
+      name: ci-build
+      deployment: false
+    env: ${{ secrets }}
+    outputs:
+      artifact_name: ${{ steps.artifact.outputs.artifact_name }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Set build artifact name
+        id: artifact
+        run: echo "artifact_name=build-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
+      - name: Deno setup
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: latest
+      - name: Site setup
+        run: deno task setup
+      - name: Build site
+        run: deno task build
+      - name: Upload build files
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ steps.artifact.outputs.artifact_name }}
+          overwrite: true
+          include-hidden-files: true
+          retention-days: 1
+          compression-level: 9
+          path: |
+            src/site/public
+            src/site/.env
+  test:
+    name: Test
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: ci-build
+      deployment: false
+    env: ${{ secrets }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Download build files
+        uses: actions/download-artifact@v8
+        with:
+          name: ${{ needs.build.outputs.artifact_name }}
+          path: ${{ github.workspace }}/src/site
+      - name: Deno setup
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: latest
+      - name: Run tests
+        run: deno task test
+
+  publish-github-packages:
+    name: Publish to GitHub Packages
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    environment:
+      name: ci-build
+      deployment: false
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: GitHub Packages login
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get commit details
+        id: commit
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - name: Build and push Docker Image
+        id: push
+        uses: docker/build-push-action@v7
+        with:
+          context: ${{ github.workspace }}/src/site
+          file: ${{ github.workspace }}/src/site/Dockerfile
+          push: true
+          build-args: |
+            SITE_FEED_TITLE=${{ secrets.SITE_FEED_TITLE }}
+            SITE_FEED_DESC=${{ secrets.SITE_FEED_DESC }}
+            SITE_FEED_DEFAULT_TITLE=${{ secrets.SITE_FEED_DEFAULT_TITLE }}
+            SITE_LANG=${{ secrets.SITE_LANG }}
+            SITE_AUTHOR=${{ secrets.SITE_AUTHOR }}
+            SITE_URL=${{ secrets.SITE_URL }}
+          tags: |
+            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:latest
+            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:${{ github.ref_name }}
+            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:${{ steps.commit.outputs.sha_short }}
+
+  deploy-gcp-cloud-run:
+    name: Deploy to GCP Cloud Run
+    needs: [build, test, publish-github-packages]
+    runs-on: ubuntu-latest
+    environment:
+      name: gcp-cloud-run
+      deployment: false
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Google Cloud login
+        id: auth
+        uses: google-github-actions/auth@v3
+        with:
+          project_id: ${{ secrets.SITE_GCP_PROJECT_ID }}
+          credentials_json: ${{ secrets.SITE_GCP_SERVICE_ACCOUNT_JSON }}
+      - name: Cloud Run deployment
+        uses: google-github-actions/deploy-cloudrun@v3
+        with:
+          service: ${{ secrets.SITE_GCP_CLOUD_RUN_SERVICE_NAME }}
+          region: ${{ secrets.SITE_GCP_REGION }}
+          image: ${{ secrets.SITE_GCP_DOCKER_IMAGE_URL }}/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:latest
+
+  release:
+    name: Release
+    needs: [build, test, publish-github-packages, deploy-gcp-cloud-run]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Generate release details
+        id: release
+        run: |
+          DATE_RELEASE=$(TZ='Australia/Sydney' date +%Y%m%d.%H%M)
+          echo "name=$DATE_RELEASE" >> $GITHUB_OUTPUT
+          echo "tag=release-$DATE_RELEASE" >> $GITHUB_OUTPUT
+      - name: Create release tag
+        run: |
+          git config user.name "bot-release"
+          git config user.email "brendan+bot-release@murty.au"
+          git tag ${{ steps.release.outputs.tag }}
+          git push --tags --quiet
+      - name: Generate release notes
+        working-directory: ${{ github.workspace }}
+        run: |
+          chmod +x ${{ github.workspace }}/bin/release-notes.sh
+          bash ${{ github.workspace }}/bin/release-notes.sh ${{ github.workspace }}/release-notes.log
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          name: ${{ steps.release.outputs.name }}
+          tag: ${{ steps.release.outputs.tag }}
+          bodyFile: ${{ github.workspace }}/release-notes.log
+          makeLatest: true

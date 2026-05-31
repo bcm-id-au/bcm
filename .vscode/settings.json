@@ -1,0 +1,48 @@
+{
+  "git.addAICoAuthor": "off",
+  "deno.enable": true,
+  "deno.lint": true,
+  "deno.config": "./src/site/deno.json",
+  "deno.importMap": "./src/site/deno.json",
+  "editor.defaultFormatter": "denoland.vscode-deno",
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "deno.json",
+        "deno.jsonc"
+      ],
+      "url": "https://raw.githubusercontent.com/denoland/deno/refs/heads/main/cli/schemas/config-file.v1.json",
+    },
+    {
+      "fileMatch": [
+        "package.json"
+      ],
+      "url": "https://www.schemastore.org/package"
+    }
+  ],
+  "yaml.schemas": {
+    "https://www.schemastore.org/github-workflow": [
+      ".github/*.yml",
+      ".github/**/*.yml",
+    ],
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+  },
+  "[markdown]": {
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false,
+  },
+  "[shellscript]": {
+    "files.trimTrailingWhitespace": false,
+  },
+  "files.exclude": {
+    "**/.zed/**": true
+  },
+  "files.watcherExclude": {
+    "**/.zed/**": true
+  }
+}

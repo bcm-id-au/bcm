@@ -1,0 +1,76 @@
+#
+#
+# GitHub Actions Workflow: Links Deploy
+#   - This workflow includes the publish, deploy, and release processes for Links
+#   - Initial setup is required, refer to: src/links/README.md > Infrastructure
+#
+#
+
+name: Links Deploy
+run-name: Links Deploy by ${{ github.actor }} on ${{ github.ref_name }}
+
+on:
+  # Allow manual triggers via GitHub Repo > Actions
+  workflow_dispatch:
+    inputs:
+      continue_deployment:
+        description: 'Confirm production deployment for Links'
+        type: boolean
+        required: true
+        default: false
+
+defaults:
+  run:
+    working-directory: src/links
+    shell: bash
+
+permissions:
+  contents: read
+
+jobs:
+
+  deploy-gcp-cloud-run:
+    name: Deploy to GCP Cloud Run
+    runs-on: ubuntu-latest
+    environment:
+      name: gcp-cloud-run
+      deployment: false
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Google Cloud login
+        id: auth
+        uses: google-github-actions/auth@v3
+        with:
+          project_id: ${{ secrets.LINKS_GCP_PROJECT_ID }}
+          credentials_json: ${{ secrets.LINKS_GCP_SERVICE_ACCOUNT_JSON }}
+
+      - name: Google Cloud setup
+        uses: google-github-actions/setup-gcloud@v3
+
+      - name: Cloud Run deploy
+        run: |
+          export PROJECT_ID="${{ secrets.LINKS_GCP_PROJECT_ID }}"
+          export REGION="${{ secrets.LINKS_GCP_REGION }}"
+          export SERVICE="${{ secrets.LINKS_GCP_CLOUD_RUN_SERVICE_NAME }}"
+
+          export OPENAI_API_KEY="${{ secrets.LINKS_OPENAI_API_KEY }}"
+          export INFERENCE_TEXT_MODEL="${{ secrets.LINKS_INFERENCE_TEXT_MODEL }}"
+          export INFERENCE_IMAGE_MODEL="${{ secrets.LINKS_INFERENCE_IMAGE_MODEL }}"
+
+          export NEXTAUTH_URL="${{ secrets.LINKS_NEXTAUTH_URL }}"
+          export NEXTAUTH_SECRET="${{ secrets.LINKS_NEXTAUTH_SECRET }}"
+          export MEILI_MASTER_KEY="${{ secrets.LINKS_MEILI_MASTER_KEY }}"
+
+          export DISABLE_SIGNUPS="${{ secrets.LINKS_DISABLE_SIGNUPS }}"
+
+          gcloud run compose up docker-compose.prod.yml \
+            --project "${PROJECT_ID}" \
+            --region "${REGION}" \
+            --container_name "${SERVICE}" \
+            --build \
+            --quiet

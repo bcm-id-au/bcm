@@ -1,0 +1,10 @@
+---
+title: Technical Lead at FOBOH
+date: 2025-11-26
+url: /posts/20251126_tech-lead-at-foboh/
+tags:
+  - Post
+  - Career
+---
+
+As the Technical Lead at [FOBOH](https://www.foboh.com.au/), I worked directly with the CEO and CPO to ship new features, lead and mentor engineers, and build a high-performing engineering culture.

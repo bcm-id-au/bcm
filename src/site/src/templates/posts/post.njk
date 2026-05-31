@@ -1,0 +1,27 @@
+---
+title: Posts
+layout: layouts/page.layout.njk
+body_class: page-post
+---
+
+<h2>
+  <a class="breadcrumb-previous" href="/posts/">Posts</a>
+  <span class="icon icon-breadcrumb fa-fw fa-solid fa-caret-right" aria-hidden="true"></span>
+  <span class="breadcrumb-current">{{ title }}</span>
+</h2>
+
+<p class="post-date">
+  <span class="icon-post icon fa-fw fa-solid fa-calendar-days"></span>{{ date | date('d LLL yyyy') }}
+</p>
+
+<ul class="tag-list">
+  {% for tag in tags|sort %}
+    <li>
+      <a href="/tags/{{ tag }}/" title="View posts tagged with {{ tag }}">
+        <span class="icon icon-tag fa-fw fa-solid fa-tag"></span>{{ tag }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+
+{{ content | safe }}

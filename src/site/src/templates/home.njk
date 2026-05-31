@@ -1,0 +1,70 @@
+---
+layout: layouts/page.layout.njk
+body_class: page-home
+---
+
+<p class="about-me">
+  I specialise in building and actively leading efficient software teams to architect scalable, well-defined technical
+  solutions for organisations.
+</p>
+
+<ul class="listing full connect">
+  <li>
+    <a href="mailto:brendan@murty.au" title="Send me an email at brendan@murty.au">
+      <span class="icon fa-fw fa-solid fa-envelope"></span>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  <li>
+    <a href="/posts" title="View my posts">
+      <span class="icon fa-fw fa-solid fa-file-lines"></span>
+      <span class="label">Posts</span>
+    </a>
+  </li>
+  <li>
+    <a href="/tags" title="View my post tags">
+      <span class="icon fa-fw fa-solid fa-tags"></span>
+      <span class="label">Tags</span>
+    </a>
+  </li>
+  <li>
+    <a href="https://github.com/brendanmurty" title="View my code repositories on GitHub">
+      <span class="icon fa-fw fa-brands fa-github"></span>
+      <span class="label">GitHub</span>
+    </a>
+  </li>
+  <li>
+    <a href="https://www.linkedin.com/in/brendanmurty" title="View my LinkedIn profile">
+      <span class="icon fa-fw fa-brands fa-linkedin"></span>
+      <span class="label">LinkedIn</span>
+    </a>
+  </li>
+  <li>
+    <a href="https://letterboxd.com/brendanmurty" title="Review my favourite movies">
+      <span class="icon fa-fw fa-solid fa-film"></span>
+      <span class="label">Letterboxd</span>
+    </a>
+  </li>
+  <li>
+    <a href="https://steamcommunity.com/id/brendanmurty" title="Join me in a game on Steam">
+      <span class="icon fa-fw fa-brands fa-steam"></span>
+      <span class="label">Steam</span>
+    </a>
+  </li>
+  <li>
+    <a href="https://discordapp.com/users/362579289700302858" title="View my Discord profile">
+      <span class="icon fa-fw fa-brands fa-discord"></span>
+      <span class="label">Discord</span>
+    </a>
+  </li>
+  <li>
+    <a href="https://schnitmydadsays.com/" title="Check out some schnitzel reviews">
+      <span class="icon fa-fw fa-solid fa-utensils"></span>
+      <span class="label">SchnitMyDadSays</span>
+    </a>
+  </li>
+</ul>
+
+<ul class="listing full posts">
+  {% include "posts/post-list.njk" %}
+</ul>

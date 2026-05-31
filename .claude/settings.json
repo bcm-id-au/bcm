@@ -1,0 +1,28 @@
+{
+  "theme": "auto",
+  "feedbackSurveyRate": "0",
+  "outputStyle": "Proactive",
+  "respectGitignore": "true",
+  "spinnerTipsEnabled": "false",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "defaultMode": "plan",
+    "disableBypassPermissionsMode": "false",
+    "allow": [
+      "Bash(cat*)",
+      "Bash(grep*)",
+      "Bash(ls*)",
+      "Bash(git status*)",
+      "Bash(git log*)"
+    ],
+    "deny": [
+      "Read(src/links/.links.env)",
+      "Read(src/site/.site.env)",
+      "Bash(git commit*)",
+      "Bash(git push*)"
+    ]
+  }
+}
