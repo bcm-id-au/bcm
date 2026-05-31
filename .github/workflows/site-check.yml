@@ -95,7 +95,7 @@ jobs:
       - name: Download build files
         uses: actions/download-artifact@v8
         with:
-          name: ${{ needs.build.outputs.artifact_name }}
+          name: ${{ needs.deno-build.outputs.artifact_name }}
           path: ${{ github.workspace }}/src/site
       - name: Deno setup
         uses: denoland/setup-deno@v2
