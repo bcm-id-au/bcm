@@ -139,8 +139,8 @@ jobs:
             SITE_URL=${{ secrets.SITE_URL }}
           tags: |
             ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:latest
-            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:${{ github.ref_name }}
-            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:${{ needs.build.outputs.COMMIT }}
+            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:branch-${{ github.ref_name }}
+            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:commit-${{ needs.build.outputs.COMMIT }}
             ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:release-${{ needs.build.outputs.TIMESTAMP }}
 
   deploy-gcp-cloud-run:
