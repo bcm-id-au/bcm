@@ -13,9 +13,11 @@ cd "$SITE_DIR"
 
 just site-docker-stop
 
+echo "Starting 'bcm-site-local' container"
+
 docker run \
   -d \
-  --name "bcm-site" \
+  --name "bcm-site-local" \
   --publish "${SITE_PORT:-8000}:8000" \
   --env-file "${SITE_ENV:-./.site.env}" \
-  "bcm-site:latest"
+  "bcm-site-local:latest"

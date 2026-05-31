@@ -15,11 +15,11 @@ if [ -f "$SITE_DIR/.site.env" ]; then
   source "$SITE_DIR/.site.env"
 fi
 
-echo 'Building Docker image using environment vars from the Terminal session.'
+echo "Building 'bcm-site-local' Docker Image"
 
 docker build \
-  --tag "bcm-site:local-latest" \
-  --tag "bcm-site:local-commit-$(git rev-parse --short HEAD)" \
+  --tag "bcm-site-local:latest" \
+  --tag "bcm-site-local:commit-$(git rev-parse --short HEAD)" \
   --progress=plain \
   --build-arg SITE_FEED_TITLE="$SITE_FEED_TITLE" \
   --build-arg SITE_FEED_DESC="$SITE_FEED_DESC" \

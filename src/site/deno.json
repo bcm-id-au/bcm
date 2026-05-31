@@ -80,7 +80,7 @@
       "command": "deno run --allow-net --allow-read jsr:@std/http/file-server ./public --port 8000"
     },
     "setup": {
-      "description": "Initial setup, used for local environments and in CI.",
+      "description": "Initial setup.",
       "command": "deno task deps-install"
     },
     "test": {
@@ -88,15 +88,15 @@
       "command": "deno test --quiet --allow-run=deno --allow-env --allow-read --allow-net src"
     },
     "docker-build": {
-      "description": "Run the Docker image build process.",
+      "description": "Run the Docker Image build process.",
       "command": "bash ./bin/site-docker-build.sh"
     },
     "docker-start": {
-      "description": "Start the Docker container.",
+      "description": "Start the Docker Container.",
       "command": "bash ./bin/site-docker-start.sh"
     },
     "docker-stop": {
-      "description": "Stop the Docker container.",
+      "description": "Stop the Docker Container.",
       "command": "bash ./bin/site-docker-stop.sh"
     }
   },
