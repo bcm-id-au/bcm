@@ -1,6 +1,6 @@
 # bcm
 
-This repository contains a set of self-hosted systems.
+This repository contains a set of self-hosted systems and websites.
 
 ## Structure
 
