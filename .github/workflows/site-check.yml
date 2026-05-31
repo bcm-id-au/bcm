@@ -9,7 +9,7 @@ name: Site Check
 run-name: Site Check by ${{ github.actor }} on ${{ github.ref_name }}
 
 on:
-  # Allow manual triggers via GitHub Repo > Actions
+  # GitHub Repo > Actions > Site Check > Run workflow
   workflow_dispatch:
   # Automatically run on pushes to 'main'
   push:
@@ -55,13 +55,19 @@ jobs:
       deployment: false
     env: ${{ secrets }}
     outputs:
-      artifact_name: ${{ steps.artifact.outputs.artifact_name }}
+      BUILD_NAME: ${{ steps.vars.outputs.BUILD_NAME }}
+      COMMIT_SHORT: ${{ steps.vars.outputs.COMMIT_SHORT }}
+      RELEASE_DATE: ${{ steps.vars.outputs.RELEASE_DATE }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Set build artifact name
-        id: artifact
-        run: echo "artifact_name=build-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
+      - name: Set workflow variables
+        id: vars
+        run: |
+          TIMESTAMP=$(TZ='Australia/Sydney' date +%Y%m%d.%H%M)
+          echo "RELEASE_DATE=$TIMESTAMP" >> $GITHUB_OUTPUT
+          echo "COMMIT_SHORT=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
+          echo "BUILD_NAME=build-$TIMESTAMP" >> $GITHUB_OUTPUT
       - name: Deno setup
         uses: denoland/setup-deno@v2
         with:
@@ -73,7 +79,7 @@ jobs:
       - name: Upload build files
         uses: actions/upload-artifact@v7
         with:
-          name: ${{ steps.artifact.outputs.artifact_name }}
+          name: ${{ steps.vars.outputs.BUILD_NAME }}
           overwrite: true
           include-hidden-files: true
           retention-days: 1
@@ -95,7 +101,7 @@ jobs:
       - name: Download build files
         uses: actions/download-artifact@v8
         with:
-          name: ${{ needs.deno-build.outputs.artifact_name }}
+          name: ${{ needs.deno-build.outputs.BUILD_NAME }}
           path: ${{ github.workspace }}/src/site
       - name: Deno setup
         uses: denoland/setup-deno@v2
