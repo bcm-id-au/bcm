@@ -55,8 +55,8 @@ jobs:
       deployment: false
     env: ${{ secrets }}
     outputs:
-      BUILD_NAME: ${{ steps.vars.outputs.BUILD_NAME }}
-      COMMIT_SHORT: ${{ steps.vars.outputs.COMMIT_SHORT }}
+      TIMESTAMP: ${{ steps.vars.outputs.TIMESTAMP }}
+      COMMIT: ${{ steps.vars.outputs.COMMIT }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -67,8 +67,8 @@ jobs:
       - name: Set workflow variables
         id: vars
         run: |
-          echo "COMMIT_SHORT=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
-          echo "BUILD_NAME=build-$COMMIT_SHORT" >> $GITHUB_OUTPUT
+          echo "TIMESTAMP=$(TZ='Australia/Sydney' date +%Y%m%d.%H%M)" >> $GITHUB_OUTPUT
+          echo "COMMIT=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
       - name: Deno setup
         uses: denoland/setup-deno@v2
         with:
@@ -80,7 +80,7 @@ jobs:
       - name: Upload build files
         uses: actions/upload-artifact@v7
         with:
-          name: ${{ steps.vars.outputs.BUILD_NAME }}
+          name: build-${{ steps.vars.outputs.COMMIT }}
           overwrite: true
           include-hidden-files: true
           retention-days: 1
@@ -106,7 +106,7 @@ jobs:
       - name: Download build files
         uses: actions/download-artifact@v8
         with:
-          name: ${{ needs.deno-build.outputs.BUILD_NAME }}
+          name: build-${{ needs.deno-build.outputs.COMMIT }}
           path: ${{ github.workspace }}/src/site
       - name: Deno setup
         uses: denoland/setup-deno@v2

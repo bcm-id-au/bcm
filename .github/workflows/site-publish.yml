@@ -38,10 +38,8 @@ jobs:
       deployment: false
     env: ${{ secrets }}
     outputs:
-      BUILD_NAME: ${{ steps.vars.outputs.BUILD_NAME }}
-      COMMIT_SHORT: ${{ steps.vars.outputs.COMMIT_SHORT }}
-      RELEASE_DATE: ${{ steps.vars.outputs.RELEASE_DATE }}
-      RELEASE_TAG: ${{ steps.vars.outputs.RELEASE_TAG }}
+      TIMESTAMP: ${{ steps.vars.outputs.TIMESTAMP }}
+      COMMIT: ${{ steps.vars.outputs.COMMIT }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -52,10 +50,8 @@ jobs:
       - name: Set workflow variables
         id: vars
         run: |
-          echo "RELEASE_DATE=$(TZ='Australia/Sydney' date +%Y%m%d.%H%M)" >> $GITHUB_OUTPUT
-          echo "RELEASE_TAG=release-$RELEASE_DATE" >> $GITHUB_OUTPUT
-          echo "COMMIT_SHORT=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
-          echo "BUILD_NAME=build-$RELEASE_DATE" >> $GITHUB_OUTPUT
+          echo "TIMESTAMP=$(TZ='Australia/Sydney' date +%Y%m%d.%H%M)" >> $GITHUB_OUTPUT
+          echo "COMMIT=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
       - name: Deno setup
         uses: denoland/setup-deno@v2
         with:
@@ -67,7 +63,7 @@ jobs:
       - name: Upload build files
         uses: actions/upload-artifact@v7
         with:
-          name: ${{ steps.vars.outputs.BUILD_NAME }}
+          name: build-${{ steps.vars.outputs.COMMIT }}
           overwrite: true
           include-hidden-files: true
           retention-days: 1
@@ -93,7 +89,7 @@ jobs:
       - name: Download build files
         uses: actions/download-artifact@v8
         with:
-          name: ${{ needs.build.outputs.BUILD_NAME }}
+          name: build-${{ needs.build.outputs.COMMIT }}
           path: ${{ github.workspace }}/src/site
       - name: Deno setup
         uses: denoland/setup-deno@v2
@@ -144,8 +140,8 @@ jobs:
           tags: |
             ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:latest
             ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:${{ github.ref_name }}
-            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:${{ needs.build.outputs.COMMIT_SHORT }}
-            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:${{ needs.build.outputs.RELEASE_TAG }}
+            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:${{ needs.build.outputs.COMMIT }}
+            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:release-${{ needs.build.outputs.TIMESTAMP }}
 
   deploy-gcp-cloud-run:
     name: Deploy to GCP Cloud Run
@@ -175,7 +171,7 @@ jobs:
         with:
           service: ${{ secrets.SITE_GCP_CLOUD_RUN_SERVICE_NAME }}
           region: ${{ secrets.SITE_GCP_REGION }}
-          image: ${{ secrets.SITE_GCP_DOCKER_IMAGE_URL }}/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:${{ needs.build.outputs.RELEASE_TAG }}
+          image: ${{ secrets.SITE_GCP_DOCKER_IMAGE_URL }}/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:release-${{ needs.build.outputs.TIMESTAMP }}
 
   release:
     name: Release
@@ -194,7 +190,7 @@ jobs:
         run: |
           git config user.name "bot-release"
           git config user.email "brendan+bot-release@murty.au"
-          git tag ${{ needs.build.outputs.RELEASE_TAG }}
+          git tag release-${{ needs.build.outputs.TIMESTAMP }}
           git push --tags --quiet
       - name: Generate release notes
         working-directory: ${{ github.workspace }}
@@ -204,7 +200,7 @@ jobs:
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          name: ${{ needs.build.outputs.RELEASE_DATE }}
-          tag: ${{ needs.build.outputs.RELEASE_TAG }}
+          name: ${{ needs.build.outputs.TIMESTAMP }}
+          tag: release-${{ needs.build.outputs.TIMESTAMP }}
           bodyFile: ${{ github.workspace }}/release-notes.log
           makeLatest: true
