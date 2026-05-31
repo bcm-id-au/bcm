@@ -85,7 +85,7 @@
     },
     "test": {
       "description": "Run all Deno Test scripts in the 'src' directory.",
-      "command": "deno test --allow-run=deno --allow-env --allow-read --allow-net src"
+      "command": "deno test --quiet --allow-run=deno --allow-env --allow-read --allow-net src"
     },
     "docker-build": {
       "description": "Run the Docker image build process.",
