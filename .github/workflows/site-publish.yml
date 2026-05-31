@@ -108,9 +108,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Get commit details
-        id: commit
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - name: Build and push Docker Image
         id: push
         uses: docker/build-push-action@v7
@@ -128,7 +125,7 @@ jobs:
           tags: |
             ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:latest
             ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:${{ github.ref_name }}
-            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:${{ steps.commit.outputs.sha_short }}
+            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:${{ github.sha }}
 
   deploy-gcp-cloud-run:
     name: Deploy to GCP Cloud Run
@@ -154,7 +151,7 @@ jobs:
         with:
           service: ${{ secrets.SITE_GCP_CLOUD_RUN_SERVICE_NAME }}
           region: ${{ secrets.SITE_GCP_REGION }}
-          image: ${{ secrets.SITE_GCP_DOCKER_IMAGE_URL }}/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:latest
+          image: ${{ secrets.SITE_GCP_DOCKER_IMAGE_URL }}/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:${{ github.sha }}
 
   release:
     name: Release
