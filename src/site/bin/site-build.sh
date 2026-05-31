@@ -37,7 +37,7 @@ PROD_LINK_REGEX=${PROD_LINK//\//\\/}
 
 echo -e "${YELLOW}Running Deno Lint and Deno Format${NC}"
 
-deno task lint
+deno task lint >/dev/null 2>&1
 
 # Start the build process
 
@@ -71,7 +71,7 @@ cp -r content/* "$SITE_BUILD_DIR"
 
 echo -e "${YELLOW}Building the front-end using Lume and '_config.ts'${NC}"
 
-deno task lume
+deno task lume >/dev/null 2>&1
 
 echo -e "${YELLOW}Updating '$SITE_PUBLIC_DIR/sitemap.xml' to use the production URL${NC}"
 

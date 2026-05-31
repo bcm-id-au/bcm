@@ -65,7 +65,7 @@
     },
     "lume": {
       "description": "Run Lume command",
-      "command": "deno run -P=lume lume/cli.ts"
+      "command": "deno run --quiet -P=lume lume/cli.ts"
     },
     "new-post": {
       "description": "Generate a Markdown file for a new post item.",
@@ -132,6 +132,7 @@
   ],
   "allowScripts": {
     "deny": [
+      "npm:fs-ext",
       "npm:sharp",
       "npm:@parcel/watcher"
     ]
