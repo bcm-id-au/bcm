@@ -30,4 +30,4 @@ The Add to Home Screen page has also been simplified following updates to the Wi
 
 #### View the code!
 
-Just in case you missed it, [UpcomingTasks is now open source](https://github.com/brendanmurty/upcomingtasks)! While no user data will ever be shared, everyone can now peek under the hood and see how the whole system works.
+Just in case you missed it, [UpcomingTasks is now open source](https://github.com/bcm-id-au/upcomingtasks)! While no user data will ever be shared, everyone can now peek under the hood and see how the whole system works.

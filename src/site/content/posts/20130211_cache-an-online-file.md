@@ -11,4 +11,4 @@ tags:
 
 When connecting to a third-party web service, it's a good idea to keep a cached version of the required files in case the third-party service is having issues. This way your website will at least show old data instead of no data at all.
 
-<script src="https://gist.github.com/brendanmurty/c499c46ce1ea076e8ee6b345f85d3ffb.js"></script>
+<script src="https://gist.github.com/bcm-id-au/c499c46ce1ea076e8ee6b345f85d3ffb.js"></script>

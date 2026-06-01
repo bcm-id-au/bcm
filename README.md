@@ -11,9 +11,9 @@ This repository contains a set of self-hosted systems and websites.
 - [docs](docs/) - Documentation and contextual information.
 - [design](design/) - Page layout and icon design files.
 - [src/links](src/links/) - A self-hosted version of the [Karakeep](https://karakeep.app/) bookmarking service.
-- [src/schnitmydadsays](https://github.com/brendanmurty/schnitmydadsays) - Schnitzel review website.
+- [src/schnitmydadsays](https://github.com/bcm-id-au/schnitmydadsays) - Schnitzel review website.
 - [src/site](src/site/) - My main public website at [murty.au](https://murty.au).
-- [src/upcomingtasks](https://github.com/brendanmurty/upcomingtasks) - A web-based Basecamp 2 client.
+- [src/upcomingtasks](https://github.com/bcm-id-au/upcomingtasks) - A web-based Basecamp 2 client.
 - [storage](storage/) - Used for persistent storage by local Docker containers.
 - [.editorconfig](.editorconfig) - Sets basic code style rules via [EditorConfig](https://editorconfig.org)
 - [justfile](justfile) - Project specific commands for [Just](https://github.com/casey/just)
@@ -29,7 +29,7 @@ The systems in this repository assume that your local machine:
 - Has an up-to-date version of [Homebrew](https://brew.sh/) installed and ready
 - Has an up-to-date version of [GitHub CLI](https://cli.github.com/) installed and ready
 
-Note that my [dotfiles repository](https://github.com/brendanmurty/dotfiles) contains install scripts for most of the above items.
+Note that my [dotfiles repository](https://github.com/bcm-id-au/dotfiles) contains install scripts for most of the above items.
 
 ## Local Tools
 
