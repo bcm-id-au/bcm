@@ -289,62 +289,24 @@ li {
   margin: 0 0 6px;
 }
 
-pre,
 blockquote {
   font-family: var(--font-family-quote);
-  border: 1px solid var(--secondary-colour);
+  border: 0 none;
   color: var(--secondary-colour);
-  padding: 20px;
-  margin: 20px 0;
+  padding: 20px 0;
+  margin: 10px 0;
   overflow-x: auto;
-}
-
-code,
-.gist .blob-code-inner,
-.gist .blob-num {
-  font-family: var(--font-family-code) !important;
-  font-size: var(--font-size-body) !important;
-  line-height: var(--line-height-body) !important;
-}
-
-.gist .highlight {
-  background-color: var(--code-background-colour) !important;
-}
-
-.gist .blob-code-inner {
-  color: var(--code-string-colour) !important;
-}
-
-.gist .pl-s,
-.gist .pl-pds,
-.gist .pl-s .pl-pse .pl-s1,
-.gist .pl-sr,
-.gist .pl-sr .pl-cce,
-.gist .pl-sr .pl-sre,
-.gist .pl-sr .pl-sra {
-  color: var(--code-string-colour) !important;
-}
-
-.gist .pl-ent,
-.gist .pl-e,
-.gist .pl-en,
-.gist .pl-k,
-.gist .pl-s1,
-.gist .pl-c1 {
-  color: var(--code-function-colour) !important;
-}
-
-.gist .blob-num,
-.gist .pl-c {
-  color: var(--code-other-colour) !important;
-}
-
-.gist-meta {
-  display: none !important;
 }
 
 blockquote p:last-child {
   margin-bottom: 0;
+}
+
+code {
+  font-family: var(--font-family-code) !important;
+  font-size: var(--font-size-body) !important;
+  line-height: var(--line-height-body) !important;
+  padding: 20px 0 !important;
 }
 
 .about-me {

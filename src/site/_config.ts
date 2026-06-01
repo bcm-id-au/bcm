@@ -1,6 +1,7 @@
 // Lume Configuration - https://lume.land/docs/configuration/config-file/
 
 import { load } from "@std/dotenv";
+
 import lume from "lume/mod.ts";
 import date from "lume/plugins/date.ts";
 import nunjucks from "lume/plugins/nunjucks.ts";
@@ -8,6 +9,12 @@ import robots from "lume/plugins/robots.ts";
 import redirects from "lume/plugins/redirects.ts";
 import sitemap from "lume/plugins/sitemap.ts";
 import feed from "lume/plugins/feed.ts";
+
+import codeHighlight from "lume/plugins/code_highlight.ts";
+import langJavaScript from "highlight/lib/languages/javascript";
+import langBash from "highlight/lib/languages/bash";
+import langPhp from "highlight/lib/languages/php";
+import langTypeScript from "highlight/lib/languages/typescript";
 
 // Load variables from the ENV file
 
@@ -42,6 +49,21 @@ site.data("SITE_URL", Deno.env.get("SITE_URL"));
 site.use(nunjucks());
 site.use(date());
 site.use(redirects());
+
+site.use(
+  codeHighlight({
+    languages: {
+      javascript: langJavaScript,
+      bash: langBash,
+      php: langPhp,
+      typescript: langTypeScript,
+    },
+    theme: {
+      name: "tomorrow-night-bright",
+      cssFile: "/css/code-highlight.min.css",
+    },
+  }),
+);
 
 // Generate a JSON feed of recent posts
 
