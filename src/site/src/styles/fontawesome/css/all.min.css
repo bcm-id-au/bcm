@@ -110,7 +110,8 @@
 }
 .fa-border {
   border-radius: var(--fa-border-radius, 0.1em);
-  border: var(--fa-border-width, 0.0625em) var(--fa-border-style, solid) var(--fa-border-color, #eee);
+  border: var(--fa-border-width, 0.0625em) var(--fa-border-style, solid)
+    var(--fa-border-color, #eee);
   box-sizing: var(--fa-border-box-sizing, content-box);
   padding: var(--fa-border-padding, 0.1875em 0.25em);
 }
@@ -188,7 +189,15 @@
   animation-timing-function: var(--fa-animation-timing, steps(8));
 }
 @media (prefers-reduced-motion: reduce) {
-  .fa-beat, .fa-beat-fade, .fa-bounce, .fa-fade, .fa-flip, .fa-pulse, .fa-shake, .fa-spin, .fa-spin-pulse {
+  .fa-beat,
+  .fa-beat-fade,
+  .fa-bounce,
+  .fa-fade,
+  .fa-flip,
+  .fa-pulse,
+  .fa-shake,
+  .fa-spin,
+  .fa-spin-pulse {
     animation: none !important;
     transition: none !important;
   }
@@ -206,14 +215,16 @@
     transform: scale(1) translateY(0);
   }
   10% {
-    transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9)) translateY(0);
+    transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9))
+      translateY(0);
   }
   30% {
     transform: scale(var(--fa-bounce-jump-scale-x, 0.9), var(--fa-bounce-jump-scale-y, 1.1))
       translateY(var(--fa-bounce-height, -0.5em));
   }
   50% {
-    transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95)) translateY(0);
+    transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95))
+      translateY(0);
   }
   57% {
     transform: scale(1) translateY(var(--fa-bounce-rebound, -0.125em));
@@ -242,7 +253,12 @@
 }
 @keyframes fa-flip {
   50% {
-    transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));
+    transform: rotate3d(
+      var(--fa-flip-x, 0),
+      var(--fa-flip-y, 1),
+      var(--fa-flip-z, 0),
+      var(--fa-flip-angle, -180deg)
+    );
   }
 }
 @keyframes fa-shake {
@@ -2054,7 +2070,11 @@
 .fa-envelope {
   --fa: "\f0e0";
 }
-.fa-arrow-left-rotate, .fa-arrow-rotate-back, .fa-arrow-rotate-backward, .fa-arrow-rotate-left, .fa-undo {
+.fa-arrow-left-rotate,
+.fa-arrow-rotate-back,
+.fa-arrow-rotate-backward,
+.fa-arrow-rotate-left,
+.fa-undo {
   --fa: "\f0e2";
 }
 .fa-gavel, .fa-legal {
@@ -2822,7 +2842,10 @@
 .fa-temperature-4, .fa-temperature-full, .fa-thermometer-4, .fa-thermometer-full {
   --fa: "\f2c7";
 }
-.fa-temperature-3, .fa-temperature-three-quarters, .fa-thermometer-3, .fa-thermometer-three-quarters {
+.fa-temperature-3,
+.fa-temperature-three-quarters,
+.fa-thermometer-3,
+.fa-thermometer-three-quarters {
   --fa: "\f2c8";
 }
 .fa-temperature-2, .fa-temperature-half, .fa-thermometer-2, .fa-thermometer-half {

@@ -18,9 +18,10 @@ fi
 echo "Building 'bcm-site-local' Docker Image"
 
 docker build \
+  --no-cache \
+  --progress=plain \
   --tag "bcm-site-local:latest" \
   --tag "bcm-site-local:commit-$(git rev-parse --short HEAD)" \
-  --progress=plain \
   --build-arg SITE_FEED_TITLE="$SITE_FEED_TITLE" \
   --build-arg SITE_FEED_DESC="$SITE_FEED_DESC" \
   --build-arg SITE_FEED_DEFAULT_TITLE="$SITE_FEED_DEFAULT_TITLE" \

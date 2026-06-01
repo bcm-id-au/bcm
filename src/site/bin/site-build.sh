@@ -9,10 +9,14 @@
 SITE_DIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
 cd "$SITE_DIR"
 
-# Load the ENV file if it exists
+# Load '.site.env' if it exists
 
 if [ -f "$SITE_DIR/.site.env" ]; then
+  echo "Loading variables from '.site.env'"
+
   source "$SITE_DIR/.site.env"
+else
+  echo "File not found at '.site.env'"
 fi
 
 # Setup the message colour characters

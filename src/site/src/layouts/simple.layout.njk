@@ -4,7 +4,10 @@
     <meta charSet="utf-8" />
     <title>{% if title %}{{ title }}{% else %}Murty{% endif %}</title>
     <meta property="og:title" content="{% if title %}{{ title }}{% else %}Murty{% endif %}">
-    <meta name="description" content="{% if description %}{{ description }}{% else %}{{ SITE_FEED_DESC }}{% endif %}">
+    <meta
+      name="description"
+      content="{% if description %}{{ description }}{% else %}{{ SITE_FEED_DESC }}{% endif %}"
+    >
     <meta name="theme-color" content="{{ theme }}">
     <meta name="author" content="{{ SITE_AUTHOR }}">
     <meta name="handheldfriendly" content="true">
@@ -18,7 +21,12 @@
       content="{% if description %}{{ description }}{% else %}{{ SITE_FEED_DESC }}{% endif %}"
     >
     <link rel="canonical" href="{{ SITE_URL }}{{ url }}">
-    <link rel="alternate" title="{{ SITE_FEED_TITLE }}" type="application/json" href="{{ SITE_URL }}/posts.json">
+    <link
+      rel="alternate"
+      title="{{ SITE_FEED_TITLE }}"
+      type="application/json"
+      href="{{ SITE_URL }}/posts.json"
+    >
     <link rel="apple-touch-icon" sizes="180x180" href="/images/logos/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/logos/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/logos/favicon-16x16.png">

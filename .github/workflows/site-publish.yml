@@ -57,7 +57,7 @@ jobs:
         with:
           deno-version: latest
       - name: Site setup
-        run: deno task setup
+        run: deno task --quiet setup
       - name: Build site
         run: deno task build
       - name: Upload build files

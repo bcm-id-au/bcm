@@ -12,8 +12,8 @@
       "_config.ts",
       "deno.json"
     ],
+    "lineWidth": 100,
     "useTabs": false,
-    "lineWidth": 120,
     "indentWidth": 2,
     "semiColons": true
   },
@@ -80,8 +80,8 @@
       "command": "deno run --allow-net --allow-read jsr:@std/http/file-server ./public --port 8000"
     },
     "setup": {
-      "description": "Initial setup.",
-      "command": "deno task deps-install"
+      "description": "Local environment setup.",
+      "command": "bash ./bin/site-setup.sh"
     },
     "test": {
       "description": "Run all Deno Test scripts in the 'src' directory.",

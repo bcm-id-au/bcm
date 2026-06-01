@@ -133,7 +133,7 @@ site-new-post:
 # Site - Run the setup process
 [group('site')]
 site-setup:
-  cd ./src/site && deno task setup
+  cd ./src/site && deno task --quiet setup
 
 # Site - Run the local web server
 [group('site')]

@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en-AU">
   <head>
-    <title>{% if title %}{{ SITE_AUTHOR }} - {{ title }}{% else %}{{ SITE_AUTHOR }}{% endif %}</title>
+    <title>
+      {% if title %}{{ SITE_AUTHOR }} - {{ title }}{% else %}{{ SITE_AUTHOR }}{% endif %}
+    </title>
     <meta charset="utf-8">
     <meta name="handheldfriendly" content="true">
     <meta name="mobileoptimized" content="480">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="{% if theme %}{{ theme }}{% else %}#23c5b0{% endif %}">
     <meta name="author" content="{{ SITE_AUTHOR }}" />
-    <meta name="description" content="{% if description %}{{ description }}{% else %}{{ SITE_FEED_DESC }}{% endif %}">
-    {% if date %}<meta property="article:published_time" content="{{ date | date('yyyy-MM-dd') }}">{% endif %}
+    <meta
+      name="description"
+      content="{% if description %}{{ description }}{% else %}{{ SITE_FEED_DESC }}{% endif %}"
+    >
+    {% if date %}<meta
+        property="article:published_time"
+        content="{{ date | date('yyyy-MM-dd') }}"
+      >{% endif %}
     <meta property="og:type" content="website">
     <meta property="og:locale" content="{{ SITE_LANG }}">
     <meta
@@ -29,7 +37,12 @@
       <meta property="og:image" content="{{ SITE_URL }}/images/brendan/profile/brendan_750.png">
     {% endif %}
     <link rel="canonical" href="{{ SITE_URL }}{{ url }}">
-    <link rel="alternate" title="{{ SITE_FEED_TITLE }}" type="application/json" href="{{ SITE_URL }}/posts.json">
+    <link
+      rel="alternate"
+      title="{{ SITE_FEED_TITLE }}"
+      type="application/json"
+      href="{{ SITE_URL }}/posts.json"
+    >
     <link rel="icon" sizes="192x192" href="/images/logos/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/logos/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/logos/favicon-16x16.png">
