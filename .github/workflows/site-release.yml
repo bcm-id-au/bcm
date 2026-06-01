@@ -1,20 +1,20 @@
 #
 #
-# GitHub Actions Workflow: Site Publish
+# GitHub Actions Workflow: Site Release
 #   - This workflow includes the build, test, deploy, and release processes
 #   - Initial setup is required, refer to: src/site/README.md > Infrastructure
 #
 #
 
-name: Site Publish
-run-name: Site Publish by ${{ github.actor }} on ${{ github.ref_name }}
+name: Site Release
+run-name: Site Release by ${{ github.actor }} on ${{ github.ref_name }}
 
 on:
-  # Manual trigger via GitHub Repo > Actions > Site Publish > Run workflow
+  # Manual trigger via GitHub Repo > Actions > Site Release > Run workflow
   workflow_dispatch:
     inputs:
       continue_deployment:
-        description: 'Confirm production deployment for Public Website'
+        description: 'Confirm production deployment and release for Public Website'
         type: boolean
         required: true
         default: false
