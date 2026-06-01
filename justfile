@@ -24,8 +24,10 @@ alias setup := setup-local
 alias ai := ai-install
 alias br := git-branch
 alias pr := gh-pr
-alias actions := gh-actions-lint
-alias gh-actions-check := gh-actions-lint
+alias actions := markdown-lint
+alias md := markdown-lint
+alias lint-actions := gh-actions-lint
+alias lint-markdown := gh-actions-lint
 
 # Default to the 'list' command, when 'just' is run without any parameters
 default: list
@@ -90,10 +92,15 @@ gh-pr:
     --draft
 
 # Lint GitHub Actions Workflows
-[group('git')]
+[group('tools')]
 gh-actions-lint:
   gh extension install cschleiden/gh-actionlint > /dev/null 2>&1
   gh actionlint
+
+# Lint Markdown files
+[group('tools')]
+markdown-lint:
+  markdownlint --config ".markdownlint.yml" "*.md" "docs/" "**/*.md"
 
 # Links - Start the local Docker containers
 [group('links')]

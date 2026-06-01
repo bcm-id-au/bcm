@@ -12,17 +12,10 @@ cd "$REPO_DIR"
 
 STOP_SETUP=false
 
-if command -v just > /dev/null 2>&1; then
-  echo '✅ Just is installed.'
+if command -v brew > /dev/null 2>&1; then
+  echo '✅ Homebrew is installed.'
 else
-  echo '❌ Just is not installed.'
-  STOP_SETUP=true
-fi
-
-if command -v docker > /dev/null 2>&1; then
-  echo '✅ Docker is installed.'
-else
-  echo '❌ Docker is not installed.'
+  echo '❌ Homebrew is not installed.'
   STOP_SETUP=true
 fi
 
@@ -33,17 +26,10 @@ else
   STOP_SETUP=true
 fi
 
-if command -v brew > /dev/null 2>&1; then
-  echo '✅ Homebrew is installed.'
+if command -v docker > /dev/null 2>&1; then
+  echo '✅ Docker is installed.'
 else
-  echo '❌ Homebrew is not installed.'
-  STOP_SETUP=true
-fi
-
-if command -v gh > /dev/null 2>&1; then
-  echo '✅ GitHub CLI is installed.'
-else
-  echo '❌ GitHub CLI is not installed.'
+  echo '❌ Docker is not installed.'
   STOP_SETUP=true
 fi
 
@@ -51,6 +37,25 @@ if [ "$STOP_SETUP" = true ]; then
   echo '⚠️ Cancelling setup, some required tools need to be installed manually.'
   exit 1
 fi
+
+if command -v just > /dev/null 2>&1; then
+  echo '✅ Just is installed.'
+else
+  echo '⚠️ Just is not installed.'
+  echo "⏳ Running 'brew install just'"
+  brew install just
+fi
+
+if command -v gh > /dev/null 2>&1; then
+  echo '✅ GitHub CLI is installed.'
+else
+  echo '⚠️ GitHub CLI is not installed.'
+  echo "⏳ Running 'brew install gh'"
+  brew install gh
+fi
+
+echo "⏳ Running 'brew install markdownlint-cli'"
+brew install markdownlint-cli
 
 echo "⏳ Running 'just git-update'"
 just git-update
