@@ -38,7 +38,7 @@ Install [Vim](http://vim.wikia.com/wiki/Vim_Tips_Wiki) so you can edit files and
 
 Commands to set basic Git settings and set Vim as the default Git editor:
 
-> git config --global user.email "your.email@sample.com"
+> git config --global user.email "<your.email@sample.com>"
 > git config --global user.name "Your Name"
 > git config --global core.editor "vim"
 
@@ -63,6 +63,6 @@ To avoid the annoying system beep on startup while in _Developer Mode_, just pre
 
 If you'd prefer a more modern text editor, you can install one from the Web Store, such as [Caret](https://chrome.google.com/webstore/detail/caret/fljalecfjciodhpcledpamjachpmelml).
 
-#### Ready to go!
+#### Ready to go
 
 You now have a cheap, portable device to develop your next web app on!

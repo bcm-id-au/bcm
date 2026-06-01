@@ -13,4 +13,3 @@ Along with some general bug fixes and performance improvements, I've also improv
 You'll now be able to change the location of the task and remove the due date.
 
 ![Task options](/images/brendan/interface-task-options.png)
-

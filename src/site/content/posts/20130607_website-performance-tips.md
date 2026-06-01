@@ -89,4 +89,3 @@ This will tell the browser to keep a cached version of image files for up to a y
   AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css application/x-javascript application/javascript
 </ifmodule>
 ```
-

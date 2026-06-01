@@ -17,7 +17,6 @@ However, I'm a big fan of customising a tool to meet my specific needs, so I tho
 - [Soda theme](https://github.com/buymeasoda/soda-theme/) - Improve the look of the interface, includes light and dark variations<li>[Droid Sans Mono](http://damieng.com/blog/2007/11/14/droid-sans-mono-great-coding-font) - Font suitable for programming
 - [RailsCasts colour scheme](http://railscasts.com/about) - Light on dark colour scheme
 - [Customised preferences](https://github.com/bcm-id-au/dotfiles/tree/main/sublime-text) - My customisations including disabling autocomplete and code folding
-</ul>
 
 ### Update (6 Feb 2013)
 

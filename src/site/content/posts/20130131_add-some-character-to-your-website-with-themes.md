@@ -20,13 +20,13 @@ There are a few requirements of a theming system:
 
 ### Setting up your CSS files
 
-This method is designed around the idea of placing common styles in a file named *common.css *and placing theme specific styling in other CSS files. The filename of these files will become the theme name, like so:
+This method is designed around the idea of placing common styles in a file named `common.css` and placing theme specific styling in other CSS files. The filename of these files will become the theme name, like so:
 
-- _red.css_ is displayed as _Red_
-- _dark-blue.css_ is displayed as _Dark Blue_
-- _salmon.css_ is displayed as _Salmon_
+- `red.css` is displayed as `Red`
+- `dark-blue.css` is displayed as `Dark Blue`
+- `salmon.css` is displayed as `Salmon`
 
-For this example, the CSS files are placed in a top level folder named _styles_. Feel free to update this by changing the value of the **$folder** variables in the PHP functions.
+For this example, the CSS files are placed in a top level folder named `styles`. Feel free to update this by changing the value of the `$folder` variables in the PHP functions.
 
 Note that themes aren't suitable for every website, so use them wisely to allow for customisations that suit your visitors' needs. Also, don't forget to ensure your default theme remains usable, including suitably sized text and clear link styling.
 

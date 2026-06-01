@@ -8,4 +8,3 @@ tags:
 ---
 
 At [Officeworks](https://www.officeworks.com.au/), I worked with the in-store team to assist customers to find what they needed, contributed to various stock management tasks, and improved pricing displays with the team at the Five Dock store.
-

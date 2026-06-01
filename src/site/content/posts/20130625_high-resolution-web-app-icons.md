@@ -91,9 +91,9 @@ I'd also recommend a guide to assist your users in adding the page to their home
 #### Notes
 
 - Images referenced in the sample code above should be square PNGs at 114px and 160px square respectively
-- The image used above named _logo-144-clear.png_ should be a 144px square transparent PNG
-- Replace *https://yourwebapp.com/webapphome.php* with the complete URL to your web app's home page
-- Replace _YourWebApp_ with the name of your web app
+- The image used above named `logo-144-clear.png` should be a 144px square transparent PNG
+- Replace `https://yourwebapp.com/webapphome.php` with the complete URL to your web app's home page
+- Replace `YourWebApp` with the name of your web app
 - You might need to customise the colours defined in the CSS to match your app's design
 - The JavaScript in the Windows Phone page is required so the browser knows to redirect to the app home page after the first view
 
