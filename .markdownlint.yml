@@ -3,3 +3,5 @@ default: true
 line-length: false
 single-trailing-newline: false
 no-inline-html: false
+heading-increment: false
+first-line-heading: false
