@@ -73,6 +73,14 @@ body.page-luca {
     url("/fonts/MDIO-Regular.woff") format("woff");
 }
 
+/* Scrollbars */
+
+body,
+code {
+  scrollbar-color: var(--secondary-colour) var(--background-colour);
+  scrollbar-width: thin;
+}
+
 /* Icons */
 
 .icon {
