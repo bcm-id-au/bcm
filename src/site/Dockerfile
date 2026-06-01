@@ -20,26 +20,27 @@ RUN deno task --quiet setup
 COPY . .
 
 # Define build arguments, set via Docker Build parameters like:
-#   --build-arg SITE_POSTS_URL="https://jane-doe.com/posts/"
 #   --build-arg SITE_AUTHOR="Jane Doe"
 #   --env-file ./.staging.sample.env
-ARG SITE_POSTS_DIR
-ARG SITE_POSTS_URL
+ARG SITE_BUILD_DIR
+ARG SITE_PUBLIC_DIR
+ARG SITE_AUTHOR
+ARG SITE_URL
+ARG SITE_LANG
 ARG SITE_FEED_TITLE
 ARG SITE_FEED_DESC
 ARG SITE_FEED_DEFAULT_TITLE
-ARG SITE_LANG
-ARG SITE_AUTHOR
-ARG SITE_URL
 
 # Persist build arguments as environment variables so
 # resulting Docker Containers can access the values.
+ENV SITE_BUILD_DIR=${SITE_BUILD_DIR}
+ENV SITE_PUBLIC_DIR=${SITE_PUBLIC_DIR}
+ENV SITE_AUTHOR=${SITE_AUTHOR}
+ENV SITE_URL=${SITE_URL}
+ENV SITE_LANG=${SITE_LANG}
 ENV SITE_FEED_TITLE=${SITE_FEED_TITLE}
 ENV SITE_FEED_DESC=${SITE_FEED_DESC}
 ENV SITE_FEED_DEFAULT_TITLE=${SITE_FEED_DEFAULT_TITLE}
-ENV SITE_LANG=${SITE_LANG}
-ENV SITE_AUTHOR=${SITE_AUTHOR}
-ENV SITE_URL=${SITE_URL}
 
 # Build the site
 RUN deno task build

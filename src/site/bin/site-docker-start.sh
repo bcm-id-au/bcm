@@ -18,6 +18,6 @@ echo "Starting 'bcm-site-local' container"
 docker run \
   -d \
   --name "bcm-site-local" \
-  --publish "${SITE_PORT:-8000}:8000" \
   --env-file "${SITE_ENV:-./.site.env}" \
+  --publish "${SITE_PORT:-8000}:8000" \
   "bcm-site-local:latest"
