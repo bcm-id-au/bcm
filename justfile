@@ -100,7 +100,7 @@ gh-actions-lint:
 # Lint Markdown files
 [group('tools')]
 markdown-lint:
-  markdownlint --config ".markdownlint.yml" "*.md" "docs/" "**/*.md"
+  markdownlint --config ".markdownlint.yml" --fix "*.md" "docs/" "**/*.md"
 
 # Links - Start the local Docker containers
 [group('links')]
