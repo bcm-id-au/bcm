@@ -57,12 +57,6 @@ If any of the below CLI commands aren't available, stop processing and explain t
 
 The `src/links/` directory contains a self-hosted version of the [Karakeep](https://karakeep.app/) bookmarking service.
 
-### Tech Stack
-
-- **OS Target:** Linux (Fedora Workstation, Ubuntu, etc)
-- **Shell:** Bash (`/usr/bin/env bash`)
-- **Containerization:** Docker (`docker`, `docker compose` and [Docker Desktop](https://docs.docker.com/desktop/)
-
 ## Site: `src/site/`
 
 The `src/site/` directory contains a static website built with Deno and Lume (static site generator).

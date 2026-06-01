@@ -21,7 +21,7 @@ The image should be a 128px x 128px transparent PNG, named **128.png**.
 The JSON file is pretty simple, check out the example below and name it **manifest.json**.
 Customise this by updating the _name_, _description_, _urls_ and _web_url_ values as needed.
 
-```
+```JavaScript
 {
   "name": "Basecamp",
   "description": "Shortcut to Basecamp Launchpad",

@@ -46,17 +46,17 @@ Don't be so specific! Longer selectors take longer for the browser to interpret,
 
 Too specific:
 
-```
-ul.post-list li div.author span.name{
-  font-size:90%;
+```CSS
+ul.post-list li div.author span.name {
+  font-size: 90%;
 }
 ```
 
 Much better:
 
-```
-.post-list .name{
-  font-size:90%;
+```CSS
+.post-list .name {
+  font-size: 90%;
 }
 ```
 
@@ -65,7 +65,7 @@ Much better:
 Most of the assets included in a web page don't change very often, especially images.
 If you're using [Apache](http://en.wikipedia.org/wiki/Apache_web_server) as your web server, you can tell the browser when it needs to check for a new version in a [.htaccess file](http://en.wikipedia.org/wiki/Htaccess):
 
-```
+```HTML
 <filesMatch ".(ico|gif|jpg|png|eot|ttf|woff|svg)$">
   ExpiresActive On
   ExpiresDefault "access plus 11 month"
@@ -84,7 +84,7 @@ This will tell the browser to keep a cached version of image files for up to a y
 
 [Gzip compression](https://developers.google.com/speed/articles/gzip) is a technique to compress HTML at the web server level before it reaches the visitor's browser. To enable it, add the following to your _.htaccess file_:
 
-```
+```HTML
 <ifmodule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css application/x-javascript application/javascript
 </ifmodule>

@@ -17,7 +17,7 @@ There are a few things to remember when implementing this feature in your web ap
 
 To ensure that [iOS](http://www.apple.com/ios/) doesn't apply the default shine to your icon, you'll need to use the correct tag in the _head_ section of your page:
 
-```
+```HTML
 <link rel="apple-touch-icon-precomposed" href="/images/logo-114.png">
 ```
 
@@ -27,7 +27,7 @@ To ensure that [iOS](http://www.apple.com/ios/) doesn't apply the default shine 
 
 For Windows 8/RT devices, you'll just need to include the following in the _head_ section of your page:
 
-```
+```HTML
 <meta name="application-name" content="YourWebApp"/>
 <meta name="msapplication-TileColor" content="#325ba0"/>
 <meta name="msapplication-TileImage" content="/images/logo-144-clear.png"/>
@@ -38,7 +38,7 @@ For Windows 8/RT devices, you'll just need to include the following in the _head
 
 Unfortunately, [Windows Phone](http://www.windowsphone.com/) requires a little more setup. You'll have to form up a unique page for Windows Phone users, a sample _pin to start page_ is:
 
-```
+```HTML
 <!doctype html>
 <html>
   <head>
