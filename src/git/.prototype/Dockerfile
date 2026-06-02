@@ -1,3 +1,13 @@
+#
+#
+# Prototype: Docker-in-Docker setup
+#
+# Note that this requires a privileged run:
+#   docker build -t my-self-contained-app .
+#   docker run --privileged -p 80:80 -p 3306:3306 my-self-contained-app
+#
+#
+
 # Use the official Docker-in-Docker base image
 FROM docker:27.0-dind
 
