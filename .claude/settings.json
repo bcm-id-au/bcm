@@ -1,16 +1,16 @@
 {
   "theme": "auto",
-  "feedbackSurveyRate": "0",
+  "feedbackSurveyRate": 0,
   "outputStyle": "Proactive",
-  "respectGitignore": "true",
-  "spinnerTipsEnabled": "false",
+  "respectGitignore": true,
+  "spinnerTipsEnabled": false,
   "attribution": {
     "commit": "",
     "pr": ""
   },
   "permissions": {
     "defaultMode": "plan",
-    "disableBypassPermissionsMode": "false",
+    "disableBypassPermissionsMode": "disable",
     "allow": [
       "Bash(cat*)",
       "Bash(grep*)",
