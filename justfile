@@ -96,6 +96,16 @@ gh-actions-lint:
 markdown-lint:
   markdownlint --config ".markdownlint.yml" --fix "*.md" "docs/" "**/*.md"
 
+# Git - Start the local Docker containers
+[group('git')]
+git-start:
+  bash ./src/git/bin/start-git.sh
+
+# Git - Stop the local Docker containers
+[group('git')]
+git-stop:
+  bash ./src/git/bin/stop-git.sh
+
 # Links - Start the local Docker containers
 [group('links')]
 links-start:

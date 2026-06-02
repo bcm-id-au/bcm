@@ -10,6 +10,7 @@ This repository contains a set of self-hosted systems and websites.
 - [bin](bin/) - Supporting tools and scripts.
 - [docs](docs/) - Documentation and contextual information.
 - [design](design/) - Page layout and icon design files.
+- [src/git](src/git/) - A self-hosted version of the [Forgejo](https://forgejo.org/) Git service.
 - [src/links](src/links/) - A self-hosted version of the [Karakeep](https://karakeep.app/) bookmarking service.
 - [src/schnitmydadsays](https://github.com/bcm-id-au/schnitmydadsays) - Schnitzel review website.
 - [src/site](src/site/) - My main public website at [murty.au](https://murty.au).

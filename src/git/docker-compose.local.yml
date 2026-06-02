@@ -1,0 +1,51 @@
+name: bcm-git
+
+networks:
+  bcm-git-network:
+    external: false
+
+services:
+
+  bcm-git-server:
+    container_name: bcm-git-server
+    image: codeberg.org/forgejo/forgejo:15-rootless
+    user: "${USER_UID}:1000"
+    restart: no
+    ports:
+      - "${PORT_WEB}:3000"
+      - "${PORT_SSH}:2222"
+    networks:
+      - bcm-git-network
+    depends_on:
+      - bcm-git-db
+    env_file:
+      - .git.env
+    environment:
+      USER_UID: "${USER_UID}"
+      USER_GID: "${USER_GID}"
+      FORGEJO__database__DB_TYPE: "postgres"
+      FORGEJO__database__HOST: "bcm-git-db:5432"
+      FORGEJO__database__NAME: "${POSTGRES_DB}"
+      FORGEJO__database__USER: "${POSTGRES_USER}"
+      FORGEJO__database__PASSWD: "${POSTGRES_PASSWORD}"
+    volumes:
+      - "${STORAGE_DIR_APP}:/var/lib/gitea"
+      - "${STORAGE_DIR_GIT}:/var/lib/gitea/git"
+      - "${STORAGE_DIR_FILES}/attachments:/var/lib/gitea/data/attachments"
+      - "${STORAGE_DIR_FILES}/avatars:/var/lib/gitea/data/avatars"
+      - "${STORAGE_DIR_FILES}/repo-avatars:/var/lib/gitea/data/repo-avatars"
+      - "${STORAGE_DIR_CUSTOM}:/var/lib/gitea/custom"
+      - "/etc/localtime:/etc/localtime:ro"
+
+  bcm-git-db:
+    container_name: bcm-git-db
+    image: postgres:14
+    restart: no
+    environment:
+      POSTGRES_USER: "${POSTGRES_DB}"
+      POSTGRES_PASSWORD: "${POSTGRES_USER}"
+      POSTGRES_DB: "${POSTGRES_PASSWORD}"
+    networks:
+      - bcm-git-network
+    volumes:
+      - "${STORAGE_DIR_DATABASE}:/var/lib/postgresql/data"

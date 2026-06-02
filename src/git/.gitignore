@@ -1,0 +1,15 @@
+$RECYCLE.BIN/
+.DS_Store
+
+*.log
+
+custom/conf/app.ini
+
+!custom/public
+
+.env
+.env.*
+*.env
+!.git.local.env
+
+.antigravitycli
