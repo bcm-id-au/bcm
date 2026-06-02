@@ -681,10 +681,6 @@ svg.attention-caution {
   color: var(--color-yellow);
 }
 
-.chroma .fm {}
-
-.chroma .g {}
-
 .chroma .gd {
   color: var(--color-red);
   background-color: #2D1215;
@@ -703,8 +699,6 @@ svg.attention-caution {
   color: var(--color-green);
   background-color: #052E16;
 }
-
-.chroma .gl {}
 
 .chroma .go {
   color: var(--bcm-text-muted);
@@ -762,10 +756,6 @@ svg.attention-caution {
 .chroma .kt {
   color: var(--color-teal);
 }
-
-.chroma .l {}
-
-.chroma .ld {}
 
 .chroma .m {
   color: var(--color-orange);
@@ -855,8 +845,6 @@ svg.attention-caution {
   color: var(--bcm-text-primary);
 }
 
-.chroma .py {}
-
 .chroma .s {
   color: var(--color-yellow);
 }
@@ -921,14 +909,9 @@ svg.attention-caution {
   color: var(--bcm-text-primary);
 }
 
-.chroma .vm {}
-
 .chroma .w {
   color: var(--bcm-text-muted);
 }
-
-.chroma .err {}
-
 
 /* CodeMirror — markdown editor, bcm palette */
 .CodeMirror.cm-s-default .cm-property,
