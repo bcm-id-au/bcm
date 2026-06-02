@@ -21,7 +21,6 @@ alias menu := choose
 alias select := choose
 alias install := setup-local
 alias setup := setup-local
-alias ai := ai-install
 alias br := git-branch
 alias pr := gh-pr
 alias actions := markdown-lint
@@ -45,11 +44,6 @@ list:
 [group('tools')]
 setup-local:
   bash ./bin/setup-local.sh || true
-
-# Install AI Code Generation tools
-[group('tools')]
-ai-install:
-  bash ./bin/ai-install.sh || true
 
 # Generate release notes and save them to a file
 [group('tools')]
