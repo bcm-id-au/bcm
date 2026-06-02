@@ -23,6 +23,11 @@ services:
     environment:
       USER_UID: "${USER_UID}"
       USER_GID: "${USER_GID}"
+      FORGEJO____APP_NAME: "${APP_NAME}"
+      FORGEJO____APP_SLOGAN: "${APP_SLOGAN}"
+      FORGEJO____APP_DISPLAY_NAME_FORMAT: "${APP_DISPLAY_NAME_FORMAT}"
+      FORGEJO__server__ROOT_URL: "${ROOT_URL}"
+      FORGEJO__ui__SHOW_USER_EMAIL: "false"
       FORGEJO__database__DB_TYPE: "postgres"
       FORGEJO__database__HOST: "bcm-git-db:5432"
       FORGEJO__database__NAME: "${POSTGRES_DB}"
@@ -31,9 +36,7 @@ services:
     volumes:
       - "${STORAGE_DIR_APP}:/var/lib/gitea"
       - "${STORAGE_DIR_GIT}:/var/lib/gitea/git"
-      - "${STORAGE_DIR_FILES}/attachments:/var/lib/gitea/data/attachments"
-      - "${STORAGE_DIR_FILES}/avatars:/var/lib/gitea/data/avatars"
-      - "${STORAGE_DIR_FILES}/repo-avatars:/var/lib/gitea/data/repo-avatars"
+      - "${STORAGE_DIR_FILES}:/var/lib/gitea/data"
       - "${STORAGE_DIR_CUSTOM}:/var/lib/gitea/custom"
       - "/etc/localtime:/etc/localtime:ro"
 

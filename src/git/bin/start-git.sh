@@ -10,7 +10,7 @@ REPO="$(cd "$(dirname "$0")/../../.." && pwd)"
 GIT="$REPO/src/git"
 cd "$GIT"
 
-mkdir -p "$REPO/storage/git/"{app,assets,database}
+mkdir -p "$REPO/storage/git/"{app,assets,repos,database}
 mkdir -p "$GIT/custom/conf"
 
 if [ ! -f "$GIT/.git.env" ]; then
