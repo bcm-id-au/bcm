@@ -575,12 +575,6 @@ svg.attention-caution {
   color: var(--dracula-yellow);
 }
 
-/* LiteralStringDelimiter */
-.chroma .fm {}
-
-/* NameFunctionMagic */
-.chroma .g {}
-
 /* Generic */
 .chroma .gd {
   color: var(--dracula-red);
@@ -603,9 +597,6 @@ svg.attention-caution {
   color: var(--dracula-green);
   background-color: #1D3328;
 }
-
-/* GenericInserted */
-.chroma .gl {}
 
 /* GenericUnderline */
 .chroma .go {
@@ -677,12 +668,6 @@ svg.attention-caution {
 .chroma .kt {
   color: var(--dracula-cyan);
 }
-
-/* KeywordType */
-.chroma .l {}
-
-/* Literal */
-.chroma .ld {}
 
 /* LiteralDate */
 .chroma .m {
@@ -799,9 +784,6 @@ svg.attention-caution {
   color: var(--dracula-foreground);
 }
 
-/* Punctuation */
-.chroma .py {}
-
 /* NameProperty */
 .chroma .s {
   color: var(--dracula-yellow);
@@ -882,17 +864,9 @@ svg.attention-caution {
   color: var(--dracula-foreground);
 }
 
-/* NameVariableInstance */
-.chroma .vm {}
-
 /* NameVariableMagic */
 .chroma .w {
   color: var(--dracula-comment);
-}
-
-/* TextWhitespace */
-.chroma .err {
-  /* not styled — Chroma flags too many things like JSX */
 }
 
 /* Error */
