@@ -103,9 +103,9 @@ h6 {
 
 :root {
   /* bcm palette */
-  --bcm-bg-primary: #0B1120;
-  --bcm-bg-secondary: #111827;
-  --bcm-bg-tertiary: #1E293B;
+  --bcm-bg-primary: #000000;
+  --bcm-bg-secondary: #1a1a1a;
+  --bcm-bg-tertiary: #333333;
   --bcm-text-primary: #F1F5F9;
   --bcm-text-secondary: #94A3B8;
   --bcm-text-muted: #64748B;
@@ -168,7 +168,7 @@ h6 {
   --color-primary-active: var(--color-primary-dark-1);
 
   /* secondary — surface chrome, based on steel ramp */
-  --color-secondary: var(--steel-800);
+  --color-secondary: var(--bcm-bg-secondary);
   --color-secondary-dark-1: var(--steel-850);
   --color-secondary-dark-2: var(--steel-900);
   --color-secondary-dark-3: #030712;
@@ -394,9 +394,9 @@ h6 {
   --color-reaction-hover-bg: var(--color-primary-alpha-40);
   --color-tooltip-text: var(--bcm-text-primary);
   --color-tooltip-bg: #0B1120e6;
-  --color-nav-bg: var(--steel-850);
-  --color-nav-hover-bg: var(--steel-700);
-  --color-secondary-nav-bg: var(--color-body);
+  --color-nav-bg: transparent;
+  --color-nav-hover-bg: transparent;
+  --color-secondary-nav-bg: transparent;
   --color-label-text: #fff;
   --color-label-bg: var(--steel-600);
   --color-label-hover-bg: var(--steel-550);
@@ -422,28 +422,15 @@ h6 {
   --color-indicator-active: #3B82F6;
   --color-indicator-active-20: #3B82F633;
 
-  /* bcm-specific: glassmorphism cards */
-  --bcm-card-glow: 0 0 20px rgba(16, 185, 129, 0.15);
-
   accent-color: var(--color-accent);
   color-scheme: dark;
 }
 
-/* Background gradient overlay */
-html {
-  background: var(--bcm-bg-primary);
-}
+/* Background */
 
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(30, 41, 59, 0.55) 0%, transparent 65%);
-  pointer-events: none;
-  z-index: -1;
+html,
+body {
+  background: var(--bcm-bg-primary);
 }
 
 /* Glassmorphism card effect */
@@ -458,15 +445,6 @@ body .pr-review-comment {
   background: var(--bcm-card-bg);
   box-shadow: var(--bcm-shadow);
   border: 1px solid var(--bcm-card-border);
-}
-
-/* Hover glow on interactive cards */
-.ui.segment:hover,
-.markdown-body:hover,
-.repository-file:hover,
-.file-content:hover {
-  box-shadow: var(--bcm-card-glow);
-  border-color: var(--bcm-border-hover) !important;
 }
 
 /* Markdown file view - no shadow/glow */
