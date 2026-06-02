@@ -28,4 +28,4 @@ PORT="$PORT" \
   --env-file "$LINKS_DIR/.links.env" \
   up --pull always --build -d
 
-echo "Karakeep started at http://localhost:3000/"
+echo "Links started at http://localhost:$PORT/"
