@@ -2,23 +2,33 @@
 #
 #
 # Install AI Code Generation tools
-#  - Run via: bash ./bin/ai-install.sh
-#  - Or run via: just ai-install
-#  - Uses the first-party suggested installation method for Linux/macOS
+#  - Run directly: bash ./bin/ai-install.sh
+#  - Run via Just: just ai-install
+#  - Uses the first-party suggested installation and update methods for Linux/macOS
 #
 #
 
-REPO_DIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
-cd "$REPO_DIR"
+REPO="$(cd "$(dirname "$0")" && cd .. && pwd)"
+cd "$REPO"
+source "$REPO/bin/.helper.sh"
 
-echo '⏳ Installing Google Antigravity CLI'
-curl -fsSL https://antigravity.google/cli/install.sh | bash
+info 'Install: Google Antigravity CLI'
+curl -fsSL https://antigravity.google/cli/install.sh | bash > /dev/null 2>&1
 
-echo '⏳ Installing OpenAI Codex CLI'
-brew install codex
+info 'Running: agy update'
+agy update > /dev/null 2>&1
 
-echo '⏳ Installing Claude Code CLI'
-curl -fsSL https://claude.ai/install.sh | bash
+info 'Install: OpenAI Codex CLI'
+brew reinstall --force codex > /dev/null 2>&1
 
-echo '⏳ Installing GitHub Copilot CLI'
-curl -fsSL https://gh.io/copilot-install | bash
+info 'Install: Claude Code CLI'
+curl -fsSL https://claude.ai/install.sh | bash > /dev/null 2>&1
+
+info 'Running: claude update'
+claude update > /dev/null 2>&1
+
+info 'Install: GitHub Copilot CLI'
+curl -fsSL https://gh.io/copilot-install | bash > /dev/null 2>&1
+
+info 'Running: copilot update'
+copilot update > /dev/null 2>&1

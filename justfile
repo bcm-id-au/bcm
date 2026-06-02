@@ -44,12 +44,12 @@ list:
 # Setup a local environment
 [group('tools')]
 setup-local:
-  bash ./bin/setup-local.sh
+  bash ./bin/setup-local.sh || true
 
 # Install AI Code Generation tools
 [group('tools')]
 ai-install:
-  bash ./bin/ai-install.sh
+  bash ./bin/ai-install.sh || true
 
 # Generate release notes and save them to a file
 [group('tools')]
