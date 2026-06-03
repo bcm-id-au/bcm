@@ -129,5 +129,9 @@
       "ffi": true,
       "sys": true
     }
+  },
+  "allowScripts": {
+    "allow": [],
+    "deny": ["npm:esbuild@0.27.3", "npm:esbuild@0.28.0", "npm:fs-ext@2.0.0"]
   }
 }
