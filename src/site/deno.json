@@ -34,7 +34,7 @@
     },
     "lume": {
       "description": "Run Lume command",
-      "command": "deno run -P=lume lume/cli.ts"
+      "command": "deno run --quiet -P=lume lume/cli.ts"
     },
     "new-post": {
       "description": "Generate a Markdown file for a new post item.",
@@ -46,7 +46,7 @@
     },
     "serve": {
       "description": "Start a local web server.",
-      "command": "deno task lume --serve"
+      "command": "deno run --allow-net --allow-read jsr:@std/http/file-server ./public --port 8000"
     },
     "setup": {
       "description": "Local environment setup.",

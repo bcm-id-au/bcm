@@ -30,17 +30,11 @@ const publicDir = Deno.env.get("SITE_PUBLIC_DIR");
 // Build the site using Lume
 
 const site = lume({
-  src: "./" + buildDir,
-  dest: "./" + publicDir,
+  src: buildDir ?? "build",
+  dest: publicDir ?? "public",
   prettyUrls: true,
   emptyDest: true,
   // location: new URL(siteUrl),
-  server: {
-    port: 8000,
-    open: true,
-    root: "../" + publicDir,
-    page404: "/index.html",
-  },
 });
 
 // Load site config values from ".env"
