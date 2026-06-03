@@ -4,11 +4,11 @@ import { load } from "@std/dotenv";
 
 import lume from "lume/mod.ts";
 import date from "lume/plugins/date.ts";
+import feed from "lume/plugins/feed.ts";
 import nunjucks from "lume/plugins/nunjucks.ts";
 import robots from "lume/plugins/robots.ts";
 import redirects from "lume/plugins/redirects.ts";
 import sitemap from "lume/plugins/sitemap.ts";
-import feed from "lume/plugins/feed.ts";
 
 import codeHighlight from "lume/plugins/code_highlight.ts";
 import langJavaScript from "highlight/lib/languages/javascript";
@@ -25,14 +25,22 @@ await load({
 
 const buildDir = Deno.env.get("SITE_BUILD_DIR");
 const publicDir = Deno.env.get("SITE_PUBLIC_DIR");
+// const siteUrl = Deno.env.get("SITE_URL");
 
 // Build the site using Lume
 
 const site = lume({
-  src: buildDir ?? "build",
-  dest: publicDir ?? "public",
+  src: "./" + buildDir,
+  dest: "./" + publicDir,
   prettyUrls: true,
   emptyDest: true,
+  // location: new URL(siteUrl),
+  server: {
+    port: 8000,
+    open: true,
+    root: "../" + publicDir,
+    page404: "/index.html",
+  },
 });
 
 // Load site config values from ".env"
