@@ -46,8 +46,8 @@
         "deno": {
           "enable": true,
           "lint": true,
-          "config": "./src/site/deno.json",
-          "importMap": "./src/site/deno.json",
+          "config": "./src/site/deno.jsonc",
+          "importMap": "./src/site/deno.jsonc",
         },
       },
     },
@@ -56,7 +56,7 @@
         "json": {
           "schemas": [
             {
-              "fileMatch": ["deno.json", "deno.jsonc"],
+              "fileMatch": ["deno.jsonc", "deno.jsoncc"],
               "url": "https://raw.githubusercontent.com/denoland/deno/refs/heads/main/cli/schemas/config-file.v1.json",
             },
             {

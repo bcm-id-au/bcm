@@ -20,7 +20,7 @@ on:
       - src/site/bin/site-docker-build.sh
       - src/site/src/**
       - src/site/_config.ts
-      - src/site/deno.json
+      - src/site/deno.jsonc
       - src/site/deno.lock
       - src/site/.dockerignore
       - src/site/Dockerfile
@@ -33,7 +33,7 @@ on:
       - src/site/bin/site-docker-build.sh
       - src/site/src/**
       - src/site/_config.ts
-      - src/site/deno.json
+      - src/site/deno.jsonc
       - src/site/deno.lock
       - src/site/.dockerignore
       - src/site/Dockerfile

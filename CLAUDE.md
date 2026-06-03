@@ -37,10 +37,10 @@ Everything runs through `just`. List commands with `just` (default) or `just lis
 
 ### Site-specific (inside `src/site/`)
 
-The project uses Deno tasks defined in `src/site/deno.json`:
+The project uses Deno tasks defined in `src/site/deno.jsonc`:
 
 - Single test: `deno test --allow-run=deno --allow-env --allow-read --allow-net src/site/src/<filename>.test.ts`
-- `deno task lume <args>` — Invoke Lume directly (with the scoped permissions in `deno.json`).
+- `deno task lume <args>` — Invoke Lume directly (with the scoped permissions in `deno.jsonc`).
 
 ## Site build architecture (`src/site/`)
 

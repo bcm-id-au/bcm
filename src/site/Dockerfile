@@ -10,7 +10,7 @@ ENV DENO_DIR=/app/.deno_cache
 
 # Copy over the Deno config files and install
 # third-party dependencies first.
-COPY deno.json /app
+COPY deno.jsonc /app
 COPY deno.lock /app
 COPY bin /app/bin
 RUN deno task --quiet setup
@@ -56,7 +56,7 @@ RUN apk add --no-cache bash
 # Copy over the bare minimum to serve the static files
 COPY --from=build /app/public /app/public
 COPY --from=build /app/deno.lock /app/deno.lock
-COPY --from=build /app/deno.json /app/deno.json
+COPY --from=build /app/deno.jsonc /app/deno.jsonc
 
 # Run as a non-root user on port 8000
 USER deno

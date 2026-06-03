@@ -174,9 +174,9 @@ See `src/types.ts` for the `YamlData` type definition.
 
 ### Code Style
 
-- Formatting configured in `deno.json`:
+- Formatting configured in `deno.jsonc`:
   - 2 space indentation
   - Line width: 120
   - Semicolons required
   - No tabs
-- Linting and formatting scoped to `src/`, `_config.ts`, and `deno.json`
+- Linting and formatting scoped to `src/`, `_config.ts`, and `deno.jsonc`

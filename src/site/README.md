@@ -21,7 +21,7 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 - [src/styles](src/styles/) - CSS styles.
 - [src/templates](src/templates/) - Nunjucks page templates.
 - [AGENTS.md](AGENTS.md) - AI Agent instructions, technical docs and guidance.
-- [deno.json](deno.json) - [Deno](https://deno.land/) imports, tasks and configuration.
+- [deno.jsonc](deno.jsonc) - [Deno](https://deno.land/) imports, tasks and configuration.
 
 ## Initial Setup
 

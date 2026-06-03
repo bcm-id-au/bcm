@@ -2,14 +2,14 @@
   "git.addAICoAuthor": "off",
   "deno.enable": true,
   "deno.lint": true,
-  "deno.config": "./src/site/deno.json",
-  "deno.importMap": "./src/site/deno.json",
+  "deno.config": "./src/site/deno.jsonc",
+  "deno.importMap": "./src/site/deno.jsonc",
   "editor.defaultFormatter": "denoland.vscode-deno",
   "json.schemas": [
     {
       "fileMatch": [
-        "deno.json",
-        "deno.jsonc"
+        "deno.jsonc",
+        "deno.jsoncc"
       ],
       "url": "https://raw.githubusercontent.com/denoland/deno/refs/heads/main/cli/schemas/config-file.v1.json",
     },

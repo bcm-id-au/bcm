@@ -11,6 +11,7 @@
     "@std/path": "jsr:@std/path@^1.1.5",
     "@std/yaml": "jsr:@std/yaml@^1.1.1",
     "highlight": "npm:highlight.js@^11.11.1",
+    "hono": "jsr:@hono/hono@^4.4.0",
     "is_json/": "https://deno.land/x/is_json@v1.0.2/",
     "lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/",
     "lume/jsx-runtime": "https://cdn.jsdelivr.net/gh/oscarotero/ssx@0.1.15/jsx-runtime.ts"
@@ -22,7 +23,7 @@
     },
     "deps-install": {
       "description": "Install the project's dependencies.",
-      "command": "deno install --quiet --entrypoint ./deno.json --config ./deno.json"
+      "command": "deno install --quiet --entrypoint ./deno.jsonc --config ./deno.jsonc"
     },
     "deps-update": {
       "description": "Update the project's dependencies.",
@@ -46,7 +47,7 @@
     },
     "serve": {
       "description": "Start a local web server.",
-      "command": "deno run --allow-net --allow-read jsr:@std/http/file-server ./public --port 8000"
+      "command": "deno run --allow-net --allow-read --allow-env ./src/server/server.ts"
     },
     "setup": {
       "description": "Local environment setup.",
@@ -80,7 +81,7 @@
     "include": [
       "src/",
       "_config.ts",
-      "deno.json"
+      "deno.jsonc"
     ],
     "lineWidth": 100,
     "useTabs": false,
@@ -91,7 +92,7 @@
     "include": [
       "src/",
       "_config.ts",
-      "deno.json"
+      "deno.jsonc"
     ],
     "plugins": [
       "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/lint.ts"

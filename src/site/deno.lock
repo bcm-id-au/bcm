@@ -23,6 +23,7 @@
     "jsr:@gnome/runtime-info@0.1": "0.1.0",
     "jsr:@gnome/slices@^0.0.0": "0.0.0",
     "jsr:@gnome/strings@0.3": "0.3.0",
+    "jsr:@hono/hono@^4.4.0": "4.12.23",
     "jsr:@std/assert@0.226": "0.226.0",
     "jsr:@std/assert@^1.0.19": "1.0.19",
     "jsr:@std/cli@1.0.28": "1.0.28",
@@ -223,6 +224,9 @@
         "jsr:@gnome/chars",
         "jsr:@gnome/slices"
       ]
+    },
+    "@hono/hono@4.12.23": {
+      "integrity": "9d9f3da498f69c311b5f92d973eb3b8ebc973b5fd2b4972781b556e07818a745"
     },
     "@std/assert@0.226.0": {
       "integrity": "0dfb5f7c7723c18cec118e080fec76ce15b4c31154b15ad2bd74822603ef75b3"
@@ -1368,6 +1372,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@gnome/exec@0.6",
+      "jsr:@hono/hono@^4.4.0",
       "jsr:@std/assert@^1.0.19",
       "jsr:@std/datetime@~0.225.7",
       "jsr:@std/dotenv@~0.225.7",
