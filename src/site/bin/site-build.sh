@@ -95,6 +95,7 @@ cp -r "assets/fonts" "$SITE_PUBLIC_DIR/fonts"
 cp -r "assets/images" "$SITE_PUBLIC_DIR/images"
 cp "assets/favicon.ico" "$SITE_PUBLIC_DIR/favicon.ico"
 cp "assets/site.webmanifest" "$SITE_PUBLIC_DIR/site.webmanifest"
+cp "assets/404.html" "$SITE_PUBLIC_DIR/404.html"
 
 echo -e "${YELLOW}Copying CSS files to '$SITE_PUBLIC_DIR/css'${NC}"
 
