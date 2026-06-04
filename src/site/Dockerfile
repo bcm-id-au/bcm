@@ -46,10 +46,11 @@ ENV SITE_FEED_DEFAULT_TITLE=${SITE_FEED_DEFAULT_TITLE}
 
 # Set Docker Image properties
 # From: https://github.com/opencontainers/image-spec/blob/main/annotations.md
-LABEL org.opencontainers.image.authors=$SITE_AUTHOR
-LABEL org.opencontainers.image.vendor=$SITE_AUTHOR
-LABEL org.opencontainers.image.url=$SITE_REPO
-LABEL org.opencontainers.image.source=$SITE_REPO
+LABEL maintainer="$SITE_AUTHOR"
+LABEL org.opencontainers.image.authors="$SITE_AUTHOR"
+LABEL org.opencontainers.image.vendor="$SITE_AUTHOR"
+LABEL org.opencontainers.image.url="$SITE_REPO"
+LABEL org.opencontainers.image.source="$SITE_REPO"
 LABEL org.opencontainers.image.licenses="MIT"
 
 # Build the site
