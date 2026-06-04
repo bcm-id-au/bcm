@@ -2,7 +2,8 @@
 #
 #
 # Build the site and organise the required assets
-#  - Run via: just site-build
+#  - Run from src/site: deno task build
+#  - Run via Just: just site-build
 #
 #
 

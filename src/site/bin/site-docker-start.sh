@@ -2,7 +2,8 @@
 #
 #
 # Start the Docker container
-#  - Run via: just site-docker-start
+#  - Run from src/site: deno task docker-start
+#  - Run via Just: just site-docker-start
 #  - Port can be customised by exporting the SITE_PORT before running the script
 #  - Env File Path can be customised by exporting the SITE_ENV before running the script
 #

@@ -2,7 +2,8 @@
 #
 #
 # Local environment setup
-#  - Run via: just site-build
+#  - Run from src/site: deno task buid
+#  - Run via Just: just site-build
 #
 #
 

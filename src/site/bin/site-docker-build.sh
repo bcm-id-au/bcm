@@ -2,7 +2,8 @@
 #
 #
 # Build the Docker image
-#  - Run via: just site-docker-build
+#  - Run from src/site: deno task docker-build
+#  - Run via Just: just site-docker-build
 #
 #
 
