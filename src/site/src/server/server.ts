@@ -1,6 +1,6 @@
 import { load } from "@std/dotenv";
 import { format } from "@std/datetime/format";
-import { serveDir } from "@std/http/file-server";
+import { serveDir, serveFile } from "@std/http/file-server";
 
 // Load variables from the ENV file
 
@@ -19,14 +19,15 @@ Deno.serve({ port: appPort }, async (req) => {
   // Extract the request properties
   const nowDate = new Date();
   const reqDate = format(nowDate, "yyyy-MM-dd HH:mm:ss");
-  const reqPath = new URL(req.url).pathname;
-  const localPath = appPublic + reqPath;
-  const logPrefix = `[${reqDate}] [${req.method}] ${reqPath}`;
-
-  // TODO: fix redirects issue when running in Docker container
-  console.log(`${logPrefix} INFO ${localPath}`);
+  const localPath = req.url.replace(appUrl, appPublic);
+  const logPrefix = `[${reqDate}] [${req.method}] ${req.url}`;
 
   try {
+    // Manually handle requests for '/'
+    if (req.url == "/" || req.url == appUrl) {
+      return serveFile(req, appPublic + "/index.html");
+    }
+
     // Get information about the related file/directory
     const fsInfo = Deno.lstatSync(localPath);
     if (fsInfo.isFile && fsInfo.size === 0) {
@@ -37,7 +38,7 @@ Deno.serve({ port: appPort }, async (req) => {
 
     // Attempt to serve the static file
     const response = await serveDir(req, {
-      fsRoot: "./" + appPublic,
+      fsRoot: appPublic,
       showDirListing: false,
       showDotfiles: false,
       showIndex: true,
