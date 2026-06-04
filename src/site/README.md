@@ -4,10 +4,10 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 
 ## Tech Stack
 
-- [Deno](https://deno.land/) - TypeScript, Deno Tests, Deno Tasks
-- [Lume](https://lumeland.github.io/)
-- [IO font by Mass-Driver](https://io.mass-driver.com/) - I have purchased a license for use here
-- [Font Awesome icon pack](https://fontawesome.com/) - Using the Free icon pack here
+- [Deno](https://deno.land/) - TypeScript, Deno Tests, Deno Tasks.
+- [Lume](https://lumeland.github.io/) - Static site generator for Deno.
+- [IO font by Mass-Driver](https://io.mass-driver.com/) - I have purchased a license for use here.
+- [Font Awesome icon pack](https://fontawesome.com/) - Using the Free icon pack here.
 
 ## Structure
 
@@ -36,6 +36,21 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 9. Commit and push all of these changes to your forked repository
 10. Setup online infrastructure by following the steps in the `Infrastructure` section below
 11. Setup your local development environmenmt by copying [.site.local.env](.site.local.env) to `.site.env` and then update `.site.env` to match your site
+
+## Usage
+
+- `deno task setup`: Local environment setup.
+- `deno task build`: Build the site and organise the required assets.
+- `deno task start`: Start a local web server.
+- `deno task test`: Run all Deno Test scripts in the 'src' directory.
+- `deno task install`: Install third-party dependencies.
+- `deno task update`: Update third-party dependencies.
+- `deno task lint`: Run linting and formatting tools.
+- `deno task lume`: Run a Lume command.
+- `deno task new-post`: Generate a Markdown file for a new post item.
+- `deno task docker-build`: Run the Docker Image build process.
+- `deno task docker-start`: Start the Docker Container.
+- `deno task docker-stop`: Stop the Docker Container.
 
 ## Deployment
 
