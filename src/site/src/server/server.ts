@@ -1,6 +1,6 @@
 import { load } from "@std/dotenv";
 import { format } from "@std/datetime/format";
-import { serveDir, serveFile } from "@std/http/file-server";
+import { serveFile } from "@std/http/file-server";
 
 // Load variables from the ENV file
 
@@ -15,40 +15,41 @@ const appPublic = Deno.env.get("SITE_PUBLIC_DIR") || "public";
 
 // Run the server on the configured port
 
+const appUrlFull = `${appUrl}:${appPort}`;
+console.log(`Server starting at ${appUrlFull}`);
+
 Deno.serve({ port: appPort }, async (req) => {
   // Extract the request properties
   const nowDate = new Date();
   const reqDate = format(nowDate, "yyyy-MM-dd HH:mm:ss");
-  const localPath = req.url.replace(appUrl, appPublic);
+  const reqUrl = new URL(req.url);
+
+  // Setup the log item prefix string
   const logPrefix = `[${reqDate}] [${req.method}] ${req.url}`;
 
+  // Figure out the related local file path
+  let localPath = "./" + appPublic + decodeURIComponent(reqUrl.pathname);
+
   try {
-    // Manually handle requests for '/'
-    if (req.url == "/" || req.url == appUrl) {
-      return serveFile(req, appPublic + "/index.html");
-    }
-
-    // Get information about the related file/directory
-    const fsInfo = Deno.lstatSync(localPath);
-    if (fsInfo.isFile && fsInfo.size === 0) {
-      console.log(`${logPrefix} ERROR empty file`);
-
-      return Response.redirect(new URL(appUrl, req.url));
+    // Check the status of the local file, files that don't exist will trigger
+    // a 'Deno.errors.NotFound' error and be caught in the 'catch' block below.
+    const localFileInfo = Deno.lstatSync(localPath);
+    if (localFileInfo.isDirectory) {
+      // Directory requests should use the 'index.html' file in that directory
+      localPath = localPath.endsWith("/") ? localPath + "/index.html" : localPath + "/index.html";
+    } else if (localFileInfo.isFile && localFileInfo.size === 0) {
+      // Handle empty files to avoid an empty response
+      console.log(`${logPrefix} ERR Empty file at ${localPath}`);
+      return Response.redirect(new URL(appUrlFull, req.url));
     }
 
     // Attempt to serve the static file
-    const response = await serveDir(req, {
-      fsRoot: appPublic,
-      showDirListing: false,
-      showDotfiles: false,
-      showIndex: true,
-    });
+    const response = await serveFile(req, localPath);
+    console.log(`${logPrefix} ${response.status}`);
 
     // Handle HTTP status failure states
     if (response.status !== 200 && response.status !== 304) {
-      console.log(`${logPrefix} ${response.status}`);
-
-      return Response.redirect(new URL(appUrl, req.url));
+      return Response.redirect(new URL(appUrlFull, req.url));
     }
 
     return response;
@@ -57,9 +58,9 @@ Deno.serve({ port: appPort }, async (req) => {
     if (error instanceof Deno.errors.NotFound) {
       console.log(`${logPrefix} 404`);
     } else {
-      console.log(`${logPrefix} ERROR ${error}`);
+      console.log(`${logPrefix} ERR ${error}`);
     }
 
-    return Response.redirect(new URL("/", req.url));
+    return Response.redirect(new URL(appUrlFull, req.url));
   }
 });
