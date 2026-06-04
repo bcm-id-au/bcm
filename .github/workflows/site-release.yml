@@ -144,13 +144,13 @@ jobs:
             ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:release-${{ needs.build.outputs.TIMESTAMP }}
           labels: |
             maintainer=${{ secrets.SITE_AUTHOR }}
+            org.opencontainers.image.licenses=MIT
             org.opencontainers.image.title=${{ secrets.SITE_TITLE }}
             org.opencontainers.image.description=${{ secrets.SITE_DESC }}
             org.opencontainers.image.authors=${{ secrets.SITE_AUTHOR }}
             org.opencontainers.image.vendor=${{ secrets.SITE_AUTHOR }}
             org.opencontainers.image.url=${{ secrets.SITE_REPO }}
             org.opencontainers.image.source=${{ secrets.SITE_REPO }}
-            org.opencontainers.image.licenses="MIT"
             org.opencontainers.image.version=${{ needs.build.outputs.TIMESTAMP }}
             org.opencontainers.image.revision=${{ needs.build.outputs.COMMIT }}
 

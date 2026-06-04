@@ -57,7 +57,7 @@ LABEL org.opencontainers.image.authors=$SITE_AUTHOR
 LABEL org.opencontainers.image.vendor=$SITE_AUTHOR
 LABEL org.opencontainers.image.url=$SITE_REPO
 LABEL org.opencontainers.image.source=$SITE_REPO
-LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.licenses=MIT
 
 # Build the site
 RUN deno task build
