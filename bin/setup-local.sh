@@ -51,6 +51,6 @@ brew reinstall --force markdownlint-cli > /dev/null 2>&1
 info 'Running: just git-update'
 just git-update
 
-info 'Install optional AI Code Generation tools: https://github.com/bcm-id-au/dotfiles/blob/main/dev/ai/ai-install.sh'
+info 'Install optional AI Code Generation tools: https://github.com/bcm-id-au/dotfiles/blob/main/ai/ai-install.sh'
 
 success 'Setup completed'
