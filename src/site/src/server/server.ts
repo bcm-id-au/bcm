@@ -13,16 +13,22 @@ const appUrl = Deno.env.get("SITE_URL") || "http://localhost:8000";
 const appPort = Number(Deno.env.get("SITE_PORT")) || 8000;
 const appPublic = Deno.env.get("SITE_PUBLIC_DIR") || "public";
 
+// Run the server on the configured port
+
 Deno.serve({ port: appPort }, async (req) => {
   // Extract the request properties
   const nowDate = new Date();
   const reqDate = format(nowDate, "yyyy-MM-dd HH:mm:ss");
   const reqPath = new URL(req.url).pathname;
+  const localPath = appPublic + reqPath;
   const logPrefix = `[${reqDate}] [${req.method}] ${reqPath}`;
+
+  // TODO: fix redirects issue when running in Docker container
+  console.log(`${logPrefix} INFO ${localPath}`);
 
   try {
     // Get information about the related file/directory
-    const fsInfo = Deno.lstatSync(`./${appPublic}${reqPath}`);
+    const fsInfo = Deno.lstatSync(localPath);
     if (fsInfo.isFile && fsInfo.size === 0) {
       console.log(`${logPrefix} ERROR empty file`);
 
@@ -53,6 +59,6 @@ Deno.serve({ port: appPort }, async (req) => {
       console.log(`${logPrefix} ERROR ${error}`);
     }
 
-    return Response.redirect(new URL(appUrl, req.url));
+    return Response.redirect(new URL("/", req.url));
   }
 });

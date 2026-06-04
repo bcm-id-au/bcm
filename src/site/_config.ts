@@ -23,18 +23,21 @@ await load({
   export: true,
 });
 
-const buildDir = Deno.env.get("SITE_BUILD_DIR");
-const publicDir = Deno.env.get("SITE_PUBLIC_DIR");
-// const siteUrl = Deno.env.get("SITE_URL");
+const buildDir = Deno.env.get("SITE_BUILD_DIR") || "build";
+const publicDir = Deno.env.get("SITE_PUBLIC_DIR") || "public";
+const timeZone = Deno.env.get("SITE_TIMEZONE") || "Australia/Sydney";
+
+// Set the timezone
+
+Deno.env.set("TZ", timeZone);
 
 // Build the site using Lume
 
 const site = lume({
-  src: buildDir ?? "build",
-  dest: publicDir ?? "public",
+  src: buildDir,
+  dest: publicDir,
   prettyUrls: true,
   emptyDest: true,
-  // location: new URL(siteUrl),
 });
 
 // Load site config values from ".env"

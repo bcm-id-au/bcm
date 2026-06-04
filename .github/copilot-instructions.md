@@ -13,7 +13,7 @@
   - Run all site tests: deno task test
   - Lint & format: deno task lint
   - Single test file example: deno test --allow-run=deno --allow-env --allow-read --allow-net src/site/src/<filename>.test.ts
-  - Serve built site: deno task serve
+  - Serve built site: deno task start
   - Run Lume directly: deno task lume -- <args>
 - Note: several just targets wrap these (e.g. just site-build, just site-test). Prefer running just when available.
 

@@ -75,7 +75,7 @@ cp -r content/* "$SITE_BUILD_DIR"
 
 echo -e "${YELLOW}Building the front-end using Lume and '_config.ts'${NC}"
 
-deno task lume > /dev/null 2>&1
+TZ="$SITE_TIMEZONE" deno task lume > /dev/null 2>&1
 
 echo -e "${YELLOW}Updating '$SITE_PUBLIC_DIR/sitemap.xml' to use the production URL${NC}"
 

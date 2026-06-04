@@ -45,9 +45,9 @@
       "description": "Generates content for the GitHub Release description.",
       "command": "cd ../.. && bash ./bin/release-notes.sh"
     },
-    "serve": {
+    "start": {
       "description": "Start a local web server.",
-      "command": "deno run --allow-net --allow-read --allow-env ./src/server/server.ts"
+      "command": "bash ./bin/site-start.sh"
     },
     "setup": {
       "description": "Local environment setup.",

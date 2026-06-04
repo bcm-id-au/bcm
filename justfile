@@ -149,7 +149,7 @@ site-setup:
 # Site - Run the local web server
 [group('site')]
 site-start:
-  cd ./src/site && deno task serve
+  cd ./src/site && deno task start
 
 # Site - Run all tests
 [group('site')]
