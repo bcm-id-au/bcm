@@ -4,19 +4,22 @@ import { serveFile } from "@std/http/file-server";
 
 // Load variables from the ENV file
 
-await load({
-  envPath: ".site.env",
-  export: true,
-});
+const appEnv = Deno.env.get("SITE_ENV") || "other";
+const isLocal = appEnv === "local";
 
-const appUrl = Deno.env.get("SITE_URL") || "http://localhost:8000";
+console.log(`Server starting for '${appEnv}' environment (${isLocal ? "local" : "hosted"})`);
+
+if (isLocal) {
+  await load({
+    envPath: ".site.env",
+    export: true,
+  });
+}
+
 const appPort = Number(Deno.env.get("SITE_PORT")) || 8000;
 const appPublic = Deno.env.get("SITE_PUBLIC_DIR") || "public";
 
 // Run the server on the configured port
-
-const appUrlFull = `${appUrl}:${appPort}`;
-console.log(`Server starting at ${appUrlFull}`);
 
 Deno.serve({ port: appPort }, async (req) => {
   // Extract the request properties
@@ -40,7 +43,7 @@ Deno.serve({ port: appPort }, async (req) => {
     } else if (localFileInfo.isFile && localFileInfo.size === 0) {
       // Handle empty files to avoid an empty response
       console.log(`${logPrefix} ERR Empty file at ${localPath}`);
-      return Response.redirect(new URL(appUrlFull, req.url));
+      return Response.redirect(new URL("/", req.url));
     }
 
     // Attempt to serve the static file
@@ -49,7 +52,7 @@ Deno.serve({ port: appPort }, async (req) => {
 
     // Handle HTTP status failure states
     if (response.status !== 200 && response.status !== 304) {
-      return Response.redirect(new URL(appUrlFull, req.url));
+      return Response.redirect(new URL("/", req.url));
     }
 
     return response;
@@ -61,6 +64,6 @@ Deno.serve({ port: appPort }, async (req) => {
       console.log(`${logPrefix} ERR ${error}`);
     }
 
-    return Response.redirect(new URL(appUrlFull, req.url));
+    return Response.redirect(new URL("/", req.url));
   }
 });

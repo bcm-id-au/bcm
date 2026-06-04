@@ -89,6 +89,7 @@ Setup a new Cloud Run service:
 - Click the `Variables & Secrets` tab
   - Copy the full contents of your `.site.env` to the first `Name` field
   - Update the values to match production use
+  - Don't forget to change `SITE_ENV` to something else like `prod`, `staging`, etc
 
 Setup a new [GitHub Token](https://github.com/settings/tokens/new):
 

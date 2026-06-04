@@ -22,15 +22,24 @@ if [ -f "$SITE_DIR/.site.env" ]; then
   echo "Loading variables from '.site.env'"
 
   source "$SITE_DIR/.site.env"
+
+  echo "Starting 'bcm-site-local' container"
+  docker run \
+    -d \
+    --name "bcm-site-local" \
+    --env-file "$SITE_DIR/.site.env" \
+    --publish "${SITE_PORT:-8000}:8000" \
+    "bcm-site-local:latest"
 else
   echo "File not found at '.site.env'"
+  echo "Starting 'bcm-site-local' container"
+
+  docker run \
+    -d \
+    --name "bcm-site-local" \
+    --publish "${SITE_PORT:-8000}:8000" \
+    "bcm-site-local:latest"
 fi
 
-echo "Starting 'bcm-site-local' container"
 
-docker run \
-  -d \
-  --name "bcm-site-local" \
-  --env-file "${SITE_ENV:-./.site.env}" \
-  --publish "${SITE_PORT:-8000}:8000" \
-  "bcm-site-local:latest"
+

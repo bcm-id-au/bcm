@@ -22,6 +22,7 @@ COPY . .
 # Define build arguments, set via Docker Build parameters like:
 #   --build-arg SITE_AUTHOR="Jane Doe"
 #   --env-file ./.staging.sample.env
+ARG SITE_ENV
 ARG SITE_BUILD_DIR
 ARG SITE_PUBLIC_DIR
 ARG SITE_AUTHOR
@@ -36,6 +37,7 @@ ARG SITE_FEED_DEFAULT_TITLE
 
 # Persist build arguments as environment variables so
 # resulting Docker Containers can access the values.
+ENV SITE_ENV=${SITE_ENV}
 ENV SITE_BUILD_DIR=${SITE_BUILD_DIR}
 ENV SITE_PUBLIC_DIR=${SITE_PUBLIC_DIR}
 ENV SITE_AUTHOR=${SITE_AUTHOR}
