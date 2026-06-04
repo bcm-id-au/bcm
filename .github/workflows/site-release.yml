@@ -123,6 +123,16 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Review Docker Image metadata
+        id: metadata
+        uses: docker/metadata-action@v6
+        with:
+          images: ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}
+          tags: |
+            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:latest
+            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:branch-${{ github.ref_name }}
+            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:commit-${{ needs.build.outputs.COMMIT }}
+            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:release-${{ needs.build.outputs.TIMESTAMP }}
       - name: Build and push Docker Image
         id: push
         uses: docker/build-push-action@v7
@@ -137,11 +147,8 @@ jobs:
             SITE_LANG=${{ secrets.SITE_LANG }}
             SITE_AUTHOR=${{ secrets.SITE_AUTHOR }}
             SITE_URL=${{ secrets.SITE_URL }}
-          tags: |
-            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:latest
-            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:branch-${{ github.ref_name }}
-            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:commit-${{ needs.build.outputs.COMMIT }}
-            ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:release-${{ needs.build.outputs.TIMESTAMP }}
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
 
   deploy-gcp-cloud-run:
     name: Deploy to GCP Cloud Run
