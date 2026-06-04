@@ -11,7 +11,6 @@
     "@std/path": "jsr:@std/path@^1.1.5",
     "@std/yaml": "jsr:@std/yaml@^1.1.1",
     "highlight": "npm:highlight.js@^11.11.1",
-    "hono": "jsr:@hono/hono@^4.4.0",
     "is_json/": "https://deno.land/x/is_json@v1.0.2/",
     "lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/",
     "lume/jsx-runtime": "https://cdn.jsdelivr.net/gh/oscarotero/ssx@0.1.15/jsx-runtime.ts"
@@ -21,29 +20,25 @@
       "description": "Build the site and organise the required assets.",
       "command": "bash ./bin/site-build.sh"
     },
-    "deps-install": {
-      "description": "Install the project's dependencies.",
+    "install": {
+      "description": "Install third-party dependencies.",
       "command": "deno install --quiet --entrypoint ./deno.jsonc --config ./deno.jsonc"
     },
-    "deps-update": {
-      "description": "Update the project's dependencies.",
+    "update": {
+      "description": "Update third-party dependencies.",
       "command": "deno outdated --quiet --update --compatible --lock ./deno.lock"
     },
     "lint": {
-      "description": "Run Deno's linting and formatting tools with the configuration defined above.",
+      "description": "Run linting and formatting tools.",
       "command": "deno lint && deno fmt"
     },
     "lume": {
-      "description": "Run Lume command",
+      "description": "Run a Lume command.",
       "command": "deno run --quiet -P=lume lume/cli.ts"
     },
     "new-post": {
       "description": "Generate a Markdown file for a new post item.",
       "command": "bash ./bin/site-new-post.sh"
-    },
-    "release-notes": {
-      "description": "Generates content for the GitHub Release description.",
-      "command": "cd ../.. && bash ./bin/release-notes.sh"
     },
     "start": {
       "description": "Start a local web server.",

@@ -18,4 +18,4 @@ fi
 
 echo 'Installing dependencies'
 
-deno task --quiet deps-install >/dev/null 2>&1
+deno task --quiet install >/dev/null 2>&1
