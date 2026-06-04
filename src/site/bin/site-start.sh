@@ -2,7 +2,8 @@
 #
 #
 # Start the static file server
-#  - Run via: just site-start
+#  - Run from src/site: deno task start
+#  - Run via Just: just site-start
 #
 #
 
