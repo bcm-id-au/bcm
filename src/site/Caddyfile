@@ -1,0 +1,34 @@
+#
+#
+# Caddy server config - https://caddyserver.com/docs/
+#
+#
+
+http://localhost:8000 {
+	# Serve the static site files
+	root * "./public"
+
+	# Standard file server
+	file_server
+
+	# Log requests and errors
+	log {
+    format transform "{common_log}"
+    # format transform `{ts} [{request>method}] {request>uri} {status}` {
+    #   time_format "02/Jan/2006:15:04:05 +1000"
+    # }
+
+		output file "./server.log" {
+			roll_size 10MiB
+			roll_keep 2
+			roll_keep_for 7d
+		}
+	}
+
+	# Error handling block
+	handle_errors {
+		handle {
+		  redir "http://localhost:8000/"
+		}
+	}
+}

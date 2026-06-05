@@ -19,3 +19,9 @@ fi
 echo 'Installing dependencies'
 
 deno task --quiet install >/dev/null 2>&1
+
+if command -v caddy > /dev/null 2>&1; then
+  echo 'Adding Caddy extension: Transform Encoder'
+
+  caddy add-package github.com/caddyserver/transform-encoder
+fi
