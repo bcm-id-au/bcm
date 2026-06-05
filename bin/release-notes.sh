@@ -43,7 +43,7 @@ if [ -z "$PREV_GIT_TAG" ]; then
   exit 0
 fi
 
-GIT_REPO_COMMIT_URL="https://github.com/bcm-id-au/bcm/commit/"
+GIT_REPO_COMMIT_URL="https://github.com/brendanmurty/bcm/commit/"
 
 GIT_LOG_FORMAT="- [%s]($GIT_REPO_COMMIT_URL%h)"
 
