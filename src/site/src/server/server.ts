@@ -6,20 +6,22 @@ import logger from "lume/middlewares/logger.ts";
 
 // Load variables from the ENV file
 
-const appEnv = Deno.env.get("SITE_ENV") || "other";
-const isLocal = appEnv === "local";
-
-if (isLocal) {
-  console.log("Loading variables from '.site.env'");
-
+try {
   await load({
     envPath: ".site.env",
     export: true,
   });
+
+  console.info("Loaded ENV vars from local file.");
+} catch (_error) {
+  console.warn("Using system ENV vars.");
 }
 
+const appEnv = Deno.env.get("SITE_ENV") || "other";
 const appPort = Number(Deno.env.get("SITE_PORT")) || 8000;
 const appPublic = Deno.env.get("SITE_PUBLIC_DIR") || "public";
+
+const isLocal = Boolean(Deno.env.get("SITE_ENV") === "local");
 
 // Configure the server
 const server = new Server({
@@ -27,8 +29,10 @@ const server = new Server({
   root: `./${appPublic}`,
 });
 
-// Log request summary items to the console
-server.use(logger());
+// Log requests to the console on local environments
+if (isLocal) {
+  server.use(logger());
+}
 
 // Send all 404 requests to a redirect file
 server.use(notFound({
@@ -39,6 +43,6 @@ server.use(notFound({
 // Start the server
 server.start();
 console.log(
-  `%c[${appEnv}, ${isLocal ? "local" : "hosted"}] Server started on port ${appPort}`,
+  `%c[env ${appEnv}] [type ${isLocal ? "local" : "hosted"}] [port ${appPort}] Server started`,
   "color:green",
 );
