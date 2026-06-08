@@ -74,7 +74,7 @@ echo -e "${YELLOW}Copying over page content files to '$SITE_BUILD_DIR'${NC}"
 
 cp -r content/* "$SITE_BUILD_DIR"
 
-echo -e "${YELLOW}Building the front-end using Lume and '_config.ts'${NC}"
+echo -e "${YELLOW}Building the front-end using Lume and 'src/lume.config.ts'${NC}"
 
 TZ="$SITE_TIMEZONE" deno task lume > /dev/null 2>&1
 

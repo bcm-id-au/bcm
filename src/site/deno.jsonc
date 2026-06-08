@@ -34,7 +34,7 @@
     },
     "lume": {
       "description": "Run a Lume command.",
-      "command": "deno run --quiet -P=lume lume/cli.ts"
+      "command": "deno run --quiet -P=lume lume/cli.ts --config=src/lume.config.ts"
     },
     "new-post": {
       "description": "Generate a Markdown file for a new post item.",
@@ -75,7 +75,6 @@
   "fmt": {
     "include": [
       "src/",
-      "_config.ts",
       "deno.jsonc"
     ],
     "lineWidth": 100,
@@ -86,7 +85,6 @@
   "lint": {
     "include": [
       "src/",
-      "_config.ts",
       "deno.jsonc"
     ],
     "plugins": [

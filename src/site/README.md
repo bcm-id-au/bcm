@@ -17,6 +17,7 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 - [config](config/) - Supporting configuration files.
 - [content](content/) - Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files.
 - [src](src/) - Source code and related unit tests.
+- [src/lume.config.ts](src/lume.config.ts) - Configuration and setup for [Lume](https://lumeland.github.io/).
 - [src/layouts](src/layouts/) - Nunjucks page layouts.
 - [src/styles](src/styles/) - CSS styles.
 - [src/templates](src/templates/) - Nunjucks page templates.
