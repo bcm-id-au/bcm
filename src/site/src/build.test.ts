@@ -2,7 +2,7 @@ import { assertEquals, assertNotEquals } from "@std/assert";
 
 Deno.test("build", async (test) => {
   await test.step({
-    name: "non-empty file 'public/index.html' was found",
+    name: "check 'public/index.html'",
     fn: async () => {
       try {
         const publicIndexFileContents: string = await Deno.readTextFile(
@@ -17,7 +17,7 @@ Deno.test("build", async (test) => {
   });
 
   await test.step({
-    name: "non-empty file 'public/404.html' was found",
+    name: "check 'public/404.html'",
     fn: async () => {
       try {
         const publicIndexFileContents: string = await Deno.readTextFile(
@@ -32,7 +32,7 @@ Deno.test("build", async (test) => {
   });
 
   await test.step({
-    name: "non-empty file 'public/css/styles.min.css' was found",
+    name: "check 'public/css/styles.min.css'",
     fn: async () => {
       try {
         const publicIndexFileContents: string = await Deno.readTextFile(
@@ -47,7 +47,7 @@ Deno.test("build", async (test) => {
   });
 
   await test.step({
-    name: "non-empty file 'public/posts.json' was found",
+    name: "check 'public/posts.json'",
     fn: async () => {
       try {
         const publicIndexFileContents: string = await Deno.readTextFile(
@@ -62,7 +62,7 @@ Deno.test("build", async (test) => {
   });
 
   await test.step({
-    name: "non-empty file 'public/images/brendan/profile/brendan_750.png' was found",
+    name: "check 'public/images/brendan/profile/brendan_750.png'",
     fn: async () => {
       try {
         const publicIndexFileContents: string = await Deno.readTextFile(
@@ -77,11 +77,26 @@ Deno.test("build", async (test) => {
   });
 
   await test.step({
-    name: "non-empty file 'public/images/brendan/profile/brendan_150.webp' was found",
+    name: "check 'public/images/brendan/profile/brendan_150.webp'",
     fn: async () => {
       try {
         const publicIndexFileContents: string = await Deno.readTextFile(
           "public/images/brendan/profile/brendan_150.webp",
+        );
+
+        assertNotEquals(publicIndexFileContents, "");
+      } catch (_) {
+        assertEquals("File not found", "");
+      }
+    },
+  });
+
+  await test.step({
+    name: "check 'public/resume.pdf'",
+    fn: async () => {
+      try {
+        const publicIndexFileContents: string = await Deno.readTextFile(
+          "public/resume.pdf",
         );
 
         assertNotEquals(publicIndexFileContents, "");
