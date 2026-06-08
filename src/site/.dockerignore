@@ -1,6 +1,7 @@
 build/
 public/
 
+.*.env
 .env
 .env.*
 
