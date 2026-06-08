@@ -10,6 +10,8 @@ const isLocal = appEnv === "local";
 console.log(`Server starting for '${appEnv}' environment (${isLocal ? "local" : "hosted"})`);
 
 if (isLocal) {
+  console.log(`Loading variables from '.site.env'`);
+
   await load({
     envPath: ".site.env",
     export: true,

@@ -5,7 +5,7 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 ## Tech Stack
 
 - [Deno](https://deno.land/) - TypeScript, Deno Tests, Deno Tasks.
-- [Lume](https://lumeland.github.io/) - Static site generator for Deno.
+- [Lume](https://lume.land/) - Static site generator for Deno.
 - [IO font by Mass-Driver](https://io.mass-driver.com/) - I have purchased a license for use here.
 - [Font Awesome icon pack](https://fontawesome.com/) - Using the Free icon pack here.
 
@@ -14,10 +14,9 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 - [.github/workflows/site-release.yml](../../.github/workflows/site-release.yml) - Deployment workflow that can be manually triggered.
 - [.github/workflows/site-check.yml](../../.github/workflows/site-check.yml) - Test workflow that runs automatically on PRs and can be manually triggered.
 - [assets](assets/) - Static files like images and PDFs.
-- [config](config/) - Supporting configuration files.
 - [content](content/) - Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files.
 - [src](src/) - Source code and related unit tests.
-- [src/lume.config.ts](src/lume.config.ts) - Configuration and setup for [Lume](https://lumeland.github.io/).
+- [src/lume.config.ts](src/lume.config.ts) - Configuration and setup for [Lume](https://lume.land/).
 - [src/layouts](src/layouts/) - Nunjucks page layouts.
 - [src/styles](src/styles/) - CSS styles.
 - [src/templates](src/templates/) - Nunjucks page templates.
