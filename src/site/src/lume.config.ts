@@ -25,35 +25,20 @@ await load({
 
 const buildDir = Deno.env.get("SITE_BUILD_DIR") || "build";
 const publicDir = Deno.env.get("SITE_PUBLIC_DIR") || "public";
-const timeZone = Deno.env.get("SITE_TIMEZONE") || "Australia/Sydney";
-
-// Set the timezone
-
-Deno.env.set("TZ", timeZone);
 
 // Build the site using Lume
 
 const site = lume({
-  src: buildDir,
-  dest: publicDir,
+  src: `./${buildDir}`,
+  dest: `./${publicDir}`,
   prettyUrls: true,
   emptyDest: true,
-  // server: {
-  //   /** The port to listen on */
-  //   port: 8000,
-  //   /** The hostname to listen on */
-  //   hostname: "localhost",
-  //   /** Open the server in a browser after starting the server */
-  //   open: false,
-  //   /** The file to serve when getting a 404 error */
-  //   page404: "/404.html",
-  //   /** Whether to use the debug bar or not */
-  //   debugBar: false,
-  //   /** Optional middleware for the server */
-  //   middlewares: [],
-  //   /** The root folder (relative to dest) */
-  //   root: `../${publicDir}`,
-  // },
+  server: {
+    hostname: "localhost",
+    open: false,
+    page404: "/404.html",
+    debugBar: false,
+  },
 });
 
 // Load site config values from ".env"

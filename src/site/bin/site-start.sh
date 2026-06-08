@@ -10,6 +10,11 @@
 SITE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$SITE_DIR"
 
+if [ -f "$SITE_DIR/.site.env" ]; then
+  echo "Loading variables from '.site.env'"
+  source "$SITE_DIR/.site.env"
+fi
+
 # Run the static file web server
 
 TZ=${SITE_TIMEZONE:-"Australia/Sydney"} deno run \
