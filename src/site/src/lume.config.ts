@@ -38,6 +38,22 @@ const site = lume({
   dest: publicDir,
   prettyUrls: true,
   emptyDest: true,
+  // server: {
+  //   /** The port to listen on */
+  //   port: 8000,
+  //   /** The hostname to listen on */
+  //   hostname: "localhost",
+  //   /** Open the server in a browser after starting the server */
+  //   open: false,
+  //   /** The file to serve when getting a 404 error */
+  //   page404: "/404.html",
+  //   /** Whether to use the debug bar or not */
+  //   debugBar: false,
+  //   /** Optional middleware for the server */
+  //   middlewares: [],
+  //   /** The root folder (relative to dest) */
+  //   root: `../${publicDir}`,
+  // },
 });
 
 // Load site config values from ".env"
