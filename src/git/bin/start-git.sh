@@ -28,5 +28,5 @@ info "Run: Docker Compose Up"
 docker compose \
   --file "$GIT/docker-compose.local.yml" \
   --env-file "$GIT/.git.env" \
-  up --pull always --build -d > /dev/null 2>&1 && \
+  up --pull always --build -d &&
   success "Git started at http://localhost:$PORT_WEB/"

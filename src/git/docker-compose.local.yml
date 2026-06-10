@@ -2,6 +2,7 @@ name: bcm-git
 
 networks:
   bcm-git-network:
+    name: bcm-git-network
     external: false
 
 services:
@@ -9,7 +10,7 @@ services:
   bcm-git-server:
     container_name: bcm-git-server
     image: codeberg.org/forgejo/forgejo:15-rootless
-    user: "${USER_UID}:1000"
+    user: "${USER_UID}:${USER_GID}"
     restart: no
     ports:
       - "${PORT_WEB}:3000"
@@ -36,10 +37,11 @@ services:
       FORGEJO__database__USER: "${POSTGRES_USER}"
       FORGEJO__database__PASSWD: "${POSTGRES_PASSWORD}"
     volumes:
-      - "${STORAGE_DIR_APP}:/var/lib/gitea"
-      - "${STORAGE_DIR_GIT}:/var/lib/gitea/git"
-      - "${STORAGE_DIR_FILES}:/var/lib/gitea/data"
-      - "${STORAGE_DIR_CUSTOM}:/var/lib/gitea/custom"
+      - "bcm-git-server-app:/var/lib/gitea"
+      - "bcm-git-server-git:/var/lib/gitea/git"
+      - "bcm-git-server-files:/var/lib/gitea/data"
+      - "bcm-git-server-custom:/var/lib/gitea/custom"
+      - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
 
   bcm-git-db:
@@ -53,4 +55,36 @@ services:
     networks:
       - bcm-git-network
     volumes:
-      - "${STORAGE_DIR_DATABASE}:/var/lib/postgresql/data"
+      - "bcm-git-db-data:/var/lib/postgresql/data"
+
+volumes:
+  bcm-git-server-app:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind"
+      device: "${STORAGE_DIR_APP}"
+  bcm-git-server-git:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind"
+      device: "${STORAGE_DIR_GIT}"
+  bcm-git-server-files:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind"
+      device: "${STORAGE_DIR_FILES}"
+  bcm-git-server-custom:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind"
+      device: "${STORAGE_DIR_CUSTOM}"
+  bcm-git-db-data:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind"
+      device: "${STORAGE_DIR_DATABASE}"
