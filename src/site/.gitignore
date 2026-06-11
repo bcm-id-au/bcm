@@ -12,10 +12,9 @@ $RECYCLE.BIN/
 
 !.envrc
 
-/build
-/dist
-/public
-/_site
+public
+build
+!src/build
 
 node_modules
 .antigravitycli

@@ -1,6 +1,6 @@
 // Lume Configuration - https://lume.land/docs/configuration/config-file/
 
-import { load } from "@std/dotenv";
+import { Site } from "$be/site.class.ts";
 
 import lume from "lume/mod.ts";
 import date from "lume/plugins/date.ts";
@@ -9,24 +9,19 @@ import nunjucks from "lume/plugins/nunjucks.ts";
 import robots from "lume/plugins/robots.ts";
 import redirects from "lume/plugins/redirects.ts";
 import sitemap from "lume/plugins/sitemap.ts";
-
 import codeHighlight from "lume/plugins/code_highlight.ts";
 import langJavaScript from "highlight/lib/languages/javascript";
 import langBash from "highlight/lib/languages/bash";
 import langPhp from "highlight/lib/languages/php";
 import langTypeScript from "highlight/lib/languages/typescript";
 
-// Load variables from the Env Var file, or directly from
-// the build terminal session if set there.
+// Load Env Vars with suitable defaults
 
-await load({
-  envPath: ".site.env",
-  export: true,
-});
+const bcm = new Site(".site.env");
 
-const buildDir: string = Deno.env.get("SITE_BUILD_DIR") || "build";
-const publicDir: string = Deno.env.get("SITE_PUBLIC_DIR") || "public";
-const siteUrl: string = Deno.env.get("SITE_URL") || "http://localhost";
+const buildDir: string = bcm.envVar("SITE_BUILD_DIR", "build");
+const publicDir: string = bcm.envVar("SITE_PUBLIC_DIR", "public");
+const siteUrl: string = bcm.envVar("SITE_URL", "http://localhost");
 
 // Build the site using Lume
 
@@ -40,11 +35,11 @@ const site = lume({
 
 // Load environment variables
 
-const siteFeedTitle: string = Deno.env.get("SITE_FEED_TITLE") || "";
-const siteFeedDesc: string = Deno.env.get("SITE_FEED_DESC") || "";
-const siteFeedDefaultTitle: string = Deno.env.get("SITE_FEED_DEFAULT_TITLE") || "";
-const siteLang: string = Deno.env.get("SITE_LANG") || "en-GB";
-const siteAuthor: string = Deno.env.get("SITE_AUTHOR") || "";
+const siteFeedTitle: string = bcm.envVar("SITE_FEED_TITLE");
+const siteFeedDesc: string = bcm.envVar("SITE_FEED_DESC");
+const siteFeedDefaultTitle: string = bcm.envVar("SITE_FEED_DEFAULT_TITLE");
+const siteLang: string = bcm.envVar("SITE_LANG", "en-GB");
+const siteAuthor: string = bcm.envVar("SITE_AUTHOR");
 
 // Save env vars as site data variables so templates can use them
 

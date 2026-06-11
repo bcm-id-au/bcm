@@ -74,7 +74,7 @@ RUN apk add --no-cache bash
 
 # Copy over the bare minimum to serve the static files
 COPY --from=build /app/bin /app/bin
-COPY --from=build /app/src/server /app/src/server
+COPY --from=build /app/src/backend /app/src/backend
 COPY --from=build /app/public /app/public
 COPY --from=build /app/deno.lock /app/deno.lock
 COPY --from=build /app/deno.jsonc /app/deno.jsonc

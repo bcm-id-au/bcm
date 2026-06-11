@@ -2,6 +2,8 @@
   "lock": true,
   "nodeModulesDir": "none",
   "imports": {
+    "$be/": "./src/backend/",
+    "$fe/": "./src/frontend/",
     "@gnome/exec": "jsr:@gnome/exec@^0.6",
     "@std/assert": "jsr:@std/assert@^1.0.19",
     "@std/datetime": "jsr:@std/datetime@^0.225.7",
