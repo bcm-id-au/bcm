@@ -12,4 +12,4 @@ cd "$SITE_DIR"
 
 TZ=${SITE_TIMEZONE:-"Australia/Sydney"} deno run \
 	--allow-net --allow-read --allow-env \
-	./src/server/server.ts
+	./src/backend/server.ts
