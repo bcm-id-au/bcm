@@ -24,9 +24,9 @@ await load({
   export: true,
 });
 
-const buildDir = Deno.env.get("SITE_BUILD_DIR") || "build";
-const publicDir = Deno.env.get("SITE_PUBLIC_DIR") || "public";
-const siteUrl = Deno.env.get("SITE_URL") || "http://localhost";
+const buildDir: string = Deno.env.get("SITE_BUILD_DIR") || "build";
+const publicDir: string = Deno.env.get("SITE_PUBLIC_DIR") || "public";
+const siteUrl: string = Deno.env.get("SITE_URL") || "http://localhost";
 
 // Build the site using Lume
 
@@ -36,20 +36,15 @@ const site = lume({
   location: new URL(siteUrl),
   prettyUrls: true,
   emptyDest: true,
-  server: {
-    page404: "/404.html",
-    open: false,
-    debugBar: false,
-  },
 });
 
 // Load environment variables
 
-const siteFeedTitle = Deno.env.get("SITE_FEED_TITLE");
-const siteFeedDesc = Deno.env.get("SITE_FEED_DESC");
-const siteFeedDefaultTitle = Deno.env.get("SITE_FEED_DEFAULT_TITLE");
-const siteLang = Deno.env.get("SITE_LANG");
-const siteAuthor = Deno.env.get("SITE_AUTHOR");
+const siteFeedTitle: string = Deno.env.get("SITE_FEED_TITLE") || "";
+const siteFeedDesc: string = Deno.env.get("SITE_FEED_DESC") || "";
+const siteFeedDefaultTitle: string = Deno.env.get("SITE_FEED_DEFAULT_TITLE") || "";
+const siteLang: string = Deno.env.get("SITE_LANG") || "en-GB";
+const siteAuthor: string = Deno.env.get("SITE_AUTHOR") || "";
 
 // Save env vars as site data variables so templates can use them
 
