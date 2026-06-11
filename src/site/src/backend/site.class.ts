@@ -29,8 +29,6 @@ export class Site {
   }
 
   public fileExists(localFilePath: string): boolean {
-    this.logDebug(`fileExists: ${localFilePath}`);
-
     try {
       const localFileCheck = Deno.lstatSync(localFilePath);
       return localFileCheck.isFile;
