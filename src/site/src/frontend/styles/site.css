@@ -2,7 +2,7 @@
 
 /* Variables */
 
-/* Default to darker colour scheme */
+/* Dark colour scheme */
 
 :root {
   --highlight-colour: #23c5b0;
@@ -21,7 +21,7 @@
   --code-other-colour: var(--secondary-colour);
 }
 
-/* Light colour scheme overrides */
+/* Light colour scheme */
 
 @media (prefers-color-scheme: light) {
   :root {
