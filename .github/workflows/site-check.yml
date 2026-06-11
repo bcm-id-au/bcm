@@ -73,8 +73,8 @@ jobs:
         uses: denoland/setup-deno@v2
         with:
           deno-version: latest
-      - name: Site setup
-        run: deno task --quiet setup
+      - name: Install dependencies
+        run: deno ci
       - name: Build site
         run: deno task build
       - name: Upload build files
@@ -88,6 +88,7 @@ jobs:
           path: |
             src/site/public
             src/site/.env
+
   deno-test:
     name: Deno tests
     needs: deno-build
