@@ -35,7 +35,7 @@
     },
     "lume": {
       "description": "Run a Lume command.",
-      "command": "deno run --quiet -P=lume lume/cli.ts --config=src/lume.config.ts"
+      "command": "deno run --quiet -P=lume lume/cli.ts --config=src/frontend/lume.config.ts"
     },
     "new-post": {
       "description": "Generate a Markdown file for a new post item.",

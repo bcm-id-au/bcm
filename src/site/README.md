@@ -16,10 +16,8 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 - [assets](assets/) - Static files like images and PDFs.
 - [content](content/) - Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files.
 - [src](src/) - Source code and related unit tests.
-- [src/lume.config.ts](src/lume.config.ts) - Configuration and setup for [Lume](https://lume.land/).
-- [src/layouts](src/layouts/) - Nunjucks page layouts.
-- [src/styles](src/styles/) - CSS styles.
-- [src/templates](src/templates/) - Nunjucks page templates.
+- [src/frontend](src/frontend/) - Frontend styles, layouts and templates.
+- [src/frontend/lume.config.ts](src/frontend/lume.config.ts) - Configuration and setup for [Lume](https://lume.land/).
 - [AGENTS.md](AGENTS.md) - AI Agent instructions, technical docs and guidance.
 - [deno.jsonc](deno.jsonc) - [Deno](https://deno.land/) imports, tasks and configuration.
 

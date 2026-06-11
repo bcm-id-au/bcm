@@ -17,21 +17,6 @@ Deno.test("build", async (test) => {
   });
 
   await test.step({
-    name: "check 'public/404.html'",
-    fn: async () => {
-      try {
-        const publicIndexFileContents: string = await Deno.readTextFile(
-          "public/404.html",
-        );
-
-        assertNotEquals(publicIndexFileContents, "");
-      } catch (_) {
-        assertEquals("File not found", "");
-      }
-    },
-  });
-
-  await test.step({
     name: "check 'public/css/styles.min.css'",
     fn: async () => {
       try {

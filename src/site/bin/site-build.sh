@@ -7,7 +7,7 @@
 #
 #
 
-SITE_DIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
+SITE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$SITE_DIR"
 
 # Load '.site.env' if it exists
@@ -42,7 +42,7 @@ PROD_LINK_REGEX=${PROD_LINK//\//\\/}
 
 echo -e "${YELLOW}Running Deno Lint and Deno Format${NC}"
 
-deno task lint >/dev/null 2>&1
+deno task lint > /dev/null 2>&1
 
 # Start the build process
 
@@ -56,9 +56,9 @@ echo -e "${YELLOW}Clearing the '$SITE_BUILD_DIR' directory and recreating subdir
 rm -rf "$SITE_BUILD_DIR"
 mkdir -p "$SITE_BUILD_DIR"
 mkdir -p "$SITE_BUILD_DIR/_data"
-cp -r "src/styles" $SITE_BUILD_DIR/_styles
-cp -r "src/templates" $SITE_BUILD_DIR/_includes
-cp -r "src/layouts" $SITE_BUILD_DIR/_includes/layouts
+cp -r "src/frontend/styles" $SITE_BUILD_DIR/_styles
+cp -r "src/frontend/templates" $SITE_BUILD_DIR/_includes
+cp -r "src/frontend/layouts" $SITE_BUILD_DIR/_includes/layouts
 
 echo -e "${YELLOW}Combining CSS files${NC}"
 
@@ -73,6 +73,7 @@ sed -e 's/^[ \t]*//g; s/[ \t]*$//g; s/\([:{;,]\) /\1/g; s/ {/{/g; s/\/\*.*\*\///
 echo -e "${YELLOW}Copying over page content files to '$SITE_BUILD_DIR'${NC}"
 
 cp -r content/* "$SITE_BUILD_DIR"
+rm -rf "$SITE_BUILD_DIR/content/resume.pdf"
 
 echo -e "${YELLOW}Building the front-end using Lume and 'src/lume.config.ts'${NC}"
 
@@ -80,19 +81,18 @@ TZ="$SITE_TIMEZONE" deno task lume > /dev/null 2>&1
 
 echo -e "${YELLOW}Copying static files to '$SITE_PUBLIC_DIR'${NC}"
 
-cp -r "assets/fonts" "$SITE_PUBLIC_DIR/fonts"
-cp -r "assets/images" "$SITE_PUBLIC_DIR/images"
-cp "assets/favicon.ico" "$SITE_PUBLIC_DIR/favicon.ico"
-cp "assets/site.webmanifest" "$SITE_PUBLIC_DIR/site.webmanifest"
-cp "assets/404.html" "$SITE_PUBLIC_DIR/404.html"
-cp "assets/resume.pdf" "$SITE_PUBLIC_DIR/resume.pdf"
+cp -r "src/frontend/assets/fonts" "$SITE_PUBLIC_DIR/fonts"
+cp -r "src/frontend/assets/images" "$SITE_PUBLIC_DIR/images"
+cp "src/frontend/assets/favicon.ico" "$SITE_PUBLIC_DIR/favicon.ico"
+cp "src/frontend/assets/site.webmanifest" "$SITE_PUBLIC_DIR/site.webmanifest"
+cp "content/resume.pdf" "$SITE_PUBLIC_DIR/resume.pdf"
 
 echo -e "${YELLOW}Copying CSS files to '$SITE_PUBLIC_DIR/css'${NC}"
 
 mkdir -p "$SITE_PUBLIC_DIR/css"
 cp "$SITE_BUILD_DIR/_assets/css/styles.min.css" "$SITE_PUBLIC_DIR/css/styles.min.css"
 
-cp -r "src/styles/fontawesome" "$SITE_PUBLIC_DIR/css"
+cp -r "src/frontend/styles/fontawesome" "$SITE_PUBLIC_DIR/css"
 
 echo -e "${YELLOW}Deleting '$SITE_BUILD_DIR'${NC}"
 
