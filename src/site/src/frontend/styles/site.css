@@ -331,7 +331,7 @@ ul.listing {
 
 ul.listing,
 ul.listing li,
-ul.listing li > a {
+ul.listing li>a {
   box-sizing: border-box;
 }
 
@@ -459,10 +459,12 @@ ul.posts-list .post-date,
 
 /* Override light theme for sidebar if needed */
 @media (prefers-color-scheme: light) {
+
   .sidebar {
     background-color: #fbfbfb;
     border-right: 1px solid rgba(0, 0, 0, 0.08);
   }
+
 }
 
 .sidebar-brand .brand-link {
@@ -582,7 +584,6 @@ ul.posts-list .post-date,
   display: flex;
   flex-direction: column;
   min-width: 0;
-  /* Prevents overflow issues with flex children */
 }
 
 .content-body {
@@ -623,10 +624,12 @@ ul.listing.connect li a {
 }
 
 @media (prefers-color-scheme: light) {
+
   ul.listing.connect li a {
     background-color: rgba(0, 0, 0, 0.02);
     border: 1px solid rgba(0, 0, 0, 0.06);
   }
+
 }
 
 ul.listing.connect li a:hover {
@@ -638,10 +641,12 @@ ul.listing.connect li a:hover {
 }
 
 @media (prefers-color-scheme: light) {
+
   ul.listing.connect li a:hover {
     background-color: rgba(0, 0, 0, 0.01);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
   }
+
 }
 
 ul.listing.connect li a:hover .icon {
@@ -696,11 +701,13 @@ ul.listing.posts li a.post-link {
 }
 
 @media (prefers-color-scheme: light) {
+
   ul.posts-list li a.post-link,
   ul.listing.posts li a.post-link {
     background-color: rgba(0, 0, 0, 0.02);
     border: 1px solid rgba(0, 0, 0, 0.06);
   }
+
 }
 
 ul.posts-list li a.post-link:hover,
@@ -713,11 +720,13 @@ ul.listing.posts li a.post-link:hover {
 }
 
 @media (prefers-color-scheme: light) {
+
   ul.posts-list li a.post-link:hover,
   ul.listing.posts li a.post-link:hover {
     background-color: rgba(0, 0, 0, 0.01);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.03);
   }
+
 }
 
 ul.posts-list .post-date,
@@ -778,10 +787,12 @@ ul.listing.posts li a.post-link:hover {
 }
 
 @media (prefers-color-scheme: light) {
+
   .tag-list li a {
     background-color: rgba(0, 0, 0, 0.03);
     border: 1px solid rgba(0, 0, 0, 0.08);
   }
+
 }
 
 .tag-list li a:hover {
@@ -798,6 +809,7 @@ ul.listing.posts li a.post-link:hover {
 /* Responsive Overrides */
 
 @media only screen and (max-width: 1024px) {
+
   .layout-wrapper {
     flex-direction: column;
   }
@@ -816,9 +828,11 @@ ul.listing.posts li a.post-link:hover {
   }
 
   @media (prefers-color-scheme: light) {
+
     .sidebar {
       border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     }
+
   }
 
   .sidebar-brand {
@@ -882,18 +896,22 @@ ul.listing.posts li a.post-link:hover {
   }
 
   @media (prefers-color-scheme: light) {
+
     .sidebar-footer {
       border-top: 1px solid rgba(0, 0, 0, 0.08);
     }
+
   }
 
   .main-content {
     margin-left: 0;
     padding: 40px 20px;
   }
+
 }
 
 @media only screen and (max-width: 600px) {
+
   .sidebar {
     flex-direction: column;
     align-items: flex-start;
@@ -920,4 +938,5 @@ ul.listing.posts li a.post-link:hover {
   .main-content {
     padding: 30px 15px;
   }
+
 }
