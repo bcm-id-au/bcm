@@ -78,18 +78,6 @@ echo -e "${YELLOW}Building the front-end using Lume and 'src/lume.config.ts'${NC
 
 TZ="$SITE_TIMEZONE" deno task lume > /dev/null 2>&1
 
-echo -e "${YELLOW}Updating '$SITE_PUBLIC_DIR/sitemap.xml' to use the production URL${NC}"
-
-sed -i -e "s/http:\/\/localhost\//$PROD_LINK_REGEX\//g" "$SITE_PUBLIC_DIR/sitemap.xml"
-
-echo -e "${YELLOW}Updating '$SITE_PUBLIC_DIR/robots.txt' to use the production URL${NC}"
-
-sed -i -e "s/http:\/\/localhost\//$PROD_LINK_REGEX\//g" "$SITE_PUBLIC_DIR/robots.txt"
-
-echo -e "${YELLOW}Updating '$SITE_PUBLIC_DIR/posts.json' to use the production URL${NC}"
-
-sed -i -e "s/http:\/\/localhost\//$PROD_LINK_REGEX\//g" "$SITE_PUBLIC_DIR/posts.json"
-
 echo -e "${YELLOW}Copying static files to '$SITE_PUBLIC_DIR'${NC}"
 
 cp -r "assets/fonts" "$SITE_PUBLIC_DIR/fonts"

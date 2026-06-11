@@ -16,7 +16,8 @@ import langBash from "highlight/lib/languages/bash";
 import langPhp from "highlight/lib/languages/php";
 import langTypeScript from "highlight/lib/languages/typescript";
 
-// Load variables from the ENV file
+// Load variables from the Env Var file, or directly from
+// the build terminal session if set there.
 
 await load({
   envPath: ".site.env",
@@ -25,30 +26,39 @@ await load({
 
 const buildDir = Deno.env.get("SITE_BUILD_DIR") || "build";
 const publicDir = Deno.env.get("SITE_PUBLIC_DIR") || "public";
+const siteUrl = Deno.env.get("SITE_URL") || "http://localhost";
 
 // Build the site using Lume
 
 const site = lume({
   src: `./${buildDir}`,
   dest: `./${publicDir}`,
+  location: new URL(siteUrl),
   prettyUrls: true,
   emptyDest: true,
   server: {
-    hostname: "localhost",
-    open: false,
     page404: "/404.html",
+    open: false,
     debugBar: false,
   },
 });
 
-// Load site config values from ".env"
+// Load environment variables
 
-site.data("SITE_FEED_TITLE", Deno.env.get("SITE_FEED_TITLE"));
-site.data("SITE_FEED_DESC", Deno.env.get("SITE_FEED_DESC"));
-site.data("SITE_FEED_DEFAULT_TITLE", Deno.env.get("SITE_FEED_DEFAULT_TITLE"));
-site.data("SITE_LANG", Deno.env.get("SITE_LANG"));
-site.data("SITE_AUTHOR", Deno.env.get("SITE_AUTHOR"));
-site.data("SITE_URL", Deno.env.get("SITE_URL"));
+const siteFeedTitle = Deno.env.get("SITE_FEED_TITLE");
+const siteFeedDesc = Deno.env.get("SITE_FEED_DESC");
+const siteFeedDefaultTitle = Deno.env.get("SITE_FEED_DEFAULT_TITLE");
+const siteLang = Deno.env.get("SITE_LANG");
+const siteAuthor = Deno.env.get("SITE_AUTHOR");
+
+// Save env vars as site data variables so templates can use them
+
+site.data("SITE_FEED_TITLE", siteFeedTitle);
+site.data("SITE_FEED_DESC", siteFeedDesc);
+site.data("SITE_FEED_DEFAULT_TITLE", siteFeedDefaultTitle);
+site.data("SITE_LANG", siteLang);
+site.data("SITE_AUTHOR", siteAuthor);
+site.data("SITE_URL", siteUrl);
 
 // Enable plugins
 
@@ -79,14 +89,14 @@ site.use(feed({
   sort: "date=desc",
   limit: 100,
   info: {
-    title: Deno.env.get("SITE_FEED_TITLE"),
-    description: Deno.env.get("SITE_FEED_DESC"),
+    title: siteFeedTitle,
+    description: siteFeedDesc,
     published: new Date(),
     self: "/posts.json",
-    lang: Deno.env.get("SITE_LANG"),
+    lang: siteLang,
     generator: false,
-    authorName: Deno.env.get("SITE_AUTHOR"),
-    authorUrl: Deno.env.get("SITE_URL"),
+    authorName: siteAuthor,
+    authorUrl: siteUrl,
   },
   items: {
     title: "=title",
@@ -94,10 +104,10 @@ site.use(feed({
     published: "=date",
     updated: undefined,
     content: "=children",
-    lang: Deno.env.get("SITE_LANG"),
+    lang: siteLang,
     image: "=cover",
-    authorName: Deno.env.get("SITE_AUTHOR"),
-    authorUrl: Deno.env.get("SITE_URL"),
+    authorName: siteAuthor,
+    authorUrl: siteUrl,
   },
 }));
 
