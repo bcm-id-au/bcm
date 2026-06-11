@@ -60,23 +60,92 @@
     <link rel="stylesheet" href="/css/code-highlight.min.css">
   </head>
   <body {% if body_class %}class="{{ body_class }}"{% endif %}>
-    <section class="container">
-      <header>
-        <h1>
-          <a href="/" title="Go to the home page">
+    <div class="layout-wrapper">
+      <aside class="sidebar">
+        <div class="sidebar-brand">
+          <a href="/" class="brand-link" title="Go to the home page">
             <img
-              class="avatar"
-              alt=""
-              width="150"
-              height="150"
+              class="sidebar-avatar"
+              alt="{{ SITE_AUTHOR }}"
+              width="100"
+              height="100"
               src="/images/brendan/profile/brendan_150.webp"
             />
-            {{ SITE_AUTHOR }}
+            <span class="brand-name">{{ SITE_AUTHOR }}</span>
           </a>
-        </h1>
-      </header>
-      <article>{{ content | safe }}</article>
-      <footer></footer>
-    </section>
+        </div>
+        
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="/" class="nav-link{% if url == '/' %} active{% endif %}">
+                <span class="nav-icon fa-fw fa-solid fa-house"></span>
+                <span class="nav-text">Home</span>
+              </a>
+            </li>
+            <li>
+              <a href="/posts/" class="nav-link{% if '/posts/' in url %} active{% endif %}">
+                <span class="nav-icon fa-fw fa-solid fa-file-lines"></span>
+                <span class="nav-text">Posts</span>
+              </a>
+            </li>
+            <li>
+              <a href="/tags/" class="nav-link{% if '/tags/' in url %} active{% endif %}">
+                <span class="nav-icon fa-fw fa-solid fa-tags"></span>
+                <span class="nav-text">Tags</span>
+              </a>
+            </li>
+            <li>
+              <a href="/resume.pdf" class="nav-link" download="Resume - Brendan Murty.pdf" title="Download my resume">
+                <span class="nav-icon fa-fw fa-solid fa-file-pdf"></span>
+                <span class="nav-text">Resume</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+          <ul class="social-links">
+            <li>
+              <a href="mailto:brendan@murty.au" title="Send me an email">
+                <span class="fa-fw fa-solid fa-envelope"></span>
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/brendanmurty" title="View my GitHub profile">
+                <span class="fa-fw fa-brands fa-github"></span>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/brendanmurty" title="View my LinkedIn profile">
+                <span class="fa-fw fa-brands fa-linkedin"></span>
+              </a>
+            </li>
+            <li>
+              <a href="https://letterboxd.com/brendanmurty" title="View my Letterboxd profile">
+                <span class="fa-fw fa-solid fa-film"></span>
+              </a>
+            </li>
+            <li>
+              <a href="https://steamcommunity.com/id/brendanmurty" title="View my Steam profile">
+                <span class="fa-fw fa-brands fa-steam"></span>
+              </a>
+            </li>
+            <li>
+              <a href="https://discordapp.com/users/362579289700302858" title="View my Discord profile">
+                <span class="fa-fw fa-brands fa-discord"></span>
+              </a>
+            </li>
+          </ul>
+          <div class="copyright">
+            &copy; 2026 {{ SITE_AUTHOR }}
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <article class="content-body">{{ content | safe }}</article>
+      </main>
+    </div>
   </body>
 </html>
