@@ -1,8 +1,14 @@
 import { load } from "@std/dotenv";
 
 import Server from "lume/core/server.ts";
-import notFound from "lume/middlewares/not_found.ts";
+import Router from "lume/middlewares/router.ts";
+
 import logger from "lume/middlewares/logger.ts";
+
+// TODO: this may not be needed anymore
+import notFound from "lume/middlewares/not_found.ts";
+
+import { responseFromFileRequest } from "./response.ts";
 
 // Load variables from the ENV file
 
@@ -17,17 +23,27 @@ try {
   console.warn("Using system ENV vars.");
 }
 
-const appEnv = Deno.env.get("SITE_ENV") || "other";
-const appPort = Number(Deno.env.get("SITE_PORT")) || 8000;
 const appPublic = Deno.env.get("SITE_PUBLIC_DIR") || "public";
-
+const appPort = Number(Deno.env.get("SITE_PORT")) || 8000;
+const appEnv = Deno.env.get("SITE_ENV") || "other";
 const isLocal = Boolean(Deno.env.get("SITE_ENV") === "local");
+
+// Configure the router
+const router = new Router();
+router.get("/*", ({ request }) => {
+  const requestPath = new URL(request.url).pathname;
+  return responseFromFileRequest(appPublic, requestPath);
+
+  // TODO: improve post canonical url to use '/post/xxxx' at all times
+});
 
 // Configure the server
 const server = new Server({
   port: appPort,
   root: `./${appPublic}`,
 });
+
+server.use(router.middleware());
 
 // Log requests to the console on local environments
 if (isLocal) {

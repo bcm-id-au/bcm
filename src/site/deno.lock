@@ -1051,6 +1051,7 @@
     "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/middlewares/not_found.ts": "0f92cd91239444247a1c3dce1bed4e978445687ca76f544a0ccd483a352f761a",
     "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/middlewares/reload.ts": "9f7fa7e376b0a510f5f69b90372c2f61fd6edb1244166c9aa6a9d52f267c3b33",
     "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/middlewares/reload_client.js": "9026da20a25fe58ad36233539ada3f38d56d935c5b0c1c69b7fcd21511efadee",
+    "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/middlewares/router.ts": "0d4079ddfa89717371a994bc97476494547841fc7e9a7a4c299751cc89db8c7c",
     "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/middlewares/serve_folder.ts": "a3dde0021fa52ad1dbaf3f159cd582ca0785f490518ac7dc15dd4d3b8a0fc0f5",
     "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/mod.ts": "349b3b7fe199bc6703b1e1fb77f3ab92699fce966da2261d3419a951b1ef2c5d",
     "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/plugins/code_highlight.ts": "065e0f48819cc74899b987069b16ac7d92ccd10195c5cda9463bd13d5dd7c5f0",
