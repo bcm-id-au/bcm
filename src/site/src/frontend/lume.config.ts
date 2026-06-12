@@ -9,7 +9,6 @@ import nunjucks from "lume/plugins/nunjucks.ts";
 import robots from "lume/plugins/robots.ts";
 import redirects from "lume/plugins/redirects.ts";
 import sitemap from "lume/plugins/sitemap.ts";
-import purgecss from "lume/plugins/purgecss.ts";
 
 import codeHighlight from "lume/plugins/code_highlight.ts";
 import langJavaScript from "highlight/lib/languages/javascript";
@@ -57,7 +56,6 @@ site.data("SITE_URL", siteUrl);
 site.use(nunjucks());
 site.use(date());
 site.use(redirects());
-site.use(purgecss());
 
 // Setup the code highlighter plugin
 
