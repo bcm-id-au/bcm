@@ -368,8 +368,7 @@ ul.posts-list .post-date,
   align-items: center;
   gap: 12px;
   font-family: var(--font-family-header);
-  font-size: 14px;
-  text-transform: uppercase;
+  font-size: 16px;
   letter-spacing: 0.1em;
   color: var(--secondary-colour);
   text-decoration: none;
@@ -415,13 +414,6 @@ ul.posts-list .post-date,
   display: flex;
   flex-direction: column;
   gap: 15px;
-}
-
-.sidebar-footer .copyright {
-  font-size: 11px;
-  color: var(--secondary-colour);
-  font-family: var(--font-family-code);
-  opacity: 0.8;
 }
 
 .main-content {
@@ -511,7 +503,6 @@ ul.listing.connect .label {
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 0.05em;
-  text-transform: uppercase;
 }
 
 /* POST CARDS */
@@ -622,7 +613,6 @@ ul.listing.posts li a.post-link:hover {
   font-family: var(--font-family-code);
   color: var(--secondary-colour);
   text-decoration: none;
-  text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: all 0.2s ease;
 }
