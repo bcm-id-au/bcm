@@ -56,26 +56,15 @@ echo -e "${YELLOW}Clearing the '$SITE_BUILD_DIR' directory and recreating subdir
 rm -rf "$SITE_BUILD_DIR"
 mkdir -p "$SITE_BUILD_DIR"
 mkdir -p "$SITE_BUILD_DIR/_data"
-cp -r "src/frontend/styles" $SITE_BUILD_DIR/_styles
 cp -r "src/frontend/templates" $SITE_BUILD_DIR/_includes
 cp -r "src/frontend/layouts" $SITE_BUILD_DIR/_includes/layouts
-
-echo -e "${YELLOW}Combining CSS files${NC}"
-
-mkdir -p $SITE_BUILD_DIR/_assets/css
-cat $SITE_BUILD_DIR/_styles/tools-reset.css $SITE_BUILD_DIR/_styles/site.css $SITE_BUILD_DIR/_styles/media-screen-medium.css $SITE_BUILD_DIR/_styles/media-screen-small.css $SITE_BUILD_DIR/_styles/media-print.css > $SITE_BUILD_DIR/_assets/css/styles.css
-
-echo -e "${YELLOW}Minifying combined CSS file${NC}"
-
-cat "$SITE_BUILD_DIR/_assets/css/styles.css" | \
-sed -e 's/^[ \t]*//g; s/[ \t]*$//g; s/\([:{;,]\) /\1/g; s/ {/{/g; s/\/\*.*\*\///g; /^$/d' | sed -e :a -e '$!N; s/\n\(.\)/\1/; ta' | tr '\n' ' ' > $SITE_BUILD_DIR/_assets/css/styles.min.css
 
 echo -e "${YELLOW}Copying over page content files to '$SITE_BUILD_DIR'${NC}"
 
 cp -r content/* "$SITE_BUILD_DIR"
 rm -rf "$SITE_BUILD_DIR/content/resume.pdf"
 
-echo -e "${YELLOW}Building the front-end using Lume and 'src/lume.config.ts'${NC}"
+echo -e "${YELLOW}Building the front-end using Lume and 'src/frontend/lume.config.ts'${NC}"
 
 TZ="$SITE_TIMEZONE" deno task lume > /dev/null 2>&1
 
@@ -87,10 +76,10 @@ cp "src/frontend/assets/favicon.ico" "$SITE_PUBLIC_DIR/favicon.ico"
 cp "src/frontend/assets/site.webmanifest" "$SITE_PUBLIC_DIR/site.webmanifest"
 cp "content/resume.pdf" "$SITE_PUBLIC_DIR/resume.pdf"
 
-echo -e "${YELLOW}Copying CSS files to '$SITE_PUBLIC_DIR/css'${NC}"
+echo -e "${YELLOW}Copying minified combined CSS file to '$SITE_PUBLIC_DIR/css'${NC}"
 
 mkdir -p "$SITE_PUBLIC_DIR/css"
-cp "$SITE_BUILD_DIR/_assets/css/styles.min.css" "$SITE_PUBLIC_DIR/css/styles.min.css"
+cp "src/frontend/styles/styles.min.css" "$SITE_PUBLIC_DIR/css/styles.min.css"
 
 cp -r "src/frontend/styles/fontawesome" "$SITE_PUBLIC_DIR/css"
 

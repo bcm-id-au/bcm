@@ -1,0 +1,56 @@
+/* DARK COLOURS */
+
+:root {
+  --highlight-colour: #23c5b0;
+  --background-colour: #000000;
+  --foreground-colour: #ffffff;
+  --secondary-colour: #888888;
+  --font-family-header: "MDIO-Black", var(--font-family-code);
+  --font-family-body: var(--font-family-code);
+  --font-family-code: "MDIO-Regular", monospace;
+  --font-family-quote: var(--font-family-code);
+  --font-size-body: 20px;
+  --line-height-body: 32px;
+  --code-function-colour: var(--highlight-colour);
+  --code-string-colour: var(--foreground-colour);
+  --code-background-colour: var(--background-colour);
+  --code-other-colour: var(--secondary-colour);
+}
+
+/* LIGHT COLOURS */
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --highlight-colour: #0b6053;
+    --background-colour: #ffffff;
+    --foreground-colour: #000000;
+    --secondary-colour: #575757;
+    --code-function-colour: var(--highlight-colour);
+    --code-string-colour: var(--foreground-colour);
+    --code-background-colour: var(--background-colour);
+    --code-other-colour: var(--secondary-colour);
+  }
+}
+
+/* FONTS */
+
+@font-face {
+  font-family: "MDIO-Black";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local("MDIO-Black"),
+    url("/fonts/MDIO-Black.woff") format("woff");
+}
+
+@font-face {
+  font-family: "MDIO-Regular";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local("MDIO"),
+    local("MDIO-Regular"),
+    url("/fonts/MDIO-Regular.woff") format("woff");
+}
