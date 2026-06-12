@@ -27,29 +27,17 @@ YELLOW="\033[0;33m"
 RED="\033[0;31m"
 NC="\033[0m"
 
-# Define the temporary build directory (SITE_BUILD_DIR) and public output directory (SITE_PUBLIC_DIR),
+# Set the temporary build directory (SITE_BUILD_DIR) and public output directory (SITE_PUBLIC_DIR),
 # defaulting to using the ENV var if it exists already
 
 SITE_BUILD_DIR=${SITE_BUILD_DIR:-"build"}
 SITE_PUBLIC_DIR=${SITE_PUBLIC_DIR:-"public"}
 
-# Set the production URL
+# Set the location of the source CSS directory
 
-PROD_LINK=${SITE_URL:-"https://murty.au"}
-PROD_LINK_REGEX=${PROD_LINK//\//\\/}
+CSS_DIR="$SITE_DIR/src/frontend/styles"
 
-# Format and lint code
-
-echo -e "${YELLOW}Run code cleanup tools${NC}"
-
-deno task clean
-
-# Start the build process
-
-echo -e "${YELLOW}Clearing the '$SITE_PUBLIC_DIR' directory and recreating subdirectories${NC}"
-
-rm -rf "$SITE_PUBLIC_DIR"
-mkdir -p "$SITE_PUBLIC_DIR"
+# Clear out and recreate the Build and Public directories
 
 echo -e "${YELLOW}Clearing the '$SITE_BUILD_DIR' directory and recreating subdirectories${NC}"
 
@@ -59,14 +47,48 @@ mkdir -p "$SITE_BUILD_DIR/_data"
 cp -r "src/frontend/templates" $SITE_BUILD_DIR/_includes
 cp -r "src/frontend/layouts" $SITE_BUILD_DIR/_includes/layouts
 
+echo -e "${YELLOW}Clearing the '$SITE_PUBLIC_DIR' directory and recreating subdirectories${NC}"
+
+rm -rf "$SITE_PUBLIC_DIR"
+mkdir -p "$SITE_PUBLIC_DIR"
+mkdir -p "$SITE_PUBLIC_DIR/css"
+
+# Format and lint code
+
+echo -e "${YELLOW}Run code cleanup tools${NC}"
+
+deno task clean
+
+# Prepare content and static files
+
 echo -e "${YELLOW}Copying over page content files to '$SITE_BUILD_DIR'${NC}"
 
 cp -r content/* "$SITE_BUILD_DIR"
-rm -rf "$SITE_BUILD_DIR/content/resume.pdf"
 
 echo -e "${YELLOW}Building the front-end using Lume and 'src/frontend/lume.config.ts'${NC}"
 
 TZ="$SITE_TIMEZONE" deno task lume > /dev/null 2>&1
+
+# Prepare CSS files
+
+echo 'Combining CSS files'
+
+cat "$CSS_DIR/reset.css" \
+  "$CSS_DIR/config.css" \
+  "$CSS_DIR/site.css" \
+  > "$SITE_BUILD_DIR/styles.css"
+
+echo 'Minifying combined CSS file'
+
+npx lightningcss-cli \
+  --minify \
+  --bundle \
+  --targets ">= 0.25%" "$SITE_BUILD_DIR/styles.css" \
+  --output-file "$SITE_PUBLIC_DIR/css/styles.min.css" > /dev/null 2>&1
+
+echo -e "${YELLOW}Copying FontAwesome files to '$SITE_PUBLIC_DIR/css'${NC}"
+
+cp -r "src/frontend/styles/fontawesome" "$SITE_PUBLIC_DIR/css"
 
 echo -e "${YELLOW}Copying static files to '$SITE_PUBLIC_DIR'${NC}"
 
@@ -75,16 +97,5 @@ cp -r "src/frontend/assets/images" "$SITE_PUBLIC_DIR/images"
 cp "src/frontend/assets/favicon.ico" "$SITE_PUBLIC_DIR/favicon.ico"
 cp "src/frontend/assets/site.webmanifest" "$SITE_PUBLIC_DIR/site.webmanifest"
 cp "content/resume.pdf" "$SITE_PUBLIC_DIR/resume.pdf"
-
-echo -e "${YELLOW}Copying minified combined CSS file to '$SITE_PUBLIC_DIR/css'${NC}"
-
-mkdir -p "$SITE_PUBLIC_DIR/css"
-cp "src/frontend/styles/styles.min.css" "$SITE_PUBLIC_DIR/css/styles.min.css"
-
-cp -r "src/frontend/styles/fontawesome" "$SITE_PUBLIC_DIR/css"
-
-echo -e "${YELLOW}Deleting '$SITE_BUILD_DIR'${NC}"
-
-rm -rf "$SITE_BUILD_DIR"
 
 echo -e "${GREEN}Build complete${NC}"
