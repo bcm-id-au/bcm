@@ -31,10 +31,6 @@
       "description": "Update third-party dependencies.",
       "command": "deno outdated --quiet --update --compatible --lock ./deno.lock"
     },
-    "lint": {
-      "description": "Run linting and formatting tools.",
-      "command": "deno lint && deno fmt"
-    },
     "lume": {
       "description": "Run a Lume command.",
       "command": "deno run --quiet -P=lume lume/cli.ts --config=src/frontend/lume.config.ts"
@@ -54,6 +50,10 @@
     "test": {
       "description": "Run all Deno Test scripts in the 'src' directory.",
       "command": "deno test --quiet --allow-run=deno --allow-env --allow-read --allow-net src"
+    },
+    "clean": {
+      "description": "Run linting and formatting tools.",
+      "command": "bash ./bin/site-clean.sh"
     },
     "docker-build": {
       "description": "Run the Docker Image build process.",

@@ -35,7 +35,7 @@ deno task              # List all available tasks
 deno task build        # Build the site
 deno task web          # Start development server
 deno task test         # Run tests
-deno task lint         # Lint and format code
+deno task clean        # Run code cleanup tools
 ```
 
 The development server (port 8000) is automatically forwarded to your local machine.

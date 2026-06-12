@@ -68,7 +68,7 @@ All commands are run via `deno task <command>`:
 - **Build**: `deno task build` - Runs the full build pipeline (lint, format, build site, copy assets)
 - **Test**: `deno task test` - Run all tests in the `src/` directory
   - Single test: `deno test --allow-run=deno --allow-env --allow-read --allow-net src/<filename>.test.ts`
-- **Lint**: `deno task lint` - Run Deno lint and format
+- **Lint**: `deno task clean` - Run code cleanup tools
 - **Local server**: `deno task start` - Serve built site from `public/` directory on port 8000
 
 Other useful commands:

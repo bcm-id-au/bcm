@@ -43,7 +43,7 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 - `deno task test`: Run all Deno Test scripts in the 'src' directory.
 - `deno task install`: Install third-party dependencies.
 - `deno task update`: Update third-party dependencies.
-- `deno task lint`: Run linting and formatting tools.
+- `deno task clean`: Run code cleanup tools.
 - `deno task lume`: Run a Lume command.
 - `deno task new-post`: Generate a Markdown file for a new post item.
 - `deno task docker-build`: Run the Docker Image build process.

@@ -11,7 +11,7 @@
 - Site (src/site) via Deno tasks (deno.jsonc):
   - Full build (lint, format, build, copy assets): deno task build
   - Run all site tests: deno task test
-  - Lint & format: deno task lint
+  - Lint & format: deno task clean
   - Single test file example: deno test --allow-run=deno --allow-env --allow-read --allow-net src/site/src/<filename>.test.ts
   - Serve built site: deno task start
   - Run Lume directly: deno task lume -- <args>
@@ -38,7 +38,7 @@
   - Tests often assert files in public/ exist — run site-build before site-test in CI or locally.
 - Scripts: Must start with #!/usr/bin/env bash, quote variables, avoid running entire scripts as root. If sudo is required, do not run it automatically; instead show the command and explain why.
 - Submodules: Treat src/schnitmydadsays and src/upcomingtasks as external; changes there belong in their own PRs against their repos.
-- Formatting & linting: follow deno.jsonc formatter and lint settings (2-space indent, 120 col, semicolons). Deno tasks `deno task lint` and `deno fmt` are the canonical tools.
+- Formatting & linting: follow deno.jsonc formatter and lint settings (2-space indent, 120 col, semicolons). Deno tasks `deno task clean` is the canonical tool.
 
 ## AI / Assistant integration notes
 

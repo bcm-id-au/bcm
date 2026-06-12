@@ -40,9 +40,9 @@ PROD_LINK_REGEX=${PROD_LINK//\//\\/}
 
 # Format and lint code
 
-echo -e "${YELLOW}Running Deno Lint and Deno Format${NC}"
+echo -e "${YELLOW}Run code cleanup tools${NC}"
 
-deno task lint > /dev/null 2>&1
+deno task clean
 
 # Start the build process
 
