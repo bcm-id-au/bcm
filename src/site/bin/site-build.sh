@@ -77,15 +77,15 @@ echo 'Combining CSS files'
 cat "$CSS_DIR/reset.css" \
   "$CSS_DIR/config.css" \
   "$CSS_DIR/site.css" \
-  > "$SITE_BUILD_DIR/styles.css"
+  > "$SITE_BUILD_DIR/bcm.css"
 
 echo 'Minifying combined CSS file'
 
 deno x --yes --no-check npm:lightningcss-cli@1.32.0 \
   --minify \
   --bundle \
-  --targets ">= 0.25%" "$SITE_BUILD_DIR/styles.css" \
-  --output-file "$SITE_PUBLIC_DIR/css/styles.min.css" # > /dev/null 2>&1
+  --targets ">= 0.25%" "$SITE_BUILD_DIR/bcm.css" \
+  --output-file "$SITE_PUBLIC_DIR/css/bcm.min.css" > /dev/null 2>&1
 
 echo -e "${YELLOW}Copying FontAwesome files to '$SITE_PUBLIC_DIR/css'${NC}"
 

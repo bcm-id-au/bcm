@@ -17,11 +17,11 @@ Deno.test("build", async (test) => {
   });
 
   await test.step({
-    name: "check 'public/css/styles.min.css'",
+    name: "check 'public/css/bcm.min.css'",
     fn: async () => {
       try {
         const publicIndexFileContents: string = await Deno.readTextFile(
-          "public/css/styles.min.css",
+          "public/css/bcm.min.css",
         );
 
         assertNotEquals(publicIndexFileContents, "");

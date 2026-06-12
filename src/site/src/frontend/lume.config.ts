@@ -57,7 +57,7 @@ site.use(nunjucks());
 site.use(date());
 site.use(redirects());
 
-// Setup the code highlighter plugin
+// Configure the Code Highlight plugin
 
 site.use(
   codeHighlight({
