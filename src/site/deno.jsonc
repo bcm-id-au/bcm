@@ -16,7 +16,9 @@
     "highlight": "npm:highlight.js@^11.11.1",
     "is_json/": "https://deno.land/x/is_json@v1.0.2/",
     "lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/",
-    "lume/jsx-runtime": "https://cdn.jsdelivr.net/gh/oscarotero/ssx@0.1.15/jsx-runtime.ts"
+    "lume/jsx-runtime": "https://cdn.jsdelivr.net/gh/oscarotero/ssx@0.1.15/jsx-runtime.ts",
+    "purgecss": "npm:purgecss@8.0.0",
+    "lightningcss": "npm:lightningcss-cli@1.32.0"
   },
   "tasks": {
     "build": {
@@ -100,6 +102,17 @@
     }
   },
   "permissions": {
+    "perms-build": {
+      "read": true,
+      "env": true,
+      "run": true,
+      "sys": true,
+      "write": [
+        "./src/frontend",
+        "./build",
+        "./public"
+      ]
+    },
     "lume": {
       "read": true,
       "write": [
@@ -128,6 +141,13 @@
   },
   "allowScripts": {
     "allow": [],
-    "deny": ["npm:esbuild@0.27.3", "npm:esbuild@0.28.0", "npm:fs-ext@2.0.0"]
+    "deny": [
+      "npm:esbuild@0.27.3",
+      "npm:esbuild@0.28.0",
+      "npm:fs-ext@2.0.0",
+      "npm:chalk@5.6.2",
+      "npm:purgecss@8.0.0",
+      "npm:lightningcss-cli@1.32.0"
+    ]
   }
 }

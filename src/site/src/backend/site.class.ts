@@ -3,17 +3,23 @@ import chalk from "chalk";
 
 export class Site {
   private envFile: string;
-  private env: Record<string, string>;
+  private env: Record<string, string> | undefined;
 
   constructor(envFile: string) {
     this.envFile = envFile;
 
-    // Load variables from ths file, or directly from
-    // the build terminal session if they're set there.
-    this.env = loadSync({
-      envPath: envFile,
-      export: true,
-    });
+    if (this.fileExists(envFile)) {
+      this.logAlways("Loading variables from Env File");
+
+      // Load variables from ths file, or directly from
+      // the build terminal session if they're set there.
+      this.env = loadSync({
+        envPath: envFile,
+        export: true,
+      });
+    } else {
+      this.logAlways("Loading variables from Session");
+    }
   }
 
   public envVar(varName: string, defaultValue?: string): string {

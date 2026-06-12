@@ -31,8 +31,8 @@ NC="\033[0m"
 # public output directory (SITE_PUBLIC_DIR), or set
 # logical defaults if the Env Vars aren't found.
 
-SITE_BUILD_DIR=${SITE_BUILD_DIR:-"build"}
-SITE_PUBLIC_DIR=${SITE_PUBLIC_DIR:-"public"}
+SITE_BUILD_DIR="${SITE_BUILD_DIR:-build}"
+SITE_PUBLIC_DIR="${SITE_PUBLIC_DIR:-public}"
 
 # Set the location of the source CSS directory
 
@@ -81,7 +81,7 @@ cat "$CSS_DIR/reset.css" \
 
 echo 'Minifying combined CSS file'
 
-npx lightningcss-cli \
+deno x --import-map "deno.jsonc" lightningcss \
   --minify \
   --bundle \
   --targets ">= 0.25%" "$SITE_BUILD_DIR/styles.css" \

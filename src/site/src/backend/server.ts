@@ -3,25 +3,24 @@ import { Site } from "$be/site.class.ts";
 
 // Load Env Vars with suitable defaults
 
-const bcm = new Site(".site.env");
+const bcm = new Site("./.site.env");
 
 const publicDir: string = bcm.envVar("SITE_PUBLIC_DIR", "public");
 const appPort: number = bcm.envVarNumber("SITE_PORT", 8000);
 const appEnv: string = bcm.envVar("SITE_ENV", "other");
 const isLocal: boolean = bcm.isLocal();
+const appEnvType: string = isLocal ? "local" : "hosted";
+const appHostname: string = bcm.envVar("SITE_HOSTNAME", "localhost");
 
 // Start the static web server
 
 Deno.serve(
   {
     port: appPort,
+    hostname: appHostname,
     onListen({ port, hostname }) {
       bcm.logAlways(
-        `[env ${appEnv}] [type ${
-          isLocal ? "local" : "hosted"
-        }] [port ${appPort}] Server started at ${
-          hostname == "0.0.0.0" ? "http://localhost" : hostname
-        }:${port}`,
+        `[env ${appEnv}] [type ${appEnvType}] [port ${appPort}] Server started at ${hostname}:${port}`,
       );
     },
   },

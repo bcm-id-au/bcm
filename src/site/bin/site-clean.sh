@@ -11,10 +11,10 @@ cd "$SITE_DIR"
 
 echo 'Applying PurgeCSS updates to site.css'
 
-npx purgecss \
+deno x --import-map "deno.jsonc" purgecss \
   --css "./src/frontend/styles/site.css" \
   --content "./src/frontend/**/*.njk" \
-  --output "./src/frontend/styles/site.css" > /dev/null 2>&1
+  --output "./src/frontend/styles/site.css" # > /dev/null 2>&1
 
 echo 'Running Deno Lint'
 

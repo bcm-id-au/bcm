@@ -12,7 +12,7 @@ cd "$REPO_DIR"
 # If an argument is provided when calling this script,
 # like "just release-notes changes.log", save the output
 # to that file, otherwise set a suitable default.
-RELEASE_FILE=${1:-"./release-notes.log"}
+RELEASE_FILE="${1:-./release-notes.log}"
 
 # Fetch all tags to ensure we have the full history
 git fetch --tags --force

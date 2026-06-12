@@ -4,16 +4,17 @@ WORKDIR /app
 # Install Bash
 RUN apk add --no-cache bash
 
-# Change DENO_DIR to avoid conflicts with Google Cloud
+# Change 'DENO_DIR' path to avoid conflicts with Google Cloud.
 RUN mkdir -p /app/.deno_cache
 ENV DENO_DIR=/app/.deno_cache
 
-# Copy over the Deno config files and install
-# third-party dependencies first.
+# Copy over Deno config files and scripts.
 COPY deno.jsonc /app
 COPY deno.lock /app
 COPY bin /app/bin
-RUN deno task --quiet setup
+
+# Run the Deno CI install command to only refer to "deno.lock".
+RUN deno ci --quiet
 
 # Copy the rest of the 'src/site' directory,
 # besides items filtered out by '.dockerignore'.
@@ -66,18 +67,18 @@ RUN deno task build
 
 # Create a new Docker Image layer to run the site using only the static files.
 # Minimises the resulting Docker Image size, speeding up build and push times.
-FROM denoland/deno:alpine AS serve
-WORKDIR /app
+# FROM denoland/deno:alpine AS serve
+# WORKDIR /app
 
 # Install Bash
 RUN apk add --no-cache bash
 
 # Copy over the bare minimum to serve the static files
-COPY --from=build /app/bin /app/bin
-COPY --from=build /app/src/backend /app/src/backend
-COPY --from=build /app/public /app/public
-COPY --from=build /app/deno.lock /app/deno.lock
-COPY --from=build /app/deno.jsonc /app/deno.jsonc
+# COPY --from=build /app/bin /app/bin
+# COPY --from=build /app/src/backend /app/src/backend
+# COPY --from=build /app/public /app/public
+# COPY --from=build /app/deno.lock /app/deno.lock
+# COPY --from=build /app/deno.jsonc /app/deno.jsonc
 
 # Start the server as a non-root user on port 8000
 USER deno

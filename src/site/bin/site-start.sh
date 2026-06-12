@@ -10,6 +10,6 @@
 SITE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$SITE_DIR"
 
-TZ=${SITE_TIMEZONE:-"Australia/Sydney"} deno run \
+TZ="${SITE_TIMEZONE:-Australia/Sydney}" deno run \
 	--allow-net --allow-read --allow-env \
 	./src/backend/server.ts

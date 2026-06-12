@@ -18,7 +18,7 @@ import langTypeScript from "highlight/lib/languages/typescript";
 
 // Load Env Vars with suitable defaults
 
-const bcm = new Site(".site.env");
+const bcm = new Site("./.site.env");
 
 const buildDir: string = bcm.envVar("SITE_BUILD_DIR", "build");
 const publicDir: string = bcm.envVar("SITE_PUBLIC_DIR", "public");
