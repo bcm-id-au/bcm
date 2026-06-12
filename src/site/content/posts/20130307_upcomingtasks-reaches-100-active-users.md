@@ -17,4 +17,4 @@ Hope you enjoy using it as much as I do! Haven't given it a go yet? All you need
 ![100 users](/images/brendan/users-100.png)
 _mmm stats_
 
-I'll continue to refine features and fix bugs as I come across them, but if you've got any ideas, or notice something that isn't quite right, feel free to [send me an email](brendan@murty.au).
+I'll continue to refine features and fix bugs as I come across them, but if you've got any ideas, or notice something that isn't quite right, feel free to [send me an email](brendan@bcm.works).
