@@ -77,7 +77,8 @@
   },
   "fmt": {
     "include": [
-      "src/",
+      "src/backend/",
+      "src/frontend/lume.config.ts",
       "deno.jsonc"
     ],
     "lineWidth": 100,
@@ -87,7 +88,8 @@
   },
   "lint": {
     "include": [
-      "src/",
+      "src/backend/",
+      "src/frontend/lume.config.ts",
       "deno.jsonc"
     ],
     "plugins": [

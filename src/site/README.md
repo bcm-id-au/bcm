@@ -15,7 +15,7 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 - [.github/workflows/site-check.yml](../../.github/workflows/site-check.yml) - Test workflow that runs automatically on PRs and can be manually triggered.
 - [assets](assets/) - Static files like images and PDFs.
 - [content](content/) - Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files.
-- [src](src/) - Source code and related unit tests.
+- [src/backend](src/backend/) - Backend server, config setup and related unit tests.
 - [src/frontend](src/frontend/) - Frontend styles, layouts and templates.
 - [src/frontend/lume.config.ts](src/frontend/lume.config.ts) - Configuration and setup for [Lume](https://lume.land/).
 - [AGENTS.md](AGENTS.md) - AI Agent instructions, technical docs and guidance.
