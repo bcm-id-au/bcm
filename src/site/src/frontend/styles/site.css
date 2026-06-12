@@ -58,13 +58,7 @@ body {
   color: var(--foreground-colour);
 }
 
-section.container {
-  max-width: 925px;
-  margin: 0 auto;
-}
-
-article,
-header {
+article {
   width: 100%;
   margin: 0 auto;
   min-width: 350px;
@@ -78,11 +72,7 @@ header {
 
 /* HEADINGS */
 
-header {
-  padding-bottom: 0;
-}
 
-h1,
 h2 {
   font-family: var(--font-family-header);
   font-weight: 500;
@@ -91,27 +81,9 @@ h2 {
   clear: both;
 }
 
-h1 {
-  font-size: 30px;
-  line-height: 50px;
-  margin-top: 0;
-}
-
 h2 {
   font-size: 25px;
   line-height: 40px;
-}
-
-header h1 {
-  float: left;
-  line-height: 150px;
-  font-size: 65px;
-  margin: 0;
-}
-
-article h1 {
-  font-size: 28px;
-  line-height: 42px;
 }
 
 /* LINKS */
@@ -129,14 +101,6 @@ a:hover,
 a:focus {
   text-decoration: underline;
   text-underline-offset: 3px;
-}
-
-header h1 a,
-header h1 a:visited,
-header h1 a:hover,
-header h1 a:focus {
-  color: var(--foreground-colour);
-  text-decoration: none;
 }
 
 /* CONTENT */
@@ -302,14 +266,13 @@ ul.posts-list .post-date,
 
 .sidebar-avatar {
   border-radius: 50%;
+  width: 150px;
+  margin: 0 auto 20px;
   border: 2px solid var(--highlight-colour);
-  margin-bottom: 20px;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 0 10px rgba(35, 197, 176, 0.1);
 }
 
 .brand-link:hover .sidebar-avatar {
-  transform: scale(1.05) rotate(5deg);
   box-shadow: 0 0 20px var(--highlight-colour);
 }
 
@@ -318,7 +281,6 @@ ul.posts-list .post-date,
   font-size: 24px;
   line-height: 1.2;
   font-weight: 500;
-  letter-spacing: -0.02em;
 }
 
 .sidebar-nav {
@@ -345,8 +307,7 @@ ul.posts-list .post-date,
   align-items: center;
   gap: 12px;
   font-family: var(--font-family-header);
-  font-size: 16px;
-  letter-spacing: 0.1em;
+  font-size: 18px;
   color: var(--secondary-colour);
   text-decoration: none;
   padding: 8px 0;
@@ -520,7 +481,6 @@ ul.listing.posts li a.post-link:hover {
   font-family: var(--font-family-code);
   color: var(--secondary-colour);
   text-decoration: none;
-  letter-spacing: 0.05em;
   transition: all 0.2s ease;
 }
 
@@ -582,10 +542,6 @@ ul.listing.posts li a.post-link:hover {
     margin-bottom: 0;
     width: 60px;
     height: 60px;
-  }
-
-  .brand-name {
-    font-size: 20px;
   }
 
   .sidebar-nav {
@@ -670,10 +626,6 @@ ul.listing.posts li a.post-link:hover {
 }
 
 @media only screen and (max-width: 800px) {
-  header h1 {
-    line-height: 100px;
-    font-size: 50px;
-  }
 
   ul.listing,
   ul.listing.full {
@@ -713,9 +665,8 @@ ul.listing.posts li a.post-link:hover {
     margin-bottom: 30px;
   }
 
-  h1,
-  h2,
-  header h1 {
+
+  h2 {
     font-size: 22px;
   }
 }
@@ -735,7 +686,7 @@ ul.listing.posts li a.post-link:hover {
     padding: 20px;
   }
 
-  header,
+
   article {
     width: 100%;
     padding: 0;
@@ -743,17 +694,8 @@ ul.listing.posts li a.post-link:hover {
     min-width: 0;
   }
 
-  header h1 a {
-    color: #000 !important;
-  }
-
   @page {
     size: auto;
     margin: 0mm 0mm 0mm 0mm;
-  }
-
-  header {
-    height: auto;
-    border: 0 none;
   }
 }
