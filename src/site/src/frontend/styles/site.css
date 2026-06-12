@@ -1,7 +1,6 @@
 /* SCROLLBARS */
 
-body,
-code {
+body {
   scrollbar-color: var(--secondary-colour) var(--background-colour);
   scrollbar-width: thin;
 }
@@ -67,7 +66,6 @@ section.container {
 article,
 header {
   width: 100%;
-  padding: 25px 10px;
   margin: 0 auto;
   min-width: 350px;
   float: left;
@@ -163,17 +161,6 @@ li {
   margin: 0 0 6px;
 }
 
-code {
-  font-family: var(--font-family-code) !important;
-  font-size: var(--font-size-body) !important;
-  line-height: var(--line-height-body) !important;
-  padding: 20px 0 !important;
-}
-
-.about-me {
-  margin: 5px 0 0;
-}
-
 /* LISTINGS */
 
 ul.listing {
@@ -209,28 +196,11 @@ ul.listing li a:not(.post-link) {
   float: left;
 }
 
-ul.listing.connect {
-  margin: 5px 0 45px;
-}
-
-ul.listing.connect li {
-  width: 33.3%;
-  margin: 25px 0 0;
-}
-
 ul.listing .icon {
   height: 30px;
   font-size: 30px;
   margin-right: 10px;
   float: left;
-}
-
-ul.listing:not(.connect) .label {
-  float: left;
-  width: 80%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* POSTS */
@@ -256,6 +226,13 @@ ul.posts-list .post-date,
 .page-post .post-date {
   float: left;
   width: 200px;
+  height: 35px;
+  line-height: 35px;
+}
+
+.page-post .tag-list {
+  height: 35px;
+  line-height: 35px;
 }
 
 .page-post article img:not(.icon-data) {
@@ -281,7 +258,7 @@ ul.posts-list .post-date,
 
 .page-tags-list .tag-list li {
   float: none;
-  margin: 0 0 20px;
+  margin: 0;
 }
 
 /* SIDEBAR */
@@ -433,78 +410,6 @@ ul.posts-list .post-date,
 
 /* CARD GRIDS */
 
-ul.listing.connect {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
-  margin: 25px 0 45px;
-  width: 100%;
-  float: none;
-}
-
-ul.listing.connect li {
-  width: 100%;
-  margin: 0;
-  float: none;
-}
-
-ul.listing.connect li a {
-  display: flex;
-  align-items: center;
-  padding: 18px 24px;
-  background-color: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 8px;
-  color: var(--foreground-colour);
-  text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  position: relative;
-  overflow: hidden;
-  box-sizing: border-box;
-}
-
-@media (prefers-color-scheme: light) {
-  ul.listing.connect li a {
-    background-color: rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-  }
-}
-
-ul.listing.connect li a:hover {
-  background-color: rgba(255, 255, 255, 0.04);
-  border-color: var(--highlight-colour);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(35, 197, 176, 0.1);
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: light) {
-  ul.listing.connect li a:hover {
-    background-color: rgba(0, 0, 0, 0.01);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-  }
-}
-
-ul.listing.connect li a:hover .icon {
-  color: var(--highlight-colour);
-  transform: scale(1.1);
-}
-
-ul.listing.connect .icon {
-  font-size: 24px;
-  margin-right: 16px;
-  float: none;
-  transition: all 0.3s ease;
-  color: var(--secondary-colour);
-}
-
-ul.listing.connect .label {
-  font-family: var(--font-family-header);
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-}
-
 /* POST CARDS */
 
 ul.posts-list,
@@ -605,7 +510,9 @@ ul.listing.posts li a.post-link:hover {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 4px;
+  padding: 0 10px;
+  height: 35px;
+  line-height: 35px;
   background-color: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 4px;
@@ -773,11 +680,6 @@ ul.listing.posts li a.post-link:hover {
     width: 100%;
   }
 
-  ul.listing.connect li {
-    width: 50%;
-    margin: 30px 0 0;
-  }
-
   ul.posts-list .post-date,
   ul.listing.posts .post-date {
     display: block;
@@ -798,7 +700,6 @@ ul.listing.posts li a.post-link:hover {
     --line-height-body: 26px;
   }
 
-  ul.listing.connect li,
   .page-home .tag-list li {
     width: 100%;
     margin: 30px 0 0;
