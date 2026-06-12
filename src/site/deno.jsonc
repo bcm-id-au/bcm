@@ -16,9 +16,7 @@
     "highlight": "npm:highlight.js@^11.11.1",
     "is_json/": "https://deno.land/x/is_json@v1.0.2/",
     "lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/",
-    "lume/jsx-runtime": "https://cdn.jsdelivr.net/gh/oscarotero/ssx@0.1.15/jsx-runtime.ts",
-    "purgecss": "npm:purgecss@8.0.0",
-    "lightningcss": "npm:lightningcss-cli@1.32.0"
+    "lume/jsx-runtime": "https://cdn.jsdelivr.net/gh/oscarotero/ssx@0.1.15/jsx-runtime.ts"
   },
   "tasks": {
     "build": {
@@ -42,8 +40,8 @@
       "command": "bash ./bin/site-new-post.sh"
     },
     "start": {
-      "description": "Start a local web server.",
-      "command": "bash ./bin/site-start.sh"
+      "description": "Start the web server.",
+      "command": "deno run --allow-net --allow-read --allow-env ./src/backend/server.ts"
     },
     "setup": {
       "description": "Local environment setup.",
@@ -102,17 +100,6 @@
     }
   },
   "permissions": {
-    "perms-build": {
-      "read": true,
-      "env": true,
-      "run": true,
-      "sys": true,
-      "write": [
-        "./src/frontend",
-        "./build",
-        "./public"
-      ]
-    },
     "lume": {
       "read": true,
       "write": [

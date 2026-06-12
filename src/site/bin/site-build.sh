@@ -81,11 +81,11 @@ cat "$CSS_DIR/reset.css" \
 
 echo 'Minifying combined CSS file'
 
-deno x --import-map "deno.jsonc" lightningcss \
+deno x --yes --no-check npm:lightningcss-cli@1.32.0 \
   --minify \
   --bundle \
   --targets ">= 0.25%" "$SITE_BUILD_DIR/styles.css" \
-  --output-file "$SITE_PUBLIC_DIR/css/styles.min.css" > /dev/null 2>&1
+  --output-file "$SITE_PUBLIC_DIR/css/styles.min.css" # > /dev/null 2>&1
 
 echo -e "${YELLOW}Copying FontAwesome files to '$SITE_PUBLIC_DIR/css'${NC}"
 

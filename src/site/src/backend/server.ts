@@ -10,7 +10,7 @@ const appPort: number = bcm.envVarNumber("SITE_PORT", 8000);
 const appEnv: string = bcm.envVar("SITE_ENV", "other");
 const isLocal: boolean = bcm.isLocal();
 const appEnvType: string = isLocal ? "local" : "hosted";
-const appHostname: string = bcm.envVar("SITE_HOSTNAME", "localhost");
+const appHostname: string = bcm.envVar("SITE_DOCKER_HOSTNAME", "0.0.0.0");
 
 // Start the static web server
 
@@ -18,9 +18,9 @@ Deno.serve(
   {
     port: appPort,
     hostname: appHostname,
-    onListen({ port, hostname }) {
+    onListen() {
       bcm.logAlways(
-        `[env ${appEnv}] [type ${appEnvType}] [port ${appPort}] Server started at ${hostname}:${port}`,
+        `[env ${appEnv}] [type ${appEnvType}] [port ${appPort}] Server started at ${appHostname}:${appPort}`,
       );
     },
   },
