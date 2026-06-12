@@ -27,8 +27,9 @@ YELLOW="\033[0;33m"
 RED="\033[0;31m"
 NC="\033[0m"
 
-# Set the temporary build directory (SITE_BUILD_DIR) and public output directory (SITE_PUBLIC_DIR),
-# defaulting to using the ENV var if it exists already
+# Set the temporary build directory (SITE_BUILD_DIR) and
+# public output directory (SITE_PUBLIC_DIR), or set
+# logical defaults if the Env Vars aren't found.
 
 SITE_BUILD_DIR=${SITE_BUILD_DIR:-"build"}
 SITE_PUBLIC_DIR=${SITE_PUBLIC_DIR:-"public"}
