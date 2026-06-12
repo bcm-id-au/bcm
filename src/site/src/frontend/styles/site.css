@@ -778,15 +778,7 @@ ul.listing.posts li a.post-link:hover {
     font-size: 50px;
   }
 
-  header .avatar {
-    width: 100px;
-    height: auto;
-  }
-
   ul.listing,
-  ul.listing.third,
-  ul.listing.twothirds,
-  ul.listing.half,
   ul.listing.full {
     width: 100%;
   }
@@ -797,8 +789,7 @@ ul.listing.posts li a.post-link:hover {
   }
 
   ul.posts-list .post-date,
-  ul.listing.posts .post-date,
-  .photo-data .data-title {
+  ul.listing.posts .post-date {
     display: block;
     width: auto;
   }
@@ -817,11 +808,6 @@ ul.listing.posts li a.post-link:hover {
     --line-height-body: 26px;
   }
 
-  header .avatar {
-    width: 100px;
-    height: auto;
-  }
-
   ul.listing.connect li,
   .page-home .tag-list li {
     width: 100%;
@@ -838,8 +824,6 @@ ul.listing.posts li a.post-link:hover {
 
   h1,
   h2,
-  h3,
-  h4,
   header h1 {
     font-size: 22px;
   }

@@ -1,32 +1,98 @@
 /* RESET - adapted from https://vale.rocks/posts/css-reset */
 
-@-webkit-viewport{width:device-width}
-@-moz-viewport{width:device-width}
-@-ms-viewport{width:device-width}
-@-o-viewport{width:device-width}
-@viewport{width:device-width}
+@-webkit-viewport {
+  width: device-width;
+}
+@-moz-viewport {
+  width: device-width;
+}
+@-ms-viewport {
+  width: device-width;
+}
+@-o-viewport {
+  width: device-width;
+}
+@viewport {
+  width: device-width;
+}
 
 @layer {
-  *,::after,::before{box-sizing:border-box;background-repeat:no-repeat}
-  *{padding:0;margin:0}
-  html{-webkit-text-size-adjust:none;text-size-adjust:none;line-height:1.5;-webkit-font-smoothing:antialiased;block-size:100%}
-  body{min-block-size:100%}
-  audio,canvas,iframe,img,video{display:block;max-inline-size:100%;block-size:auto}
-  svg{max-inline-size:100%}
-  svg:not([fill]){fill:currentColor}
-  button,input,select,textarea{font:inherit}
-  textarea{resize:vertical}
-  fieldset,iframe{border:none}
-  h1,h2,h3,h4,h5,h6,p{overflow-wrap:break-word}
-  p{text-wrap:pretty;font-variant-numeric:proportional-nums}
-  h1,h2,h3,h4,h5,h6{font-variant-numeric:lining-nums}
-  blockquote,figcaption,li,p,q{hanging-punctuation:first allow-end last}
-  button,h1,h2,h3,h4,h5,h6,input,label{line-height:1.1}
-  math,table,time{font-variant-numeric:tabular-nums lining-nums slashed-zero}
-  code{font-variant-numeric:slashed-zero}
-  table{border-collapse:collapse}
-  abbr{font-variant-caps:all-small-caps;text-decoration:none;text-decoration:underline dotted}
-  sub{line-height:0}
-  :disabled{opacity:.8;cursor:not-allowed}
-  :focus-visible{outline-offset:.2rem}
+  *, ::after, ::before {
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+  }
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  html {
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    block-size: 100%;
+  }
+  body {
+    min-block-size: 100%;
+  }
+  audio, canvas, iframe, img, video {
+    display: block;
+    max-inline-size: 100%;
+    block-size: auto;
+  }
+  svg {
+    max-inline-size: 100%;
+  }
+  svg:not([fill]) {
+    fill: currentColor;
+  }
+  button, input, select, textarea {
+    font: inherit;
+  }
+  textarea {
+    resize: vertical;
+  }
+  fieldset, iframe {
+    border: none;
+  }
+  h1, h2, h3, h4, h5, h6, p {
+    overflow-wrap: break-word;
+  }
+  p {
+    text-wrap: pretty;
+    font-variant-numeric: proportional-nums;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-variant-numeric: lining-nums;
+  }
+  blockquote, figcaption, li, p, q {
+    hanging-punctuation: first allow-end last;
+  }
+  button, h1, h2, h3, h4, h5, h6, input, label {
+    line-height: 1.1;
+  }
+  math, table, time {
+    font-variant-numeric: tabular-nums lining-nums slashed-zero;
+  }
+  code {
+    font-variant-numeric: slashed-zero;
+  }
+  table {
+    border-collapse: collapse;
+  }
+  abbr {
+    font-variant-caps: all-small-caps;
+    text-decoration: none;
+    text-decoration: underline dotted;
+  }
+  sub {
+    line-height: 0;
+  }
+  :disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+  }
+  :focus-visible {
+    outline-offset: 0.2rem;
+  }
 }
