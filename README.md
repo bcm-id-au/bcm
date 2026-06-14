@@ -1,6 +1,6 @@
 # bcm
 
-This repository contains a [my public website](src/site/) and a set of self-hosted systems.
+This repository contains [my public website](src/site/), other projects I've worked on, and some self-hosted systems.
 
 ## Structure
 
