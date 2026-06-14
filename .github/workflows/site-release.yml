@@ -138,7 +138,8 @@ jobs:
             SITE_AUTHOR=${{ secrets.SITE_AUTHOR }}
             SITE_URL=${{ secrets.SITE_URL }}
             SITE_POSTHOG_ID=${{ secrets.SITE_POSTHOG_ID }}
-            SITE_POSTHOG_REGION=${{ secrets.SITE_POSTHOG_REGION }}
+            SITE_POSTHOG_API_HOST=${{ secrets.SITE_POSTHOG_API_HOST }}
+            SITE_POSTHOG_UI_HOST=${{ secrets.SITE_POSTHOG_UI_HOST }}
           tags: |
             ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:latest
             ghcr.io/${{ secrets.SITE_DOCKER_IMAGE_PATH }}:branch-${{ github.ref_name }}
