@@ -1,154 +1,140 @@
 <!DOCTYPE html>
 <html lang="en-AU">
-  <head>
-    <title>
-      {% if title %}{{ SITE_AUTHOR }} - {{ title }}{% else %}{{ SITE_AUTHOR }}{% endif %}
-    </title>
-    <meta charset="utf-8">
-    <meta name="handheldfriendly" content="true">
-    <meta name="mobileoptimized" content="480">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="{% if theme %}{{ theme }}{% else %}#23c5b0{% endif %}">
-    <meta name="author" content="{{ SITE_AUTHOR }}" />
-    <meta
-      name="description"
-      content="{% if description %}{{ description }}{% else %}{{ SITE_FEED_DESC }}{% endif %}"
-    >
-    {% if date %}<meta
-        property="article:published_time"
-        content="{{ date | date('yyyy-MM-dd') }}"
-      >{% endif %}
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="{{ SITE_LANG }}">
-    <meta
-      property="og:title"
-      content="{% if title %}{{ SITE_AUTHOR }} - {{ title }}{% else %}{{ SITE_AUTHOR }}{% endif %}"
-    >
-    <meta property="og:url" content="{{ SITE_URL }}{{ url }}">
-    <meta
-      name="og:description"
-      content="{% if description %}{{ description }}{% else %}{{ SITE_FEED_DESC }}{% endif %}"
-    >
-    {% if photo_thumb_url %}
-      <meta property="og:image" content="{{ SITE_URL }}{{ photo_thumb_url }}">
-    {% elif photo_url %}
-      <meta property="og:image" content="{{ SITE_URL }}{{ photo_url }}">
-    {% else %}
-      <meta property="og:image" content="{{ SITE_URL }}/images/brendan/profile/brendan_750.png">
-    {% endif %}
-    <link rel="canonical" href="{{ SITE_URL }}{{ url }}">
-    <link
-      rel="alternate"
-      title="{{ SITE_FEED_TITLE }}"
-      type="application/json"
-      href="{{ SITE_URL }}/posts.json"
-    >
-    <link rel="icon" sizes="192x192" href="/images/logos/android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/logos/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/logos/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/logos/apple-touch-icon.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="preload" href="/fonts/MDIO-Black.woff" as="font" crossOrigin="anonymous">
-    <link rel="preload" href="/fonts/MDIO-Regular.woff" as="font" crossOrigin="anonymous">
-    <link rel="preload" href="/css/bcm.min.css" as="style">
-    <link rel="preload" href="/css/fontawesome/css/all.min.css" as="style">
-    <link rel="preload" href="/css/fontawesome/css/fontawesome.min.css" as="style">
-    <link rel="preload" href="/css/code-highlight.min.css" as="style">
-    <link rel="stylesheet" href="/css/bcm.min.css">
-    <link rel="stylesheet" href="/css/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="/css/fontawesome/css/fontawesome.min.css">
-    <link rel="stylesheet" href="/css/code-highlight.min.css">
-  </head>
-  <body {% if body_class %}class="{{ body_class }}"{% endif %}>
-    <div class="layout-wrapper">
-      <aside class="sidebar">
-        <div class="sidebar-brand">
-          <a href="/" class="brand-link" title="Go to the home page">
-            <img
-              class="sidebar-avatar"
-              alt="{{ SITE_AUTHOR }}"
-              width="100"
-              height="100"
-              src="/images/brendan/profile/brendan_150.webp"
-            />
-            <span class="brand-name">{{ SITE_AUTHOR }}</span>
-          </a>
-        </div>
+<head>
 
-        <nav class="sidebar-nav">
-          <ul>
-            <li>
-              <a href="/" class="nav-link{% if url == '/' %} active{% endif %}">
-                <span class="nav-icon fa-fw fa-solid fa-house"></span>
-                <span class="nav-text">Home</span>
-              </a>
-            </li>
-            <li>
-              <a href="/posts/" class="nav-link{% if '/posts/' in url %} active{% endif %}">
-                <span class="nav-icon fa-fw fa-solid fa-file-lines"></span>
-                <span class="nav-text">Posts</span>
-              </a>
-            </li>
-            <li>
-              <a href="/tags/" class="nav-link{% if '/tags/' in url %} active{% endif %}">
-                <span class="nav-icon fa-fw fa-solid fa-tags"></span>
-                <span class="nav-text">Tags</span>
-              </a>
-            </li>
-            <li>
-              <a href="/resume.pdf" class="nav-link" download="Resume - Brendan Murty.pdf" title="Download my resume">
-                <span class="nav-icon fa-fw fa-solid fa-file-pdf"></span>
-                <span class="nav-text">Resume</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+<title>{% if title %}{{ SITE_AUTHOR }} - {{ title }}{% else %}{{ SITE_AUTHOR }}{% endif %}</title>
 
-        <div class="sidebar-footer">
-          <ul class="social-links">
-            <li>
-              <a href="mailto:brendan@bcm.works" class="nav-link" title="Send me an email">
-                <span class="nav-icon fa-fw fa-solid fa-envelope"></span>
-                <span class="nav-text">Email</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/brendanmurty" class="nav-link" title="View my GitHub profile">
-                <span class="nav-icon fa-fw fa-brands fa-github"></span>
-                <span class="nav-text">GitHub</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/brendanmurty" class="nav-link" title="View my LinkedIn profile">
-                <span class="nav-icon fa-fw fa-brands fa-linkedin"></span>
-                <span class="nav-text">LinkedIn</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://letterboxd.com/brendanmurty" class="nav-link" title="View my Letterboxd profile">
-                <span class="nav-icon fa-fw fa-solid fa-film"></span>
-                <span class="nav-text">Letterboxd</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://steamcommunity.com/id/brendanmurty" class="nav-link" title="View my Steam profile">
-                <span class="nav-icon fa-fw fa-brands fa-steam"></span>
-                <span class="nav-text">Steam</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://discordapp.com/users/362579289700302858" class="nav-link" title="View my Discord profile">
-                <span class="nav-icon fa-fw fa-brands fa-discord"></span>
-                <span class="nav-text">Discord</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </aside>
+<meta charset="utf-8">
+<meta name="handheldfriendly" content="true">
+<meta name="mobileoptimized" content="480">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="{% if theme %}{{ theme }}{% else %}#23c5b0{% endif %}">
+<meta name="author" content="{{ SITE_AUTHOR }}" />
+<meta name="description" content="{% if description %}{{ description }}{% else %}{{ SITE_FEED_DESC }}{% endif %}">
+{% if date %}<meta property="article:published_time" content="{{ date | date('yyyy-MM-dd') }}">{% endif %}
+<meta property="og:type" content="website">
+<meta property="og:locale" content="{{ SITE_LANG }}">
+<meta property="og:title" content="{% if title %}{{ SITE_AUTHOR }} - {{ title }}{% else %}{{ SITE_AUTHOR }}{% endif %}">
+<meta property="og:url" content="{{ SITE_URL }}{{ url }}">
+<meta name="og:description" content="{% if description %}{{ description }}{% else %}{{ SITE_FEED_DESC }}{% endif %}">
+{% if photo_thumb_url %}<meta property="og:image" content="{{ SITE_URL }}{{ photo_thumb_url }}">
+{% elif photo_url %}<meta property="og:image" content="{{ SITE_URL }}{{ photo_url }}">
+{% else %}<meta property="og:image" content="{{ SITE_URL }}/images/brendan/profile/brendan_750.png">{% endif %}
 
-      <main class="main-content">
-        <article class="content-body">{{ content | safe }}</article>
-      </main>
-    </div>
-  </body>
+<link rel="preload" href="/fonts/MDIO-Black.woff" as="font" crossOrigin="anonymous">
+<link rel="preload" href="/fonts/MDIO-Black.woff" as="font" crossOrigin="anonymous">
+<link rel="preload" href="/fonts/MDIO-Regular.woff" as="font" crossOrigin="anonymous">
+<link rel="preload" href="/css/bcm.min.css" as="style">
+<link rel="preload" href="/css/fontawesome/css/all.min.css" as="style">
+<link rel="preload" href="/css/fontawesome/css/fontawesome.min.css" as="style">
+<link rel="preload" href="/css/code-highlight.min.css" as="style">
+
+<link rel="canonical" href="{{ SITE_URL }}{{ url }}">
+<link rel="alternate" title="{{ SITE_FEED_TITLE }}" type="application/json" href="{{ SITE_URL }}/posts.json">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" sizes="192x192" href="/images/logos/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/logos/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/logos/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/logos/apple-touch-icon.png">
+
+<link rel="stylesheet" href="/css/bcm.min.css">
+<link rel="stylesheet" href="/css/fontawesome/css/all.min.css">
+<link rel="stylesheet" href="/css/fontawesome/css/fontawesome.min.css">
+<link rel="stylesheet" href="/css/code-highlight.min.css">
+
+{% if SITE_POSTHOG_ID %}<script>
+!function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="rn sn init kn Qr wn Cn yn capture calculateEventProperties Rn register register_once register_for_session unregister unregister_for_session An getFeatureFlag getFeatureFlagPayload getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Fn identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty On En createPersonProfile setInternalOrTestUser Ln gn $n opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing In debug Kr Pn getPageViewId captureTraceFeedback captureTraceMetric vn".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+posthog.init('{{ SITE_POSTHOG_ID }}', {
+  api_host: 'https://{{ SITE_POSTHOG_REGION }}.i.posthog.com',
+  defaults: '2026-05-30',
+  person_profiles: 'always',
+})
+</script>{% endif %}
+</head>
+<body {% if body_class %}class="{{ body_class }}"{% endif %}>
+  <div class="layout-wrapper">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <a href="/" class="brand-link" title="Go to the home page">
+          <img class="sidebar-avatar" alt="{{ SITE_AUTHOR }}" width="150" height="150" src="/images/brendan/profile/brendan_150.webp"/>
+          <span class="brand-name">{{ SITE_AUTHOR }}</span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul>
+          <li>
+            <a href="/" class="nav-link{% if url == '/' %} active{% endif %}">
+              <span class="nav-icon fa-fw fa-solid fa-house"></span>
+              <span class="nav-text">Home</span>
+            </a>
+          </li>
+          <li>
+            <a href="/posts/" class="nav-link{% if '/posts/' in url %} active{% endif %}">
+              <span class="nav-icon fa-fw fa-solid fa-file-lines"></span>
+              <span class="nav-text">Posts</span>
+            </a>
+          </li>
+          <li>
+            <a href="/tags/" class="nav-link{% if '/tags/' in url %} active{% endif %}">
+              <span class="nav-icon fa-fw fa-solid fa-tags"></span>
+              <span class="nav-text">Tags</span>
+            </a>
+          </li>
+          <li>
+            <a href="/resume.pdf" class="nav-link" download="Resume - Brendan Murty.pdf" title="Download my resume">
+              <span class="nav-icon fa-fw fa-solid fa-file-pdf"></span>
+              <span class="nav-text">Resume</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <ul class="social-links">
+          <li>
+            <a href="mailto:brendan@bcm.works" class="nav-link" title="Send me an email">
+              <span class="nav-icon fa-fw fa-solid fa-envelope"></span>
+              <span class="nav-text">Email</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/brendanmurty" class="nav-link" title="View my GitHub profile">
+              <span class="nav-icon fa-fw fa-brands fa-github"></span>
+              <span class="nav-text">GitHub</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/brendanmurty" class="nav-link" title="View my LinkedIn profile">
+              <span class="nav-icon fa-fw fa-brands fa-linkedin"></span>
+              <span class="nav-text">LinkedIn</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://letterboxd.com/brendanmurty" class="nav-link" title="View my Letterboxd profile">
+              <span class="nav-icon fa-fw fa-solid fa-film"></span>
+              <span class="nav-text">Letterboxd</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://steamcommunity.com/id/brendanmurty" class="nav-link" title="View my Steam profile">
+              <span class="nav-icon fa-fw fa-brands fa-steam"></span>
+              <span class="nav-text">Steam</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://discordapp.com/users/362579289700302858" class="nav-link" title="View my Discord profile">
+              <span class="nav-icon fa-fw fa-brands fa-discord"></span>
+              <span class="nav-text">Discord</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <article class="content-body">{{ content | safe }}</article>
+    </main>
+  </div>
+</body>
 </html>

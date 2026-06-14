@@ -11,9 +11,11 @@ SITE_DIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
 cd "$SITE_DIR"
 
 if [ -f "$SITE_DIR/.site.env" ]; then
-  echo 'Loading environment vars from file.'
+  echo 'Loading vars from env file.'
 
   source "$SITE_DIR/.site.env"
+else
+  echo 'Loading vars from session.'
 fi
 
 echo "Building 'bcm-site-local' Docker Image"
@@ -29,4 +31,6 @@ docker build \
   --build-arg SITE_LANG="$SITE_LANG" \
   --build-arg SITE_AUTHOR="$SITE_AUTHOR" \
   --build-arg SITE_URL="$SITE_URL" \
+  --build-arg SITE_POSTHOG_ID="$SITE_POSTHOG_ID" \
+  --build-arg SITE_POSTHOG_REGION="$SITE_POSTHOG_REGION" \
   "."

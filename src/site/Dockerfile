@@ -32,6 +32,8 @@ ARG SITE_LANG
 ARG SITE_FEED_TITLE
 ARG SITE_FEED_DESC
 ARG SITE_FEED_DEFAULT_TITLE
+ARG SITE_POSTHOG_ID
+ARG SITE_POSTHOG_REGION
 
 # Persist build arguments as environment variables so
 # resulting Docker Containers can access the values.
@@ -47,6 +49,8 @@ ENV SITE_LANG=${SITE_LANG}
 ENV SITE_FEED_TITLE=${SITE_FEED_TITLE}
 ENV SITE_FEED_DESC=${SITE_FEED_DESC}
 ENV SITE_FEED_DEFAULT_TITLE=${SITE_FEED_DEFAULT_TITLE}
+ENV SITE_POSTHOG_ID=${SITE_POSTHOG_ID}
+ENV SITE_POSTHOG_REGION=${SITE_POSTHOG_REGION}
 
 # Set Docker Image properties
 # From: https://github.com/opencontainers/image-spec/blob/main/annotations.md

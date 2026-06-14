@@ -29,6 +29,8 @@ if [ -f "$SITE_DIR/.site.env" ]; then
     --name "bcm-site-local" \
     --env-file "$SITE_DIR/.site.env" \
     --publish "${SITE_PORT:-8000}:8000" \
+    --env "SITE_POSTHOG_ID=${SITE_POSTHOG_ID}" \
+    --env "SITE_POSTHOG_REGION=${SITE_POSTHOG_REGION}" \
     "bcm-site-local:latest"
 else
   echo "File not found at '.site.env'"
@@ -38,6 +40,8 @@ else
     -d \
     --name "bcm-site-local" \
     --publish "${SITE_PORT:-8000}:8000" \
+    --env "SITE_POSTHOG_ID=${SITE_POSTHOG_ID}" \
+    --env "SITE_POSTHOG_REGION=${SITE_POSTHOG_REGION}" \
     "bcm-site-local:latest"
 fi
 
