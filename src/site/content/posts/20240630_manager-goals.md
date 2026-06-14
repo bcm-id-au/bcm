@@ -5,7 +5,6 @@ url: /posts/20240630_manager-goals/
 oldUrl: /brendan/posts/20240630_manager-goals/
 tags:
   - Post
-  - Career
   - Development
   - Health
   - Management

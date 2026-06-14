@@ -5,7 +5,6 @@ url: /posts/20191116_fixing-software-bugs-without-losing-your-mind/
 oldUrl: /brendan/posts/20191116_fixing-software-bugs-without-losing-your-mind/
 tags:
   - Post
-  - Career
   - Development
   - Debugging
   - Health
