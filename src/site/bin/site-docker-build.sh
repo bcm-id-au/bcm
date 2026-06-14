@@ -12,7 +12,6 @@ cd "$SITE_DIR"
 
 if [ -f "$SITE_DIR/.site.env" ]; then
   echo 'Loading vars from env file.'
-
   source "$SITE_DIR/.site.env"
 else
   echo 'Loading vars from session.'
@@ -32,5 +31,6 @@ docker build \
   --build-arg SITE_AUTHOR="$SITE_AUTHOR" \
   --build-arg SITE_URL="$SITE_URL" \
   --build-arg SITE_POSTHOG_ID="$SITE_POSTHOG_ID" \
-  --build-arg SITE_POSTHOG_REGION="$SITE_POSTHOG_REGION" \
+  --build-arg SITE_POSTHOG_API_HOST="$SITE_POSTHOG_API_HOST" \
+  --build-arg SITE_POSTHOG_UI_HOST="$SITE_POSTHOG_UI_HOST" \
   "."

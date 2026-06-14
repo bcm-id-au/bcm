@@ -30,7 +30,8 @@ if [ -f "$SITE_DIR/.site.env" ]; then
     --env-file "$SITE_DIR/.site.env" \
     --publish "${SITE_PORT:-8000}:8000" \
     --env "SITE_POSTHOG_ID=${SITE_POSTHOG_ID}" \
-    --env "SITE_POSTHOG_REGION=${SITE_POSTHOG_REGION}" \
+    --env "SITE_POSTHOG_API_HOST=${SITE_POSTHOG_API_HOST}" \
+    --env "SITE_POSTHOG_UI_HOST=${SITE_POSTHOG_UI_HOST}" \
     "bcm-site-local:latest"
 else
   echo "File not found at '.site.env'"
@@ -41,7 +42,8 @@ else
     --name "bcm-site-local" \
     --publish "${SITE_PORT:-8000}:8000" \
     --env "SITE_POSTHOG_ID=${SITE_POSTHOG_ID}" \
-    --env "SITE_POSTHOG_REGION=${SITE_POSTHOG_REGION}" \
+    --env "SITE_POSTHOG_API_HOST=${SITE_POSTHOG_API_HOST}" \
+    --env "SITE_POSTHOG_UI_HOST=${SITE_POSTHOG_UI_HOST}" \
     "bcm-site-local:latest"
 fi
 

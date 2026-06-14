@@ -42,7 +42,8 @@ const siteFeedDefaultTitle: string = bcm.envVar("SITE_FEED_DEFAULT_TITLE");
 const siteLang: string = bcm.envVar("SITE_LANG", "en-GB");
 const siteAuthor: string = bcm.envVar("SITE_AUTHOR");
 const sitePosthogId: string = bcm.envVar("SITE_POSTHOG_ID");
-const sitePosthogRegion: string = bcm.envVar("SITE_POSTHOG_REGION");
+const sitePosthogApiHost: string = bcm.envVar("SITE_POSTHOG_API_HOST");
+const sitePosthogUiHost: string = bcm.envVar("SITE_POSTHOG_UI_HOST");
 
 // Save env vars as site data variables so templates can use them
 
@@ -53,7 +54,8 @@ site.data("SITE_LANG", siteLang);
 site.data("SITE_AUTHOR", siteAuthor);
 site.data("SITE_URL", siteUrl);
 site.data("SITE_POSTHOG_ID", sitePosthogId);
-site.data("SITE_POSTHOG_REGION", sitePosthogRegion);
+site.data("SITE_POSTHOG_API_HOST", sitePosthogApiHost);
+site.data("SITE_POSTHOG_UI_HOST", sitePosthogUiHost);
 
 // Enable plugins
 
