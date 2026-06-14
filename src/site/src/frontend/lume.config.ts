@@ -112,34 +112,32 @@ site.use(feed({
 
 // Generate a custom robots.txt
 
-site.use(robots(
-  {
-    "disallow": [
-      "Mediapartners-Google",
-      "Adsbot-Google",
-      "Amazonbot",
-      "anthropic-ai",
-      "Applebot",
-      "Bytespider",
-      "CCBot",
-      "ChatGPT",
-      "Claude-Web",
-      "ClaudeBot",
-      "Diffbot",
-      "FacebookBot",
-      "Google-Extended",
-      "GPTBot",
-      "Image2dataset",
-      "ImagesiftBot",
-      "Omgili",
-      "Omgilibot",
-      "PerplexityBot",
-      "YouBot",
-      "PerplexityBot",
-      "YouBot",
-    ],
-  },
-));
+site.use(robots({
+  "disallow": [
+    "Mediapartners-Google",
+    "Adsbot-Google",
+    "Amazonbot",
+    "anthropic-ai",
+    "Applebot",
+    "Bytespider",
+    "CCBot",
+    "ChatGPT",
+    "Claude-Web",
+    "ClaudeBot",
+    "Diffbot",
+    "FacebookBot",
+    "Google-Extended",
+    "GPTBot",
+    "Image2dataset",
+    "ImagesiftBot",
+    "Omgili",
+    "Omgilibot",
+    "PerplexityBot",
+    "YouBot",
+    "PerplexityBot",
+    "YouBot",
+  ],
+}));
 
 // Generate a sitemap
 site.use(sitemap());
