@@ -65,6 +65,7 @@ deno task clean
 echo -e "${YELLOW}Copying over page content files to '$SITE_BUILD_DIR'${NC}"
 
 cp -r content/* "$SITE_BUILD_DIR"
+rm -rf "$SITE_BUILD_DIR/content/resume.pdf"
 
 echo -e "${YELLOW}Building the front-end using Lume and 'src/frontend/lume.config.ts'${NC}"
 
@@ -93,10 +94,10 @@ cp -r "src/frontend/styles/fontawesome" "$SITE_PUBLIC_DIR/css"
 
 echo -e "${YELLOW}Copying static files to '$SITE_PUBLIC_DIR'${NC}"
 
-cp -r "src/frontend/assets/fonts" "$SITE_PUBLIC_DIR/fonts"
-cp -r "src/frontend/assets/images" "$SITE_PUBLIC_DIR/images"
-cp "src/frontend/assets/favicon.ico" "$SITE_PUBLIC_DIR/favicon.ico"
-cp "src/frontend/assets/site.webmanifest" "$SITE_PUBLIC_DIR/site.webmanifest"
+cp -r "src/frontend/fonts" "$SITE_PUBLIC_DIR/fonts"
+cp -r "src/frontend/images" "$SITE_PUBLIC_DIR/images"
+cp "src/frontend/favicon.ico" "$SITE_PUBLIC_DIR/favicon.ico"
+cp "src/frontend/site.webmanifest" "$SITE_PUBLIC_DIR/site.webmanifest"
 cp "content/resume.pdf" "$SITE_PUBLIC_DIR/resume.pdf"
 
 echo -e "${GREEN}Build complete${NC}"

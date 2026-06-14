@@ -13,7 +13,6 @@ This directory contains the main [murty.au](https://murty.au/) public website.
 
 - [.github/workflows/site-release.yml](../../.github/workflows/site-release.yml) - Deployment workflow that can be manually triggered.
 - [.github/workflows/site-check.yml](../../.github/workflows/site-check.yml) - Test workflow that runs automatically on PRs and can be manually triggered.
-- [assets](assets/) - Static files like images and PDFs.
 - [content](content/) - Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files.
 - [src/backend](src/backend/) - Backend server, config setup and related unit tests.
 - [src/frontend](src/frontend/) - Frontend styles, layouts and templates.
