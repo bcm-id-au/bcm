@@ -245,6 +245,9 @@ ul.posts-list .post-date,
   position: fixed;
   height: 100vh;
   box-sizing: border-box;
+  width: 300px;
+  margin: 0 auto;
+  text-align: center;
   z-index: 100;
   transition: all 0.3s ease;
 }
@@ -254,6 +257,12 @@ ul.posts-list .post-date,
     background-color: #fbfbfb;
     border-right: 1px solid rgba(0, 0, 0, 0.08);
   }
+}
+
+.sidebar-brand {
+  width: 200px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .sidebar-brand .brand-link {
@@ -281,6 +290,7 @@ ul.posts-list .post-date,
   font-size: 24px;
   line-height: 1.2;
   font-weight: 500;
+  margin: 0 auto;
 }
 
 .sidebar-nav {
@@ -530,6 +540,8 @@ ul.listing.posts li a.post-link:hover {
 
   .sidebar-brand {
     flex-shrink: 0;
+    width: auto;
+    margin: 0;
   }
 
   .sidebar-brand .brand-link {
