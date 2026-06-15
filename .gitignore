@@ -2,8 +2,11 @@ node_modules
 cache
 temp
 
+*.log
+
 build
 public
+dist
 
 .antigravitycli
 
